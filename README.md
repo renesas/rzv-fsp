@@ -16,20 +16,9 @@ Download the latest FSP version from the [Releases page](https://github.com/rene
 
 ### Setup Instructions
 
-<!--
-#### For existing users that are using RZ/V FSP with e² studio
--->
-
-- FSP versions of 1.1.0 and later require a minimum e² studio version of 2022-10.
+- FSP versions of 1.1.0 and later require a minimum e² studio version of 2023-01.
 
 If you have already installed a previous FSP release that included e² studio then you can download the packs separately. These are available for download under the Assets section for each release. There is a zipped version, RZV_FSP_Packs_\<version\>.zip, and an installer version, RZV_FSP_Packs_\<version\>.exe.
-
-<!--
-#### For new users that are using RZ/V FSP with e² studio
-
-1.	Download the FSP with e² studio Installer from the Assets section of the [latest release](https://github.com/renesas/rzv-fsp/releases).
-2.	Run the installer. This will install the e² studio tool, FSP packs, GCC toolchain and other tools required to use this software. No additional installations are required.
--->
 
 ### Starting Development
 
