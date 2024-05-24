@@ -1,28 +1,18 @@
-/***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics Corporation and/or its affiliates and may only
- * be used with products of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.
- * Renesas products are sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for
- * the selection and use of Renesas products and Renesas assumes no liability.  No license, express or implied, to any
- * intellectual property right is granted by Renesas.  This software is protected under all applicable laws, including
- * copyright laws. Renesas reserves the right to change or discontinue this software and/or this documentation.
- * THE SOFTWARE AND DOCUMENTATION IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND
- * TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY,
- * INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE
- * SOFTWARE OR DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR
- * DOCUMENTATION (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER,
- * INCLUDING, WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY
- * LOST PROFITS, OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE
- * POSSIBILITY OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
  **********************************************************************************************************************/
 #include "r_rspi.h"
 #include "r_rspi_cfg.h"
+
+#if RSPI_CFG_DMAC_ENABLE
+ #include "r_dmac_b.h"
+#endif
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -33,12 +23,10 @@
 
 /** RSPI base register access macro.  */
 
-#define RSPI_CLK_N_DIV_MULTIPLIER    (512U)  ///< Maximum divider for N=0
-#define RSPI_CLK_MAX_DIV             (4096U) ///< Maximum SPI CLK divider
-#define RSPI_CLK_MIN_DIV             (2U)    ///< Minimum SPI CLK divider
+#define RSPI_CLK_N_DIV_MULTIPLIER    (512U) ///< Maximum divider for N=0
 
 /** RSPI parameter */
-#define RSPI_TX_FIFO_SIZE            (8)     ///< TX FIFO size
+#define RSPI_TX_FIFO_SIZE            (8)    ///< TX FIFO size
 #define RSPI_SPDCR_WIDTH_8BIT        (1 << R_RSPI0_SPDCR_SPLW_Pos)
 #define RSPI_SPDCR_WIDTH_16BIT       (2 << R_RSPI0_SPDCR_SPLW_Pos)
 #define RSPI_SPDCR_WIDTH_32BIT       (3 << R_RSPI0_SPDCR_SPLW_Pos)
@@ -90,6 +78,14 @@ static void r_rspi_receive(rspi_instance_ctrl_t * p_ctrl);
 static void r_rspi_transmit(rspi_instance_ctrl_t * p_ctrl);
 static void r_rspi_call_callback(rspi_instance_ctrl_t * p_ctrl, spi_event_t event);
 
+#if RSPI_CFG_DMAC_ENABLE
+
+static fsp_err_t r_rspi_transfer_config(rspi_instance_ctrl_t * p_ctrl, spi_cfg_t const * const p_cfg);
+void             rspi_tx_dmac_callback(rspi_instance_ctrl_t * p_ctrl);
+void             rspi_rx_dmac_callback(rspi_instance_ctrl_t * p_ctrl);
+
+#endif
+
 /***********************************************************************************************************************
  * ISR prototypes
  **********************************************************************************************************************/
@@ -100,15 +96,6 @@ void rspi_eri_isr(void);
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
-
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_rspi_version =
-{
-    .api_version_major  = SPI_API_VERSION_MAJOR,
-    .api_version_minor  = SPI_API_VERSION_MINOR,
-    .code_version_major = RSPI_CODE_VERSION_MAJOR,
-    .code_version_minor = RSPI_CODE_VERSION_MINOR
-};
 
 /***********************************************************************************************************************
  * Global variables
@@ -122,7 +109,6 @@ const spi_api_t g_spi_on_rspi =
     .write       = R_RSPI_Write,
     .writeRead   = R_RSPI_WriteRead,
     .close       = R_RSPI_Close,
-    .versionGet  = R_RSPI_VersionGet,
     .callbackSet = R_RSPI_CallbackSet
 };
 
@@ -162,8 +148,6 @@ fsp_err_t R_RSPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_cfg->p_extend);
     FSP_ERROR_RETURN(BSP_FEATURE_RSPI_VALID_CHANNELS_MASK & (1 << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
-    FSP_ASSERT(p_cfg->rxi_irq >= 0);
-    FSP_ASSERT(p_cfg->txi_irq >= 0);
     FSP_ASSERT(p_cfg->eri_irq >= 0);
 #endif
 
@@ -175,6 +159,13 @@ fsp_err_t R_RSPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
 
     /* Enable interrupts in NVIC. */
     r_rspi_nvic_config(p_ctrl);
+
+#if RSPI_CFG_DMAC_ENABLE
+
+    /* Configure transfers if they are provided in p_cfg. */
+    err = r_rspi_transfer_config(p_ctrl, p_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+#endif
 
     p_ctrl->open = RSPI_OPEN;
 
@@ -192,6 +183,7 @@ fsp_err_t R_RSPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
  * @retval  FSP_ERR_ASSERTION             NULL pointer to control or destination parameters or transfer length is zero.
  * @retval  FSP_ERR_NOT_OPEN              The channel has not been opened. Open channel first.
  * @retval  FSP_ERR_IN_USE                A transfer is already in progress.
+ * @retval  FSP_ERR_INVALID_ARGUMENT      A bit length not supported by this device was assigned to the argument.
  **********************************************************************************************************************/
 fsp_err_t R_RSPI_Read (spi_ctrl_t * const    p_api_ctrl,
                        void                * p_dest,
@@ -217,6 +209,7 @@ fsp_err_t R_RSPI_Read (spi_ctrl_t * const    p_api_ctrl,
  * @retval  FSP_ERR_ASSERTION               NULL pointer to control or source parameters or transfer length is zero.
  * @retval  FSP_ERR_NOT_OPEN                The channel has not been opened. Open the channel first.
  * @retval  FSP_ERR_IN_USE                  A transfer is already in progress.
+ * @retval  FSP_ERR_INVALID_ARGUMENT        A bit length not supported by this device was assigned to the argument.
  **********************************************************************************************************************/
 fsp_err_t R_RSPI_Write (spi_ctrl_t * const    p_api_ctrl,
                         void const          * p_src,
@@ -242,6 +235,7 @@ fsp_err_t R_RSPI_Write (spi_ctrl_t * const    p_api_ctrl,
  *                                        transfer length is zero.
  * @retval  FSP_ERR_NOT_OPEN              The channel has not been opened. Open the channel first.
  * @retval  FSP_ERR_IN_USE                A transfer is already in progress.
+ * @retval  FSP_ERR_INVALID_ARGUMENT      A bit length not supported by this device was assigned to the argument.
  *********************************************************************************************************************/
 fsp_err_t R_RSPI_WriteRead (spi_ctrl_t * const    p_api_ctrl,
                             void const          * p_src,
@@ -330,9 +324,29 @@ fsp_err_t R_RSPI_Close (spi_ctrl_t * const p_api_ctrl)
 
     p_ctrl->open = 0;
 
+#if RSPI_CFG_DMAC_ENABLE
+    if (NULL != p_ctrl->p_cfg->p_transfer_rx)
+    {
+        p_ctrl->p_cfg->p_transfer_rx->p_api->close(p_ctrl->p_cfg->p_transfer_rx->p_ctrl);
+    }
+
+    if (NULL != p_ctrl->p_cfg->p_transfer_tx)
+    {
+        p_ctrl->p_cfg->p_transfer_tx->p_api->close(p_ctrl->p_cfg->p_transfer_tx->p_ctrl);
+    }
+#endif
+
     /* Disable interrupts in NVIC. */
-    R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
-    R_BSP_IrqDisable(p_ctrl->p_cfg->rxi_irq);
+    if (p_ctrl->p_cfg->txi_irq >= 0)
+    {
+        R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
+    }
+
+    if (p_ctrl->p_cfg->rxi_irq >= 0)
+    {
+        R_BSP_IrqDisable(p_ctrl->p_cfg->rxi_irq);
+    }
+
     R_BSP_IrqDisable(p_ctrl->p_cfg->eri_irq);
 
     /* Disable the SPI Transfer. */
@@ -344,57 +358,29 @@ fsp_err_t R_RSPI_Close (spi_ctrl_t * const p_api_ctrl)
     p_ctrl->p_regs->SPSR;
     p_ctrl->p_regs->SPSR = 0;
 
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED This function gets the version information of the underlying driver. Implements
- * @ref spi_api_t::versionGet.
- *
- * @retval      FSP_SUCCESS            Successful version get.
- * @retval      FSP_ERR_ASSERTION      The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_RSPI_VersionGet (fsp_version_t * p_version)
-{
-#if RSPI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(p_version != NULL);
-#endif
-
-    p_version->version_id = g_rspi_version.version_id;
+    /* Remove power to the channel. */
+    R_BSP_MODULE_STOP(FSP_IP_RSPI, p_ctrl->p_cfg->channel);
 
     return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
  * Calculates the SPBR register value and the BRDV bits for a desired bitrate.
- * If the desired bitrate is faster than the maximum bitrate, than the bitrate is set to the
- * maximum bitrate. If the desired bitrate is slower than the minimum bitrate, than an error is returned.
+ * Calculates the SPBR register value and the BRDV bits for a desired bitrate.
+ * If the desired bitrate is faster than the maximum bitrate, then the bitrate is set to the
+ * maximum bitrate and an error is returned.
+ * If the desired bitrate is slower than the minimum bitrate, then an error is returned.
  *
- * @param[in] bitrate             Desired bitrate
+ * @param[in] bitrate             Desired bitrate.
  * @param[out] spck_div           Memory location to store bitrate register settings.
  *
- * @retval FSP_SUCCESS            Valid spbr and brdv values were calculated
- * @retval FSP_ERR_UNSUPPORTED    Bitrate is not achievable
+ * @retval FSP_SUCCESS            Valid spbr and brdv values were calculated.
+ * @retval FSP_ERR_UNSUPPORTED    Bitrate is out of the settable range.
  **********************************************************************************************************************/
 fsp_err_t R_RSPI_CalculateBitrate (uint32_t bitrate, rspi_rspck_div_setting_t * spck_div)
 {
     /* desired_divider = Smallest integer greater than or equal to RSPI_CLOCK / bitrate. */
     uint32_t desired_divider = (R_FSP_SystemClockHzGet(BSP_FEATURE_RSPI_CLOCK) + bitrate - 1) / bitrate;
-
-    /* Can't achieve bitrate slower than desired. */
-    if (desired_divider > RSPI_CLK_MAX_DIV)
-    {
-        return FSP_ERR_UNSUPPORTED;
-    }
-
-    if (desired_divider < RSPI_CLK_MIN_DIV)
-    {
-        /* Configure max bitrate (SPI_CLK / 2) */
-        spck_div->brdv = 0;
-        spck_div->spbr = 0;
-
-        return FSP_SUCCESS;
-    }
 
     /*
      * Possible SPI_CLK dividers for values of N:
@@ -432,6 +418,13 @@ fsp_err_t R_RSPI_CalculateBitrate (uint32_t bitrate, rspi_rspck_div_setting_t * 
     /* spbr = (Smallest integer greater than or equal to SPI_CLK_DIV / (2 * 2^i)) - 1. */
     spck_div->spbr = (uint8_t) (((desired_divider + spbr_divisor - 1U) / spbr_divisor) - 1U) & UINT8_MAX;
 
+    /* Can't achieve bitrate faster or slower than desired. */
+    if ((desired_divider > BSP_FEATURE_RSPI_CLK_MAX_DIV) ||
+        ((R_FSP_SystemClockHzGet(BSP_FEATURE_RSPI_CLOCK) / bitrate) < BSP_FEATURE_RSPI_CLK_MIN_DIV))
+    {
+        return FSP_ERR_UNSUPPORTED;
+    }
+
     return FSP_SUCCESS;
 }
 
@@ -442,6 +435,50 @@ fsp_err_t R_RSPI_CalculateBitrate (uint32_t bitrate, rspi_rspck_div_setting_t * 
 /*******************************************************************************************************************//**
  * Private Functions
  **********************************************************************************************************************/
+
+#if RSPI_CFG_DMAC_ENABLE
+
+/*******************************************************************************************************************//**
+ * Configure the given transfer instances for receiving and transmitting data without CPU intervention.
+ *
+ * @param      p_cfg           Configuration structure with references to receive and transmit transfer instances.
+ *
+ * @retval     FSP_SUCCESS     The given transfer instances were configured successfully.
+ * @return                     See @ref RENESAS_ERROR_CODES for other possible return codes. This function internally
+ *                             calls @ref transfer_api_t::open.
+ **********************************************************************************************************************/
+static fsp_err_t r_rspi_transfer_config (rspi_instance_ctrl_t * p_ctrl, spi_cfg_t const * const p_cfg)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    const transfer_instance_t * p_transfer_tx = p_cfg->p_transfer_tx;
+    void * p_spdr = (void *) &(p_ctrl->p_regs->SPDR);
+
+    if (p_transfer_tx)
+    {
+        p_transfer_tx->p_cfg->p_info->p_dest = p_spdr;
+
+        err = p_transfer_tx->p_api->open(p_transfer_tx->p_ctrl, p_transfer_tx->p_cfg);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
+
+    const transfer_instance_t * p_transfer_rx = p_cfg->p_transfer_rx;
+    if (p_transfer_rx)
+    {
+        p_transfer_rx->p_cfg->p_info->p_src = p_spdr;
+
+        err = p_transfer_rx->p_api->open(p_transfer_rx->p_ctrl, p_transfer_rx->p_cfg);
+
+        if ((FSP_SUCCESS != err) && p_transfer_tx)
+        {
+            p_transfer_tx->p_api->close(p_transfer_tx->p_ctrl);
+        }
+    }
+
+    return err;
+}
+
+#endif
 
 /*******************************************************************************************************************//**
  * initialize control structure
@@ -485,8 +522,6 @@ static void r_rspi_hw_config (rspi_instance_ctrl_t * p_ctrl)
 
     /* Enable IP */
     R_BSP_MODULE_START(FSP_IP_RSPI, p_ctrl->p_cfg->channel);
-    R_BSP_MODULE_CLKON(FSP_IP_RSPI, p_ctrl->p_cfg->channel);
-    R_BSP_MODULE_RSTOFF(FSP_IP_RSPI, p_ctrl->p_cfg->channel);
 
     /* Reset SPI controller */
     p_ctrl->p_regs->SPCR = (uint8_t) spcr;
@@ -523,13 +558,9 @@ static void r_rspi_hw_config (rspi_instance_ctrl_t * p_ctrl)
 
     rspi_extended_cfg_t * p_extend = ((rspi_extended_cfg_t *) p_ctrl->p_cfg->p_extend);
 
-#if BSP_FEATURE_RSPI_HAS_SSL_LEVEL_KEEP == 1
-    if ((1 << p_ctrl->p_cfg->channel) & BSP_FEATURE_RSPI_SSL_LEVEL_KEEP_VALID_CHANNEL_MASK)
-    {
-        /* Configure SSL Level Keep Setting. */
-        spcmd0 |= (uint32_t) (!p_ctrl->p_cfg->operating_mode << R_RSPI0_SPCMD0_SSLKP_Pos);
-    }
-#endif
+    /* Configure SSL Level Keep Setting.(Can be set only in master mode)*/
+    spcmd0 |=
+        (uint32_t) (((!p_ctrl->p_cfg->operating_mode) & p_extend->ssl_level_keep) << R_RSPI0_SPCMD0_SSLKP_Pos);
 
     /* Configure SSLn polarity setting. */
     if (RSPI_SSLP_HIGH == p_extend->ssl_polarity)
@@ -566,7 +597,14 @@ static void r_rspi_hw_config (rspi_instance_ctrl_t * p_ctrl)
     }
 
     /* Pre-storing TX FIFO trigger level (not write at this time) */
-    spbfcr |= ((unsigned) p_extend->tx_trigger_level << R_RSPI0_SPBFCR_TXTRG_Pos);
+    if (p_ctrl->p_cfg->p_transfer_tx)
+    {
+        spbfcr |= ((unsigned) RSPI_TX_TRIGGER_0 << R_RSPI0_SPBFCR_TXTRG_Pos);
+    }
+    else
+    {
+        spbfcr |= ((unsigned) p_extend->tx_trigger_level << R_RSPI0_SPBFCR_TXTRG_Pos);
+    }
 
     /* Reset FIFOs */
     p_ctrl->p_regs->SPBFCR = (uint8_t) (spbfcr | R_RSPI0_SPBFCR_RXRST_Msk | R_RSPI0_SPBFCR_TXRST_Msk);
@@ -596,8 +634,16 @@ static void r_rspi_hw_config (rspi_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static void r_rspi_nvic_config (rspi_instance_ctrl_t * p_ctrl)
 {
-    R_BSP_IrqCfgEnable(p_ctrl->p_cfg->txi_irq, p_ctrl->p_cfg->txi_ipl, p_ctrl);
-    R_BSP_IrqCfgEnable(p_ctrl->p_cfg->rxi_irq, p_ctrl->p_cfg->rxi_ipl, p_ctrl);
+    if (p_ctrl->p_cfg->txi_irq >= 0)
+    {
+        R_BSP_IrqCfgEnable(p_ctrl->p_cfg->txi_irq, p_ctrl->p_cfg->txi_ipl, p_ctrl);
+    }
+
+    if (p_ctrl->p_cfg->rxi_irq >= 0)
+    {
+        R_BSP_IrqCfgEnable(p_ctrl->p_cfg->rxi_irq, p_ctrl->p_cfg->rxi_ipl, p_ctrl);
+    }
+
     R_BSP_IrqCfgEnable(p_ctrl->p_cfg->eri_irq, p_ctrl->p_cfg->eri_ipl, p_ctrl);
 }
 
@@ -757,8 +803,15 @@ static void r_rspi_set_rx_fifo_hint (rspi_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static void r_rspi_set_rxtrg (rspi_instance_ctrl_t * p_ctrl, rspi_rx_trigger_level_t level)
 {
-    p_ctrl->p_regs->SPBFCR &= (uint8_t) (~R_RSPI0_SPBFCR_RXTRG_Msk);
-    p_ctrl->p_regs->SPBFCR |= (uint8_t) (level << R_RSPI0_SPBFCR_RXTRG_Pos);
+    if (p_ctrl->p_cfg->p_transfer_rx)
+    {
+        level = RSPI_RX_TRIGGER_1;
+    }
+
+    uint8_t spbfcr = p_ctrl->p_regs->SPBFCR;
+    spbfcr                &= (uint8_t) (~R_RSPI0_SPBFCR_RXTRG_Msk);
+    spbfcr                |= (uint8_t) (level << R_RSPI0_SPBFCR_RXTRG_Pos);
+    p_ctrl->p_regs->SPBFCR = spbfcr;
 }
 
 /*******************************************************************************************************************//**
@@ -768,7 +821,7 @@ static void r_rspi_set_rxtrg (rspi_instance_ctrl_t * p_ctrl, rspi_rx_trigger_lev
  **********************************************************************************************************************/
 static void r_rspi_set_rx_fifo_level (rspi_instance_ctrl_t * p_ctrl)
 {
-    uint32_t bytes_remained = p_ctrl->rx_count * p_ctrl->bit_width;
+    uint32_t bytes_remained = p_ctrl->rx_count * (p_ctrl->bit_width + 1) >> 3;
     if (bytes_remained >= p_ctrl->rxfifo_trigger_bytes)
     {
         /* More than FIFO trigger data left : do nothing */
@@ -813,16 +866,17 @@ static void r_rspi_set_rx_fifo_level (rspi_instance_ctrl_t * p_ctrl)
 /*******************************************************************************************************************//**
  * Configures the driver state and initiates a SPI transfer for all modes of operation.
  *
- * @param[in]  p_api_ctrl        pointer to control structure.
- * @param      p_src             Buffer to transmit data from.
- * @param      p_dest            Buffer to store received data in.
- * @param[in]  length            Number of transfers
- * @param[in]  bit_width         Data frame size (8-Bit, 16-Bit, 32-Bit)
+ * @param[in]  p_api_ctrl                pointer to control structure.
+ * @param      p_src                     Buffer to transmit data from.
+ * @param      p_dest                    Buffer to store received data in.
+ * @param[in]  length                    Number of transfers
+ * @param[in]  bit_width                 Data frame size (8-Bit, 16-Bit, 32-Bit)
  *
- * @retval     FSP_SUCCESS       Transfer was started successfully.
- * @retval     FSP_ERR_ASSERTION An argument is invalid.
- * @retval     FSP_ERR_NOT_OPEN  The instance has not been initialized.
- * @retval     FSP_ERR_IN_USE    A transfer is already in progress.
+ * @retval     FSP_SUCCESS               Transfer was started successfully.
+ * @retval     FSP_ERR_ASSERTION         An argument is invalid.
+ * @retval     FSP_ERR_NOT_OPEN          The instance has not been initialized.
+ * @retval     FSP_ERR_IN_USE            A transfer is already in progress.
+ * @retval     FSP_ERR_INVALID_ARGUMENT  A bit length not supported by this device was assigned to the argument.
  * @return                       See @ref RENESAS_ERROR_CODES for other possible return codes. This function internally
  *                               calls @ref transfer_api_t::reconfigure.
  **********************************************************************************************************************/
@@ -841,6 +895,12 @@ static fsp_err_t r_rspi_write_read_common (spi_ctrl_t * const    p_api_ctrl,
     FSP_ASSERT(0 != length);
 #endif
 
+    /* Reject bit width settings not compatible with R_RSPI */
+    FSP_ERROR_RETURN(((SPI_BIT_WIDTH_8_BITS == bit_width) ||
+                      (SPI_BIT_WIDTH_16_BITS == bit_width) ||
+                      (SPI_BIT_WIDTH_32_BITS == bit_width)),
+                     FSP_ERR_INVALID_ARGUMENT);
+
     FSP_ERROR_RETURN(false == p_ctrl->transfer_is_pending, FSP_ERR_IN_USE);
 
     /* Save transfer data */
@@ -849,6 +909,101 @@ static fsp_err_t r_rspi_write_read_common (spi_ctrl_t * const    p_api_ctrl,
     p_ctrl->tx_count  = length;
     p_ctrl->rx_count  = length;
     p_ctrl->bit_width = bit_width;
+
+#if RSPI_CFG_DMAC_ENABLE
+    if (p_ctrl->p_cfg->p_transfer_rx)
+    {
+        /* When the rxi interrupt is called, all transfers will be finished. */
+        p_ctrl->rx_count = 0;
+
+        /* The number of bytes transferred by DMAC is specified here, but it varies depending on the data width. */
+        p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->length = length;
+
+        /* Configure the receive DMA instance. */
+        if (SPI_BIT_WIDTH_16_BITS < p_ctrl->bit_width)
+        {
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->length = length * 4;
+
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->src_size  = TRANSFER_SIZE_4_BYTE;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->dest_size = TRANSFER_SIZE_4_BYTE;
+        }
+        else if (SPI_BIT_WIDTH_8_BITS >= p_ctrl->bit_width)
+        {
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->src_size  = TRANSFER_SIZE_1_BYTE;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->dest_size = TRANSFER_SIZE_1_BYTE;
+        }
+        else
+        {
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->length = length * 2;
+
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->src_size  = TRANSFER_SIZE_2_BYTE;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->dest_size = TRANSFER_SIZE_2_BYTE;
+        }
+
+        p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->dest_addr_mode = TRANSFER_ADDR_MODE_INCREMENTED;
+        p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->p_dest         = p_dest;
+
+        if (NULL == p_dest)
+        {
+            static uint32_t dummy_rx;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->dest_addr_mode = TRANSFER_ADDR_MODE_FIXED;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->p_dest         = &dummy_rx;
+        }
+
+        fsp_err_t err = p_ctrl->p_cfg->p_transfer_rx->p_api->reconfigure(p_ctrl->p_cfg->p_transfer_rx->p_ctrl,
+                                                                         p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info);
+
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
+
+    if (p_ctrl->p_cfg->p_transfer_tx)
+    {
+        /* When the txi interrupt is called, all transfers will be finished. */
+        p_ctrl->tx_count = 0;
+
+        /* The number of bytes transferred by DMAC is specified here, but it varies depending on the data width. */
+        p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->length = length;
+
+        /* Configure the transmit DMA instance. */
+        if (SPI_BIT_WIDTH_16_BITS < p_ctrl->bit_width)
+        {
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->length = length * 4;
+
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->src_size  = TRANSFER_SIZE_4_BYTE;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->dest_size = TRANSFER_SIZE_4_BYTE;
+        }
+        else if (SPI_BIT_WIDTH_8_BITS >= p_ctrl->bit_width)
+        {
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->src_size  = TRANSFER_SIZE_1_BYTE;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->dest_size = TRANSFER_SIZE_1_BYTE;
+        }
+        else
+        {
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->length = length * 2;
+
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->src_size  = TRANSFER_SIZE_2_BYTE;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->dest_size = TRANSFER_SIZE_2_BYTE;
+        }
+
+        p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->src_addr_mode = TRANSFER_ADDR_MODE_INCREMENTED;
+        p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->p_src         = p_src;
+
+        if (NULL == p_src)
+        {
+            static uint32_t dummy_tx = 0;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->src_addr_mode = TRANSFER_ADDR_MODE_FIXED;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->p_src         = &dummy_tx;
+        }
+
+        /* Disable the TX buffer empty interrupt before enabling transfer. */
+        p_ctrl->p_regs->SPCR_b.SPTIE = 0;
+
+        fsp_err_t err = p_ctrl->p_cfg->p_transfer_tx->p_api->reconfigure(p_ctrl->p_cfg->p_transfer_tx->p_ctrl,
+                                                                         p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info);
+
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
+#endif
 
     /* Set transfer width */
     r_rspi_bit_width_config(p_ctrl);
@@ -863,7 +1018,7 @@ static fsp_err_t r_rspi_write_read_common (spi_ctrl_t * const    p_api_ctrl,
     r_rspi_transmit(p_ctrl);
 
     uint32_t spcr = p_ctrl->p_regs->SPCR;
-    if (p_ctrl->tx_count)
+    if (p_ctrl->tx_count || p_ctrl->p_cfg->p_transfer_tx)
     {
         /* More data remained */
         spcr |= R_RSPI0_SPCR_SPTIE_Msk;
@@ -1135,7 +1290,7 @@ static void r_rspi_call_callback (rspi_instance_ctrl_t * p_ctrl, spi_event_t eve
 void rspi_rxi_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     R_BSP_IrqStatusClear(irq);
@@ -1145,7 +1300,7 @@ void rspi_rxi_isr (void)
     r_rspi_receive(p_ctrl);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1154,7 +1309,7 @@ void rspi_rxi_isr (void)
 void rspi_txi_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     R_BSP_IrqStatusClear(irq);
@@ -1164,7 +1319,7 @@ void rspi_txi_isr (void)
     r_rspi_transmit(p_ctrl);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1173,7 +1328,7 @@ void rspi_txi_isr (void)
 void rspi_eri_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type              irq    = R_FSP_CurrentIrqGet();
     rspi_instance_ctrl_t * p_ctrl = (rspi_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -1202,7 +1357,27 @@ void rspi_eri_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
+
+#if RSPI_CFG_DMAC_ENABLE
+
+/*******************************************************************************************************************//**
+ * Dedicated function for DMAC linkage at the time of transmission.
+ **********************************************************************************************************************/
+void rspi_tx_dmac_callback (rspi_instance_ctrl_t * p_ctrl)
+{
+    r_rspi_transmit(p_ctrl);
+}
+
+/*******************************************************************************************************************//**
+ * Dedicated function for DMAC linkage at the time of reception.
+ **********************************************************************************************************************/
+void rspi_rx_dmac_callback (rspi_instance_ctrl_t * p_ctrl)
+{
+    r_rspi_receive(p_ctrl);
+}
+
+#endif
 
 /* End of file R_SPI. */

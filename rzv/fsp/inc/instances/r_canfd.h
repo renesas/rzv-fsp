@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics Corporation and/or its affiliates and may only
- * be used with products of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.
- * Renesas products are sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for
- * the selection and use of Renesas products and Renesas assumes no liability.  No license, express or implied, to any
- * intellectual property right is granted by Renesas.  This software is protected under all applicable laws, including
- * copyright laws. Renesas reserves the right to change or discontinue this software and/or this documentation.
- * THE SOFTWARE AND DOCUMENTATION IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND
- * TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY,
- * INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE
- * SOFTWARE OR DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR
- * DOCUMENTATION (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER,
- * INCLUDING, WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY
- * LOST PROFITS, OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE
- * POSSIBILITY OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef R_CANFD_H
 #define R_CANFD_H
@@ -39,8 +25,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CANFD_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define CANFD_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -81,15 +65,22 @@ typedef enum e_canfd_error
     CANFD_ERROR_GLOBAL_DLC               = 0x00010000, ///< DLC Error
     CANFD_ERROR_GLOBAL_MESSAGE_LOST      = 0x00020000, ///< Message Lost
     CANFD_ERROR_GLOBAL_PAYLOAD_OVERFLOW  = 0x00080000, ///< FD Payload Overflow
+    CANFD_ERROR_GLOBAL_TXQ_OVERWRITE     = 0x00100000, ///< TX Queue Message Overwrite
+    CANFD_ERROR_GLOBAL_TXQ_MESSAGE_LOST  = 0x00400000, ///< TX Queue Message Lost
+    CANFD_ERROR_GLOBAL_CH0_SCAN_FAIL     = 0x01000000, ///< Channel 0 RX Scan Failure
+    CANFD_ERROR_GLOBAL_CH1_SCAN_FAIL     = 0x02000000, ///< Channel 1 RX Scan Failure
+    CANFD_ERROR_GLOBAL_CH0_ECC           = 0x10000000, ///< Channel 0 ECC Error
+    CANFD_ERROR_GLOBAL_CH1_ECC           = 0x20000000, ///< Channel 1 ECC Error
 } canfd_error_t;
 
 /** CANFD Transmit Message Buffer (TX MB) */
 typedef enum e_canfd_tx_mb
 {
-    CANFD_TX_MB_0  = 0,
-    CANFD_TX_MB_1  = 1,
-    CANFD_TX_MB_2  = 2,
-    CANFD_TX_MB_3  = 3,
+    CANFD_TX_MB_0 = 0,
+    CANFD_TX_MB_1 = 1,
+    CANFD_TX_MB_2 = 2,
+    CANFD_TX_MB_3 = 3,
+#if !BSP_FEATURE_CANFD_LITE
     CANFD_TX_MB_4  = 4,
     CANFD_TX_MB_5  = 5,
     CANFD_TX_MB_6  = 6,
@@ -102,7 +93,26 @@ typedef enum e_canfd_tx_mb
     CANFD_TX_MB_13 = 13,
     CANFD_TX_MB_14 = 14,
     CANFD_TX_MB_15 = 15,
+    CANFD_TX_MB_32 = 32,
+    CANFD_TX_MB_33 = 33,
+    CANFD_TX_MB_34 = 34,
+    CANFD_TX_MB_35 = 35,
+    CANFD_TX_MB_36 = 36,
+    CANFD_TX_MB_37 = 37,
+    CANFD_TX_MB_38 = 38,
+    CANFD_TX_MB_39 = 39,
+    CANFD_TX_MB_40 = 40,
+    CANFD_TX_MB_41 = 41,
+    CANFD_TX_MB_42 = 42,
+    CANFD_TX_MB_43 = 43,
+    CANFD_TX_MB_44 = 44,
+    CANFD_TX_MB_45 = 45,
+    CANFD_TX_MB_46 = 46,
+    CANFD_TX_MB_47 = 47,
+#endif
 } canfd_tx_mb_t;
+
+#ifndef BSP_OVERRIDE_CANFD_RX_BUFFER_T
 
 /** CANFD Receive Buffer (MB + FIFO) */
 typedef enum e_canfd_rx_buffer
@@ -141,13 +151,17 @@ typedef enum e_canfd_rx_buffer
     CANFD_RX_BUFFER_MB_31  = 31,
     CANFD_RX_BUFFER_FIFO_0 = 32,
     CANFD_RX_BUFFER_FIFO_1 = 33,
+#if !BSP_FEATURE_CANFD_LITE
     CANFD_RX_BUFFER_FIFO_2 = 34,
     CANFD_RX_BUFFER_FIFO_3 = 35,
     CANFD_RX_BUFFER_FIFO_4 = 36,
     CANFD_RX_BUFFER_FIFO_5 = 37,
     CANFD_RX_BUFFER_FIFO_6 = 38,
     CANFD_RX_BUFFER_FIFO_7 = 39,
+#endif
 } canfd_rx_buffer_t;
+
+#endif
 
 /** CANFD Receive Message Buffer (RX MB) */
 typedef enum e_canfd_rx_mb
@@ -185,6 +199,70 @@ typedef enum e_canfd_rx_mb
     CANFD_RX_MB_29   = 0x80 + 29,
     CANFD_RX_MB_30   = 0x80 + 30,
     CANFD_RX_MB_31   = 0x80 + 31,
+    CANFD_RX_MB_32   = 0x80 + 32,
+    CANFD_RX_MB_33   = 0x80 + 33,
+    CANFD_RX_MB_34   = 0x80 + 34,
+    CANFD_RX_MB_35   = 0x80 + 35,
+    CANFD_RX_MB_36   = 0x80 + 36,
+    CANFD_RX_MB_37   = 0x80 + 37,
+    CANFD_RX_MB_38   = 0x80 + 38,
+    CANFD_RX_MB_39   = 0x80 + 39,
+    CANFD_RX_MB_40   = 0x80 + 40,
+    CANFD_RX_MB_41   = 0x80 + 41,
+    CANFD_RX_MB_42   = 0x80 + 42,
+    CANFD_RX_MB_43   = 0x80 + 43,
+    CANFD_RX_MB_44   = 0x80 + 44,
+    CANFD_RX_MB_45   = 0x80 + 45,
+    CANFD_RX_MB_46   = 0x80 + 46,
+    CANFD_RX_MB_47   = 0x80 + 47,
+    CANFD_RX_MB_48   = 0x80 + 48,
+    CANFD_RX_MB_49   = 0x80 + 49,
+    CANFD_RX_MB_50   = 0x80 + 50,
+    CANFD_RX_MB_51   = 0x80 + 51,
+    CANFD_RX_MB_52   = 0x80 + 52,
+    CANFD_RX_MB_53   = 0x80 + 53,
+    CANFD_RX_MB_54   = 0x80 + 54,
+    CANFD_RX_MB_55   = 0x80 + 55,
+    CANFD_RX_MB_56   = 0x80 + 56,
+    CANFD_RX_MB_57   = 0x80 + 57,
+    CANFD_RX_MB_58   = 0x80 + 58,
+    CANFD_RX_MB_59   = 0x80 + 59,
+    CANFD_RX_MB_60   = 0x80 + 60,
+    CANFD_RX_MB_61   = 0x80 + 61,
+    CANFD_RX_MB_62   = 0x80 + 62,
+    CANFD_RX_MB_63   = 0x80 + 63,
+    CANFD_RX_MB_64   = 0x80 + 64,
+    CANFD_RX_MB_65   = 0x80 + 65,
+    CANFD_RX_MB_66   = 0x80 + 66,
+    CANFD_RX_MB_67   = 0x80 + 67,
+    CANFD_RX_MB_68   = 0x80 + 68,
+    CANFD_RX_MB_69   = 0x80 + 69,
+    CANFD_RX_MB_70   = 0x80 + 70,
+    CANFD_RX_MB_71   = 0x80 + 71,
+    CANFD_RX_MB_72   = 0x80 + 72,
+    CANFD_RX_MB_73   = 0x80 + 73,
+    CANFD_RX_MB_74   = 0x80 + 74,
+    CANFD_RX_MB_75   = 0x80 + 75,
+    CANFD_RX_MB_76   = 0x80 + 76,
+    CANFD_RX_MB_77   = 0x80 + 77,
+    CANFD_RX_MB_78   = 0x80 + 78,
+    CANFD_RX_MB_79   = 0x80 + 79,
+    CANFD_RX_MB_80   = 0x80 + 80,
+    CANFD_RX_MB_81   = 0x80 + 81,
+    CANFD_RX_MB_82   = 0x80 + 82,
+    CANFD_RX_MB_83   = 0x80 + 83,
+    CANFD_RX_MB_84   = 0x80 + 84,
+    CANFD_RX_MB_85   = 0x80 + 85,
+    CANFD_RX_MB_86   = 0x80 + 86,
+    CANFD_RX_MB_87   = 0x80 + 87,
+    CANFD_RX_MB_88   = 0x80 + 88,
+    CANFD_RX_MB_89   = 0x80 + 89,
+    CANFD_RX_MB_90   = 0x80 + 90,
+    CANFD_RX_MB_91   = 0x80 + 91,
+    CANFD_RX_MB_92   = 0x80 + 92,
+    CANFD_RX_MB_93   = 0x80 + 93,
+    CANFD_RX_MB_94   = 0x80 + 94,
+    CANFD_RX_MB_95   = 0x80 + 95
 } canfd_rx_mb_t;
 
 /** CANFD Receive FIFO (RX FIFO) */
@@ -192,12 +270,14 @@ typedef enum e_canfd_rx_fifo
 {
     CANFD_RX_FIFO_0 = (1U),
     CANFD_RX_FIFO_1 = (1U << 1),
+#if !BSP_FEATURE_CANFD_LITE
     CANFD_RX_FIFO_2 = (1U << 2),
     CANFD_RX_FIFO_3 = (1U << 3),
     CANFD_RX_FIFO_4 = (1U << 4),
     CANFD_RX_FIFO_5 = (1U << 5),
     CANFD_RX_FIFO_6 = (1U << 6),
     CANFD_RX_FIFO_7 = (1U << 7),
+#endif
 } canfd_rx_fifo_t;
 
 /** CANFD AFL Minimum DLC settings */
@@ -240,6 +320,8 @@ typedef enum e_canfd_txmb_merge_mode
 /* CAN Instance Control Block   */
 typedef struct st_canfd_instance_ctrl
 {
+    R_CANFD_Type       * p_reg;                 // Pointer to register base address
+
     /* Parameters to control CAN peripheral device */
     can_cfg_t const    * p_cfg;                 // Pointer to the configuration structure
     uint32_t             open;                  // Open status of channel.
@@ -288,10 +370,10 @@ typedef struct st_canfd_afl_entry
 
         struct
         {
-            uint32_t                        : 8;
-            canfd_rx_mb_t rx_buffer         : 8; ///< RX Message Buffer to receive messages accepted by this rule
-            uint32_t                        : 12;
             canfd_minimum_dlc_t minimum_dlc : 4; ///< Minimum DLC value to accept (valid when DLC Check is enabled)
+            uint32_t                        : 4;
+            canfd_rx_mb_t rx_buffer         : 8; ///< RX Message Buffer to receive messages accepted by this rule
+            uint32_t                        : 16;
             canfd_rx_fifo_t fifo_select_flags;   ///< RX FIFO(s) to receive messages accepted by this rule
         } destination;
     };
@@ -302,7 +384,11 @@ typedef struct st_canfd_global_cfg
 {
     uint32_t global_interrupts;        ///< Global control options (CFDGCTR register setting)
     uint32_t global_config;            ///< Global configuration options (CFDGCFG register setting)
+#if !BSP_FEATURE_CANFD_LITE
     uint32_t rx_fifo_config[8];        ///< RX FIFO configuration (CFDRFCCn register settings)
+#else
+    uint32_t rx_fifo_config[2];        ///< RX FIFO configuration (CFDRFCCn register settings)
+#endif
     uint32_t rx_mb_config;             ///< Number and size of RX Message Buffers (CFDRMNB register setting)
     uint8_t  global_err_ipl;           ///< Global Error interrupt priority
     uint8_t  rx_fifo_ipl;              ///< RX FIFO interrupt priority
@@ -312,13 +398,12 @@ typedef struct st_canfd_global_cfg
 typedef struct st_canfd_extended_cfg
 {
     canfd_afl_entry_t const * p_afl;           ///< AFL rules list
-    uint16_t               txmb_txi_enable;    ///< Array of TX Message Buffer enable bits
+    uint64_t               txmb_txi_enable;    ///< Array of TX Message Buffer enable bits
     uint32_t               error_interrupts;   ///< Error interrupt enable bits
     can_bit_timing_cfg_t * p_data_timing;      ///< FD Data Rate (when bitrate switching is used)
     uint8_t                delay_compensation; ///< FD Transceiver Delay Compensation (enable or disable)
     canfd_global_cfg_t   * p_global_cfg;       ///< Global configuration (global error callback channel only)
     canfd_txmb_merge_mode_t txmb_merge_mode_enable;  ///< TXMB buffer marge mode configuration
-
 } canfd_extended_cfg_t;
 
 /**********************************************************************************************************************
@@ -346,7 +431,6 @@ fsp_err_t R_CANFD_CallbackSet(can_ctrl_t * const          p_api_ctrl,
                               void (                    * p_callback)(can_callback_args_t *),
                               void const * const          p_context,
                               can_callback_args_t * const p_callback_memory);
-fsp_err_t R_CANFD_VersionGet(fsp_version_t * const version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup CAN)

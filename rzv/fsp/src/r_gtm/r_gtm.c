@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics Corporation and/or its affiliates and may only
- * be used with products of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.
- * Renesas products are sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for
- * the selection and use of Renesas products and Renesas assumes no liability.  No license, express or implied, to any
- * intellectual property right is granted by Renesas.  This software is protected under all applicable laws, including
- * copyright laws. Renesas reserves the right to change or discontinue this software and/or this documentation.
- * THE SOFTWARE AND DOCUMENTATION IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND
- * TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY,
- * INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE
- * SOFTWARE OR DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR
- * DOCUMENTATION (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER,
- * INCLUDING, WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY
- * LOST PROFITS, OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE
- * POSSIBILITY OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -60,13 +46,31 @@ void gtm_int_isr(void);
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure. */
-static const fsp_version_t s_gtm_version =
+/* GTM base address */
+static const uint32_t volatile * p_gtm_base_address[BSP_FEATURE_GTM_MAX_CHANNEL] =
 {
-    .api_version_minor  = TIMER_API_VERSION_MINOR,
-    .api_version_major  = TIMER_API_VERSION_MAJOR,
-    .code_version_minor = GTM_CODE_VERSION_MINOR,
-    .code_version_major = GTM_CODE_VERSION_MAJOR,
+    (uint32_t *) R_GTM0,
+#if BSP_FEATURE_GTM_MAX_CHANNEL > 1
+    (uint32_t *) R_GTM1,
+ #if BSP_FEATURE_GTM_MAX_CHANNEL > 2
+    (uint32_t *) R_GTM2,
+  #if BSP_FEATURE_GTM_MAX_CHANNEL > 3
+    (uint32_t *) R_GTM3,
+   #if BSP_FEATURE_GTM_MAX_CHANNEL > 4
+    (uint32_t *) R_GTM4,
+    #if BSP_FEATURE_GTM_MAX_CHANNEL > 5
+    (uint32_t *) R_GTM5,
+     #if BSP_FEATURE_GTM_MAX_CHANNEL > 6
+    (uint32_t *) R_GTM6,
+      #if BSP_FEATURE_GTM_MAX_CHANNEL > 7
+    (uint32_t *) R_GTM7,
+      #endif
+     #endif
+    #endif
+   #endif
+  #endif
+ #endif
+#endif
 };
 
 /***********************************************************************************************************************
@@ -87,8 +91,7 @@ const timer_api_t g_timer_on_gtm =
     .infoGet      = R_GTM_InfoGet,
     .statusGet    = R_GTM_StatusGet,
     .callbackSet  = R_GTM_CallbackSet,
-    .close        = R_GTM_Close,
-    .versionGet   = R_GTM_VersionGet
+    .close        = R_GTM_Close
 };
 
 /*******************************************************************************************************************//**
@@ -127,15 +130,12 @@ fsp_err_t R_GTM_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
 #endif
 
     /* calculate base address for specified channel */
-    intptr_t base_address = (intptr_t) R_GTM0_BASE +
-                            (p_cfg->channel * ((intptr_t) R_GTM1_BASE - (intptr_t) R_GTM0_BASE));
-    p_instance_ctrl->p_reg = (R_GTM0_Type *) base_address;
+    p_instance_ctrl->p_reg = (R_GTM0_Type *) p_gtm_base_address[p_cfg->channel];
+
     p_instance_ctrl->p_cfg = p_cfg;
 
     /* Power on the GTM channel. */
     R_BSP_MODULE_START(FSP_IP_GTM, p_cfg->channel);
-    R_BSP_MODULE_CLKON(FSP_IP_GTM, p_cfg->channel);
-    R_BSP_MODULE_RSTOFF(FSP_IP_GTM, p_cfg->channel);
 
     /* Forcibly stop timer. */
     p_instance_ctrl->p_reg->OSTMnTT = 1;
@@ -432,7 +432,7 @@ fsp_err_t R_GTM_Close (timer_ctrl_t * const p_ctrl)
 
     if (FSP_INVALID_VECTOR != p_instance_ctrl->p_cfg->cycle_end_irq)
     {
-        NVIC_DisableIRQ(p_instance_ctrl->p_cfg->cycle_end_irq);
+        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->cycle_end_irq);
         R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->cycle_end_irq, p_instance_ctrl);
     }
 
@@ -440,27 +440,6 @@ fsp_err_t R_GTM_Close (timer_ctrl_t * const p_ctrl)
 
     /* Remove power to the channel. */
     R_BSP_MODULE_STOP(FSP_IP_GTM, p_instance_ctrl->p_cfg->channel);
-    R_BSP_MODULE_RSTON(FSP_IP_GTM, p_instance_ctrl->p_cfg->channel);
-    R_BSP_MODULE_CLKOFF(FSP_IP_GTM, p_instance_ctrl->p_cfg->channel);
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Sets driver version based on compile time macros.  Implements @ref timer_api_t::versionGet.
- *
- * @retval     FSP_SUCCESS          Version in p_version.
- * @retval     FSP_ERR_ASSERTION    The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_GTM_VersionGet (fsp_version_t * const p_version)
-{
-#if GTM_CFG_PARAM_CHECKING_ENABLE
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = s_gtm_version.version_id;
 
     return FSP_SUCCESS;
 }
@@ -560,8 +539,8 @@ static uint32_t r_gtm_clock_frequency_get (R_GTM0_Type * p_gtm_regs)
     (void) p_gtm_regs;
     uint32_t clock_freq_hz = 0U;
 
-    /* Call CGC function to obtain current PCLKB clock frequency. */
-    clock_freq_hz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_P0CLK);
+    /* Call CGC function to obtain current clock frequency. */
+    clock_freq_hz = R_FSP_SystemClockHzGet(BSP_FEATURE_GTM_SOURCE_CLOCK);
 
     return clock_freq_hz;
 }

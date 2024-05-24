@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics Corporation and/or its affiliates and may only
- * be used with products of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.
- * Renesas products are sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for
- * the selection and use of Renesas products and Renesas assumes no liability.  No license, express or implied, to any
- * intellectual property right is granted by Renesas.  This software is protected under all applicable laws, including
- * copyright laws. Renesas reserves the right to change or discontinue this software and/or this documentation.
- * THE SOFTWARE AND DOCUMENTATION IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND
- * TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY,
- * INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE
- * SOFTWARE OR DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR
- * DOCUMENTATION (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER,
- * INCLUDING, WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY
- * LOST PROFITS, OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE
- * POSSIBILITY OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -29,17 +15,21 @@
  **********************************************************************************************************************/
 
 /** "IRQ" in ASCII, used to determine if channel is open. */
-#define INTC_IRQ_OPEN                (0x0000495251U)
+#define INTC_IRQ_OPEN                  (0x0000495251U)
 
-#define INTC_IRQ_TRIG_LEVEL_LOW      (0U)
-#define INTC_IRQ_TRIG_FALLING        (1U)
-#define INTC_IRQ_TRIG_RISING         (2U)
-#define INTC_IRQ_TRIG_BOTH_EDGE      (3U)
+#define INTC_IRQ_TRIG_LEVEL_LOW        (0U)
+#define INTC_IRQ_TRIG_FALLING          (1U)
+#define INTC_IRQ_TRIG_RISING           (2U)
+#define INTC_IRQ_TRIG_BOTH_EDGE        (3U)
 
-#define INTC_IRQ_IITSR_IITSEL_MASK   (3U)
-#define INTC_IRQ_IITSR_IITSEL_WIDTH  (2U)
+#define INTC_IRQ_IITSR_IITSEL_MASK     (3U)
+#define INTC_IRQ_IITSR_IITSEL_WIDTH    (2U)
 
-#define INTC_IRQ_ISCR_ISTAT_MASK     (1U)
+#if BSP_FEATURE_INTC_IRQ_HAS_ISCTR_ISCLR
+ #define INTC_IRQ_ISCR_ICLR_MASK       (1U)
+#else
+ #define INTC_IRQ_ISCR_ISTAT_MASK      (1U)
+#endif
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -60,15 +50,6 @@ void r_intc_irq_isr(void);
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_intc_irq_version =
-{
-    .api_version_minor  = EXTERNAL_IRQ_API_VERSION_MINOR,
-    .api_version_major  = EXTERNAL_IRQ_API_VERSION_MAJOR,
-    .code_version_major = INTC_IRQ_CODE_VERSION_MAJOR,
-    .code_version_minor = INTC_IRQ_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -81,7 +62,6 @@ const external_irq_api_t g_external_irq_on_intc_irq =
     .disable     = R_INTC_IRQ_ExternalIrqDisable,
     .callbackSet = R_INTC_IRQ_ExternalIrqCallbackSet,
     .close       = R_INTC_IRQ_ExternalIrqClose,
-    .versionGet  = R_INTC_IRQ_ExternalIrqVersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -105,8 +85,6 @@ const external_irq_api_t g_external_irq_on_intc_irq =
  *                                        Call the associated Close function to reconfigure the channel.
  * @retval FSP_ERR_IP_CHANNEL_NOT_PRESENT The channel requested in p_cfg is not available on the device selected in
  *                                        r_bsp_cfg.h.
- * @retval FSP_ERR_INVALID_ARGUMENT       p_cfg->p_callback is not NULL, but ISR is not enabled. ISR must be enabled to
- *                                        use callback function.
  *
  * @note This function is reentrant for different channels. It is not reentrant for the same channel.
  **********************************************************************************************************************/
@@ -118,13 +96,8 @@ fsp_err_t R_INTC_IRQ_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, ex
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(INTC_IRQ_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
     FSP_ASSERT(NULL != p_cfg);
-    FSP_ERROR_RETURN(0 != ((1U << p_cfg->channel) & BSP_FEATURE_INTC_IRQ_VALID_CHANNEL_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
-
-    /* Callback must be used with a valid interrupt priority otherwise it will never be called. */
-    if (p_cfg->p_callback)
-    {
-        FSP_ERROR_RETURN(BSP_IRQ_DISABLED != p_cfg->ipl, FSP_ERR_INVALID_ARGUMENT);
-    }
+    FSP_ERROR_RETURN(0 != ((1U << p_cfg->channel) & BSP_FEATURE_INTC_IRQ_VALID_CHANNEL_MASK),
+                     FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 #endif
 
     p_ctrl->irq = p_cfg->irq;
@@ -141,6 +114,7 @@ fsp_err_t R_INTC_IRQ_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, ex
     p_ctrl->channel    = p_cfg->channel;
 
     uint32_t trigger = 0;
+
     /* Convert the trigger. */
     if (EXTERNAL_IRQ_TRIG_LEVEL_LOW == p_cfg->trigger)
     {
@@ -163,10 +137,21 @@ fsp_err_t R_INTC_IRQ_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, ex
         /* Do nothing. */
     }
 
+#if BSP_FEATURE_INTC_IRQ_HAS_ISCTR_ISCLR
+
+    /* Set the trigger. */
+    uint32_t iitsr = R_INTC->IITSR;
+    iitsr        &= ~(INTC_IRQ_IITSR_IITSEL_MASK << (p_ctrl->channel * INTC_IRQ_IITSR_IITSEL_WIDTH));
+    iitsr        |= (trigger << (p_ctrl->channel * INTC_IRQ_IITSR_IITSEL_WIDTH));
+    R_INTC->IITSR = iitsr;
+
+    /* Clear the ICLR bit after changing the trigger setting to the edge type. */
+    R_INTC->ISCLR = (INTC_IRQ_ISCR_ICLR_MASK << p_ctrl->channel);
+#else                                  /* In case of RZV2L */
     /* Set the trigger. */
     uint32_t iitsr = R_INTC_IM33->IITSR;
-    iitsr &= ~(INTC_IRQ_IITSR_IITSEL_MASK << (p_ctrl->channel * INTC_IRQ_IITSR_IITSEL_WIDTH));
-    iitsr |= (trigger << (p_ctrl->channel * INTC_IRQ_IITSR_IITSEL_WIDTH));
+    iitsr             &= ~(INTC_IRQ_IITSR_IITSEL_MASK << (p_ctrl->channel * INTC_IRQ_IITSR_IITSEL_WIDTH));
+    iitsr             |= (trigger << (p_ctrl->channel * INTC_IRQ_IITSR_IITSEL_WIDTH));
     R_INTC_IM33->IITSR = iitsr;
 
     if (INTC_IRQ_TRIG_LEVEL_LOW == trigger)
@@ -188,6 +173,7 @@ fsp_err_t R_INTC_IRQ_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, ex
         iscr = R_INTC_IM33->ISCR;
         FSP_PARAMETER_NOT_USED(iscr);
     }
+#endif
 
     if (p_ctrl->irq >= 0)
     {
@@ -329,23 +315,6 @@ fsp_err_t R_INTC_IRQ_ExternalIrqClose (external_irq_ctrl_t * const p_api_ctrl)
     return FSP_SUCCESS;
 }
 
-/***********************************************************************************************************************
- * DEPRECATED Set driver version based on compile time macros. Implements @ref external_irq_api_t::versionGet.
- *
- * @retval     FSP_SUCCESS        Successful close.
- * @retval     FSP_ERR_ASSERTION  The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_INTC_IRQ_ExternalIrqVersionGet (fsp_version_t * const p_version)
-{
-#if INTC_IRQ_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_intc_irq_version.version_id;
-
-    return FSP_SUCCESS;
-}
-
 /*******************************************************************************************************************//**
  * @} (end addtogroup INTC_IRQ)
  **********************************************************************************************************************/
@@ -358,12 +327,18 @@ void r_intc_irq_isr (void)
     /* Save context if RTOS is used. */
     FSP_CONTEXT_SAVE
 
-    IRQn_Type                  irq    = R_FSP_CurrentIrqGet();
+    IRQn_Type irq = R_FSP_CurrentIrqGet();
     intc_irq_instance_ctrl_t * p_ctrl = (intc_irq_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
+#if BSP_FEATURE_INTC_IRQ_HAS_ISCTR_ISCLR
+
+    /* Clear the ICLR bit before calling the user callback so that if an edge is detected while the ISR is active
+     * it will not be missed. */
+    R_INTC->ISCLR = (INTC_IRQ_ISCR_ICLR_MASK << p_ctrl->channel);
+#else                                  /* In case of RZV2L */
     /* Retrieve the trigger setting. */
     uint32_t iitsr = R_INTC_IM33->IITSR;
-    iitsr &= (INTC_IRQ_IITSR_IITSEL_MASK << (p_ctrl->channel * INTC_IRQ_IITSR_IITSEL_WIDTH));
+    iitsr  &= (INTC_IRQ_IITSR_IITSEL_MASK << (p_ctrl->channel * INTC_IRQ_IITSR_IITSEL_WIDTH));
     iitsr >>= (p_ctrl->channel * INTC_IRQ_IITSR_IITSEL_WIDTH);
 
     if (INTC_IRQ_TRIG_LEVEL_LOW == iitsr)
@@ -385,6 +360,7 @@ void r_intc_irq_isr (void)
         iscr = R_INTC_IM33->ISCR;
         FSP_PARAMETER_NOT_USED(iscr);
     }
+#endif
 
     if ((NULL != p_ctrl) && (NULL != p_ctrl->p_callback))
     {

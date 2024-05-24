@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics Corporation and/or its affiliates and may only
- * be used with products of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.
- * Renesas products are sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for
- * the selection and use of Renesas products and Renesas assumes no liability.  No license, express or implied, to any
- * intellectual property right is granted by Renesas.  This software is protected under all applicable laws, including
- * copyright laws. Renesas reserves the right to change or discontinue this software and/or this documentation.
- * THE SOFTWARE AND DOCUMENTATION IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND
- * TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY,
- * INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE
- * SOFTWARE OR DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR
- * DOCUMENTATION (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER,
- * INCLUDING, WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY
- * LOST PROFITS, OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE
- * POSSIBILITY OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @ingroup RENESAS_INTERFACES
@@ -34,6 +20,7 @@
  *
  * Implemented by:
  * - @ref SCIF_UART
+ * - @ref SCI_B_UART
  *
  * @{
  **********************************************************************************************************************/
@@ -55,8 +42,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define UART_API_VERSION_MAJOR    (1U)
-#define UART_API_VERSION_MINOR    (1U)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -78,9 +63,9 @@ typedef enum e_sf_event
 /** UART Data bit length definition */
 typedef enum e_uart_data_bits
 {
-    UART_DATA_BITS_8,                  ///< Data bits 8-bit
-    UART_DATA_BITS_7,                  ///< Data bits 7-bit
-    UART_DATA_BITS_9                   ///< Data bits 9-bit
+    UART_DATA_BITS_9 = 0U,             ///< Data bits 9-bit
+    UART_DATA_BITS_8 = 2U,             ///< Data bits 8-bit
+    UART_DATA_BITS_7 = 3U,             ///< Data bits 7-bit
 } uart_data_bits_t;
 
 /** UART Parity definition */
@@ -164,6 +149,7 @@ typedef struct st_uart_cfg
 /** UART control block.  Allocate an instance specific control block to pass into the UART API calls.
  * @par Implemented as
  * - scif_uart_instance_ctrl_t
+ * - sci_b_uart_instance_ctrl_t
  */
 typedef void uart_ctrl_t;
 
@@ -173,6 +159,7 @@ typedef struct st_uart_api
     /** Open  UART device.
      * @par Implemented as
      * - @ref R_SCIF_UART_Open()
+     * - @ref R_SCI_B_UART_Open()
      *
      * @param[in,out]  p_ctrl     Pointer to the UART control block. Must be declared by user. Value set here.
      * @param[in]      uart_cfg_t Pointer to UART configuration structure. All elements of this structure must be set by
@@ -186,6 +173,7 @@ typedef struct st_uart_api
      * The maximum transfer size is reported by infoGet().
      * @par Implemented as
      * - @ref R_SCIF_UART_Read()
+     * - @ref R_SCI_B_UART_Read()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block for the channel.
      * @param[in]   p_dest     Destination address to read data from.
@@ -199,6 +187,7 @@ typedef struct st_uart_api
      * The maximum transfer size is reported by infoGet().
      * @par Implemented as
      * - @ref R_SCIF_UART_Write()
+     * - @ref R_SCI_B_UART_Write()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block.
      * @param[in]   p_src      Source address  to write data to.
@@ -212,6 +201,7 @@ typedef struct st_uart_api
      *
      * @par Implemented as
      * - @ref R_SCIF_UART_BaudSet()
+     * - @ref R_SCI_B_UART_BaudSet()
      *
      * @param[in]   p_ctrl          Pointer to the UART control block.
      * @param[in]   p_baudrate_info Pointer to module specific information for configuring baud rate.
@@ -221,6 +211,7 @@ typedef struct st_uart_api
     /** Get the driver specific information.
      * @par Implemented as
      * - @ref R_SCIF_UART_InfoGet()
+     * - @ref R_SCI_B_UART_InfoGet()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block.
      * @param[in]   baudrate   Baud rate in bps.
@@ -231,6 +222,7 @@ typedef struct st_uart_api
      * Abort ongoing transfer.
      * @par Implemented as
      * - @ref R_SCIF_UART_Abort()
+     * - @ref R_SCI_B_UART_Abort()
      *
      * @param[in]   p_ctrl                   Pointer to the UART control block.
      * @param[in]   communication_to_abort   Type of abort request.
@@ -241,6 +233,7 @@ typedef struct st_uart_api
      * Specify callback function and optional context pointer and working memory pointer.
      * @par Implemented as
      * - R_SCIF_Uart_CallbackSet()
+     * - R_SCI_B_Uart_CallbackSet()
      *
      * @param[in]   p_api_ctrl               Pointer to the UART control block.
      * @param[in]   p_callback               Callback function
@@ -254,18 +247,21 @@ typedef struct st_uart_api
     /** Close UART device.
      * @par Implemented as
      * - @ref R_SCIF_UART_Close()
+     * - @ref R_SCI_B_UART_Close()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block.
      */
     fsp_err_t (* close)(uart_ctrl_t * const p_ctrl);
 
-    /* DEPRECATED Get version.
+    /** Stop ongoing read and return the number of bytes remaining in the read.
      * @par Implemented as
-     * - @ref R_SCIF_UART_VersionGet()
+     * - @ref R_SCIF_UART_ReadStop()
+     * - @ref R_SCI_B_UART_ReadStop()
      *
-     * @param[in]   p_version  Pointer to the memory to store the version information.
+     * @param[in]      p_ctrl                Pointer to the UART control block.
+     * @param[in,out]  remaining_bytes       Pointer to location to store remaining bytes for read.
      */
-    fsp_err_t (* versionGet)(fsp_version_t * p_version);
+    fsp_err_t (* readStop)(uart_ctrl_t * const p_ctrl, uint32_t * remaining_bytes);
 } uart_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

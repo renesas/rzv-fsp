@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics Corporation and/or its affiliates and may only
- * be used with products of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.
- * Renesas products are sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for
- * the selection and use of Renesas products and Renesas assumes no liability.  No license, express or implied, to any
- * intellectual property right is granted by Renesas.  This software is protected under all applicable laws, including
- * copyright laws. Renesas reserves the right to change or discontinue this software and/or this documentation.
- * THE SOFTWARE AND DOCUMENTATION IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND
- * TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY,
- * INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE
- * SOFTWARE OR DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR
- * DOCUMENTATION (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER,
- * INCLUDING, WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY
- * LOST PROFITS, OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE
- * POSSIBILITY OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef FSP_COMMON_API_H
 #define FSP_COMMON_API_H
@@ -108,6 +94,7 @@ typedef enum e_fsp_err
     FSP_ERR_NOT_FOUND             = 34,                     ///< The requested item could not be found
     FSP_ERR_NO_CALLBACK_MEMORY    = 35,                     ///< Non-secure callback memory not provided for non-secure callback
     FSP_ERR_BUFFER_EMPTY          = 36,                     ///< No data available in buffer
+    FSP_ERR_INVALID_DATA          = 37,                     ///< Accuracy of data is not guaranteed
 
     /* Start of RTOS only error codes */
     FSP_ERR_INTERNAL     = 100,                             ///< Internal error
@@ -225,6 +212,7 @@ typedef enum e_fsp_err
     FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL = 4003, ///< Transmit buffer is not empty
     FSP_ERR_ETHER_ERROR_FILTERING            = 4004, ///< Detect multicast frame when multicast frame filtering enable
     FSP_ERR_ETHER_ERROR_PHY_COMMUNICATION    = 4005, ///< ETHERC/EDMAC has an error in the phy communication
+    FSP_ERR_ETHER_RECEIVE_BUFFER_ACTIVE      = 4006, ///< Receive buffer is active.
 
     /* Start of ETHER_PHY Driver specific */
     FSP_ERR_ETHER_PHY_ERROR_LINK = 5000,             ///< PHY is not link up.
@@ -235,9 +223,24 @@ typedef enum e_fsp_err
     FSP_ERR_QUEUE_EMPTY = 10001,                     ///< Queue is empty, no data to dequeue
 
     /* Start of CTSU Driver specific */
-    FSP_ERR_CTSU_SCANNING          = 6000,           ///< Scanning.
-    FSP_ERR_CTSU_NOT_GET_DATA      = 6001,           ///< Not processed previous scan data.
-    FSP_ERR_CTSU_INCOMPLETE_TUNING = 6002,           ///< Incomplete initial offset tuning.
+    FSP_ERR_CTSU_SCANNING              = 6000,       ///< Scanning.
+    FSP_ERR_CTSU_NOT_GET_DATA          = 6001,       ///< Not processed previous scan data.
+    FSP_ERR_CTSU_INCOMPLETE_TUNING     = 6002,       ///< Incomplete initial offset tuning.
+    FSP_ERR_CTSU_DIAG_NOT_YET          = 6003,       ///< Diagnosis of data collected no yet.
+    FSP_ERR_CTSU_DIAG_LDO_OVER_VOLTAGE = 6004,       ///< Diagnosis of LDO over voltage failed.
+    FSP_ERR_CTSU_DIAG_CCO_HIGH         = 6005,       ///< Diagnosis of CCO into 19.2uA failed.
+    FSP_ERR_CTSU_DIAG_CCO_LOW          = 6006,       ///< Diagnosis of CCO into 2.4uA failed.
+    FSP_ERR_CTSU_DIAG_SSCG             = 6007,       ///< Diagnosis of SSCG frequency failed.
+    FSP_ERR_CTSU_DIAG_DAC              = 6008,       ///< Diagnosis of non-touch count value failed.
+    FSP_ERR_CTSU_DIAG_OUTPUT_VOLTAGE   = 6009,       ///< Diagnosis of LDO output voltage failed.
+    FSP_ERR_CTSU_DIAG_OVER_VOLTAGE     = 6010,       ///< Diagnosis of over voltage detection circuit failed.
+    FSP_ERR_CTSU_DIAG_OVER_CURRENT     = 6011,       ///< Diagnosis of over current detection circuit failed.
+    FSP_ERR_CTSU_DIAG_LOAD_RESISTANCE  = 6012,       ///< Diagnosis of LDO internal resistance value failed.
+    FSP_ERR_CTSU_DIAG_CURRENT_SOURCE   = 6013,       ///< Diagnosis of Current source value failed.
+    FSP_ERR_CTSU_DIAG_SENSCLK_GAIN     = 6014,       ///< Diagnosis of SENSCLK frequency gain failed.
+    FSP_ERR_CTSU_DIAG_SUCLK_GAIN       = 6015,       ///< Diagnosis of SUCLK frequency gain failed.
+    FSP_ERR_CTSU_DIAG_CLOCK_RECOVERY   = 6016,       ///< Diagnosis of SUCLK clock recovery function failed.
+    FSP_ERR_CTSU_DIAG_CFC_GAIN         = 6017,       ///< Diagnosis of CFC oscillator gain failed.
 
     /* Start of SDMMC specific */
     FSP_ERR_CARD_INIT_FAILED     = 40000,            ///< SD card or eMMC device failed to initialize.
@@ -260,14 +263,16 @@ typedef enum e_fsp_err
     FSP_ERR_CAN_RECEIVE_MAILBOX    = 60004,          ///< Mailbox is setup as a receive mailbox.
     FSP_ERR_CAN_TRANSMIT_MAILBOX   = 60005,          ///< Mailbox is setup as a transmit mailbox.
     FSP_ERR_CAN_MESSAGE_LOST       = 60006,          ///< Receive message has been overwritten or overrun.
+    FSP_ERR_CAN_TRANSMIT_FIFO_FULL = 60007,          ///< Transmit FIFO is full.
 
     /* Start of SF_WIFI Specific */
-    FSP_ERR_WIFI_CONFIG_FAILED   = 70000,            ///< WiFi module Configuration failed.
-    FSP_ERR_WIFI_INIT_FAILED     = 70001,            ///< WiFi module initialization failed.
-    FSP_ERR_WIFI_TRANSMIT_FAILED = 70002,            ///< Transmission failed
-    FSP_ERR_WIFI_INVALID_MODE    = 70003,            ///< API called when provisioned in client mode
-    FSP_ERR_WIFI_FAILED          = 70004,            ///< WiFi Failed.
-    FSP_ERR_WIFI_SCAN_COMPLETE   = 70005,            ///< Wifi scan has completed.
+    FSP_ERR_WIFI_CONFIG_FAILED    = 70000,           ///< WiFi module Configuration failed.
+    FSP_ERR_WIFI_INIT_FAILED      = 70001,           ///< WiFi module initialization failed.
+    FSP_ERR_WIFI_TRANSMIT_FAILED  = 70002,           ///< Transmission failed
+    FSP_ERR_WIFI_INVALID_MODE     = 70003,           ///< API called when provisioned in client mode
+    FSP_ERR_WIFI_FAILED           = 70004,           ///< WiFi Failed.
+    FSP_ERR_WIFI_SCAN_COMPLETE    = 70005,           ///< Wifi scan has completed.
+    FSP_ERR_WIFI_AP_NOT_CONNECTED = 70006,           ///< WiFi module is not connected to access point
 
     /* Start of SF_CELLULAR Specific */
     FSP_ERR_CELLULAR_CONFIG_FAILED       = 80000,    ///< Cellular module Configuration failed.
@@ -310,7 +315,9 @@ typedef enum e_fsp_err
     FSP_ERR_CRYPTO_INSTALL_KEY_FAILED    = 0x10010,  ///< Specified input key is invalid.
     FSP_ERR_CRYPTO_AUTHENTICATION_FAILED = 0x10011,  ///< Authentication failed
     FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      = 0x10012,  ///< Failure to Init Cipher
-    FSP_ERR_CRYPTO_SCE_AUTHENTICATION    = 0x10013,
+    FSP_ERR_CRYPTO_SCE_AUTHENTICATION    = 0x10013,  ///< Authentication failed
+    FSP_ERR_CRYPTO_SCE_PARAMETER         = 0x10014,  ///< Input date is illegal.
+    FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION = 0x10015,  ///< An invalid function call occurred.
 
     /* Start of SF_CRYPTO specific */
     FSP_ERR_CRYPTO_COMMON_NOT_OPENED      = 0x20000, ///< Crypto Framework Common is not opened

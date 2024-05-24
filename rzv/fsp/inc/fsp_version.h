@@ -1,28 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics Corporation and/or its affiliates and may only
- * be used with products of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.
- * Renesas products are sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for
- * the selection and use of Renesas products and Renesas assumes no liability.  No license, express or implied, to any
- * intellectual property right is granted by Renesas.  This software is protected under all applicable laws, including
- * copyright laws. Renesas reserves the right to change or discontinue this software and/or this documentation.
- * THE SOFTWARE AND DOCUMENTATION IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND
- * TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY,
- * INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE
- * SOFTWARE OR DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR
- * DOCUMENTATION (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER,
- * INCLUDING, WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY
- * LOST PROFITS, OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE
- * POSSIBILITY OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
-
-/**********************************************************************************************************************
- * File Name    : fsp_version.h
- * Version      : 1.00
- * Description  : fsp_version header
- *********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef FSP_VERSION_H
 #define FSP_VERSION_H
@@ -44,10 +24,10 @@
  **********************************************************************************************************************/
 
 /** FSP pack major version. */
-#define FSP_VERSION_MAJOR (1U)
+#define FSP_VERSION_MAJOR (2U)
 
 /** FSP pack minor version. */
-#define FSP_VERSION_MINOR (1U)
+#define FSP_VERSION_MINOR (0U)
 
 /** FSP pack patch version. */
 #define FSP_VERSION_PATCH (0U)
@@ -56,10 +36,10 @@
 #define FSP_VERSION_BUILD           (0U)
 
 /** Public FSP version name. */
-#define FSP_VERSION_STRING          ("1.1.0")
+#define FSP_VERSION_STRING          ("2.0.0")
 
 /** Unique FSP version ID. */
-#define FSP_VERSION_BUILD_STRING    ("Build with RZ/V2L Flexible Software Package version 1.1.0")
+#define FSP_VERSION_BUILD_STRING    ("Built with RZ/V Flexible Software Package version 2.0.0")
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -83,4 +63,4 @@ typedef union st_fsp_pack_version
 
 /** @} */
 
-#endif                                 /* FSP_VERSION_H */
+#endif

@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics Corporation and/or its affiliates and may only
- * be used with products of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.
- * Renesas products are sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for
- * the selection and use of Renesas products and Renesas assumes no liability.  No license, express or implied, to any
- * intellectual property right is granted by Renesas.  This software is protected under all applicable laws, including
- * copyright laws. Renesas reserves the right to change or discontinue this software and/or this documentation.
- * THE SOFTWARE AND DOCUMENTATION IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND
- * TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY,
- * INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE
- * SOFTWARE OR DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR
- * DOCUMENTATION (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER,
- * INCLUDING, WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY
- * LOST PROFITS, OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE
- * POSSIBILITY OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes   <System Includes> , "Project Includes"
@@ -27,8 +13,8 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define BSP_DELAY_NS_PER_SECOND    (1000000000)
-#define BSP_DELAY_NS_PER_US        (1000)
+#define BSP_DELAY_UNIT_CONV_S_TO_NS     (1000000000)
+#define BSP_DELAY_UNIT_CONV_US_TO_NS    (1000)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -60,7 +46,7 @@
  *              One loop time through bsp_prv_software_delay_loop() takes roughly 500ns. This value is based on the
  *              actual measured time in the condition that a frequency of the CPU clock is 200MHz and the code is
  *              excuted on DDR3L-1333 DRAM(133MHz).
- *              One loop running time of software_delay_loop() can be modified by redefining BSP_DELAY_LOOP_CYCLES.
+ *              One loop running time of software_delay_loop() can be modified by redefining BSP_FEATURE_BSP_DELAY_LOOP_CYCLES.
  *
  * @param[in]   delay  The number of 'units' to delay.
  * @param[in]   units  The 'base' (bsp_delay_units_t) for the units specified. Valid values are:
@@ -89,39 +75,52 @@
 
 void R_BSP_SoftwareDelay (uint32_t delay, bsp_delay_units_t units)
 {
-    uint32_t iclk_hz;
-    uint32_t cycles_requested;
-    uint32_t ns_per_cycle;
+    double   iclk_hz;
+    double   cycles_requested;
+    double   ns_per_cycle;
     uint32_t loops_required = 0;
+    uint64_t loops_64bits   = 0;
     uint32_t total_us       = (delay * units);
     uint64_t ns_64bits;
 
-    iclk_hz      = SystemCoreClock;
-    ns_per_cycle = BSP_DELAY_NS_PER_SECOND / iclk_hz;
-    ns_64bits    = (uint64_t) total_us * (uint64_t) BSP_DELAY_NS_PER_US;
+    iclk_hz = (double) SystemCoreClock;
 
-    /* Have we overflowed 32 bits? */
+    /* Calculate the time per CPU clock (in nsec) */
+    ns_per_cycle = (double) BSP_DELAY_UNIT_CONV_S_TO_NS / iclk_hz;
+
+    /* Convert wait time to nsec */
+    ns_64bits = (uint64_t) total_us * (uint64_t) BSP_DELAY_UNIT_CONV_US_TO_NS;
+
+    /* Check whether the wait time overflows the maximum value of 32 bits */
     if (ns_64bits <= UINT32_MAX)
     {
-        /* No, we will not overflow. */
-        cycles_requested = ((uint32_t) ns_64bits / ns_per_cycle);
-        loops_required   = cycles_requested / BSP_DELAY_LOOP_CYCLES;
+        /* If the wait time does not overflow the maximum value of 32 bits */
+        /* Convert wait time to CPU clock units */
+        cycles_requested = ((double) ns_64bits / ns_per_cycle);
+
+        /* Calculate the number of loop processing executions by dividing it by the number of loop processing instructions. */
+        loops_required = (uint32_t) (cycles_requested / BSP_FEATURE_BSP_DELAY_LOOP_CYCLES) + 1;
     }
     else
     {
-        /* We did overflow. Try dividing down first. */
-        total_us  = (total_us / (ns_per_cycle * BSP_DELAY_LOOP_CYCLES));
-        ns_64bits = (uint64_t) total_us * (uint64_t) BSP_DELAY_NS_PER_US; // Convert to ns.
+        /* If the wait time overflows the maximum value of 32 bits */
+        /* Calculate the number of loop processing executions from the wait time in usec units */
+        loops_64bits = (uint64_t) (total_us / (ns_per_cycle * BSP_FEATURE_BSP_DELAY_LOOP_CYCLES)) + 1;
 
-        /* Have we overflowed 32 bits? */
-        if (ns_64bits <= UINT32_MAX)
+        /* Convert the number of executions of loop processing to the number of times in nsec */
+        loops_64bits *= BSP_DELAY_UNIT_CONV_US_TO_NS; // Convert to ns unit.
+
+        /* Check whether the number of executions of loop processing overflows the maximum value of 32 bits */
+        if (loops_64bits <= UINT32_MAX)
         {
-            /* No, we will not overflow. */
-            loops_required = (uint32_t) ns_64bits;
+            /* If it doesn't overflow */
+            /* Cast the loop processing execution count to a 32bit type variable */
+            loops_required = (uint32_t) loops_64bits;
         }
         else
         {
-            /* We still overflowed, use the max count for cycles */
+            /* If it overflow */
+            /* Set the number of loop processing executions to the maximum value of 32 bits */
             loops_required = UINT32_MAX;
         }
     }
@@ -136,7 +135,7 @@ void R_BSP_SoftwareDelay (uint32_t delay, bsp_delay_units_t units)
 /** @} (end addtogroup BSP_MCU) */
 
 /*******************************************************************************************************************//**
- *        This assembly language routine takes roughly 500ns per one loop.
+ *        This assembly language routine performs the loops according to the number passed to R0.
  *        The 'naked' attribute  indicates that the specified function does not need prologue/epilogue sequences
  *        generated by the compiler.
  * @param[in]     loop_cnt  The number of loops to iterate.
