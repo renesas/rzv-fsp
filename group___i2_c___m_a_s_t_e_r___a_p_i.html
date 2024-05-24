@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RZ/V Flexible Software Package Documentation: I2C Master Interface</title>
+<title>RZV Flexible Software Package Documentation: I2C Master Interface</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -32,24 +36,24 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">RZ/V Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.0</span>
+   <div id="projectname">RZV Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___i2_c___m_a_s_t_e_r___a_p_i.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___i2_c___m_a_s_t_e_r___a_p_i.htm
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
@@ -107,7 +175,8 @@ Summary</h1>
 <li>Callback function support which can return an event code</li>
 </ul>
 <p>Implemented by:</p><ul>
-<li><a class="el" href="group___r_i_i_c___m_a_s_t_e_r.html">I2C Master on RIIC (r_riic_master)</a> </li>
+<li><a class="el" href="group___r_i_i_c___m_a_s_t_e_r.html">I2C Master on RIIC (r_riic_master)</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html">I2C Master (r_sci_b_i2c)</a> </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -376,6 +445,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Opens the I2C Master driver and initializes the hardware. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_i_i_c___m_a_s_t_e_r.html#ga0e3fee8948f4df299977350491d537fa">R_RIIC_MASTER_Open()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#gae457daf3146cc92adfadc471b5bebd27">R_SCI_B_I2C_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -401,6 +471,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Performs a read operation on an I2C Master device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_i_i_c___m_a_s_t_e_r.html#ga2a0ac14ddd932a9cab8faf253dcdbbb5">R_RIIC_MASTER_Read()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#ga0d1ab3b59b204adb64bff01d4c83d10f">R_SCI_B_I2C_Read()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -428,6 +499,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Performs a write operation on an I2C Master device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_i_i_c___m_a_s_t_e_r.html#ga492a86497c72e8f9bcf70d8dcd03c762">R_RIIC_MASTER_Write()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#gaa214ca399eb4bb9cb198237f608b4767">R_SCI_B_I2C_Write()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -455,6 +527,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Performs a reset of the peripheral. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_i_i_c___m_a_s_t_e_r.html#ga978fc692cf57fadf35e57123b717be3d">R_RIIC_MASTER_Abort()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#gadddbf1fa35661d53916faae95db97202">R_SCI_B_I2C_Abort()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -479,6 +552,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Sets address of the slave device without reconfiguring the bus. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_i_i_c___m_a_s_t_e_r.html#gafd5de8a9b0160931adaba85f614839f3">R_RIIC_MASTER_SlaveAddressSet()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#ga286e5448d62d962610e1c7e104eb3fe9">R_SCI_B_I2C_SlaveAddressSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -505,11 +579,12 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_i_i_c___m_a_s_t_e_r.html#gaaa8f27a523bc16f11c179ff05f9aed78">R_RIIC_MASTER_CallbackSet()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#gaa8c8d381f7c639650bf775c3eec125b9">R_SCI_B_I2C_CallbackSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the RIIC Master control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to the IIC Master control block. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
@@ -532,11 +607,12 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Gets the status of the configured I2C device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_i_i_c___m_a_s_t_e_r.html#ga786eaee89f66ecbf8f4faea575ee6e56">R_RIIC_MASTER_StatusGet()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#ga677766a68a258bb7a2e97090cff1c03b">R_SCI_B_I2C_StatusGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the RIIC Master control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the IIC Master control block. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_status</td><td>Pointer to store current status. </td></tr>
   </table>
   </dd>
@@ -557,6 +633,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Closes the driver and releases the I2C Master device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_i_i_c___m_a_s_t_e_r.html#ga56dab8b87d138f1e86f718dff839bbb0">R_RIIC_MASTER_Close()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#ga1d57041c70f924d2968792d59d1b980b">R_SCI_B_I2C_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -700,7 +777,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">RZ/V FSP Release v1.1.0 API Reference Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

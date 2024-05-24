@@ -1,25 +1,12 @@
 var searchData=
 [
-  ['led_5forder',['led_order',['../group___r_m___o_b1203.html#a6ea712faa60b5098695c5bf9dee22fa9',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['ledcurrentset',['ledCurrentSet',['../group___r_m___o_b1203___a_p_i.html#a7d3decdc87199472697b5aec3387d406',1,'rm_ob1203_api_t']]],
-  ['length',['length',['../group___t_r_a_n_s_f_e_r___a_p_i.html#aa92c5d06d07e7d13c16f9704a431c7cb',1,'transfer_info_t']]],
-  ['light',['light',['../group___r_m___o_b1203___a_p_i.html#a895aed77cf1aba3014b6d0b631e8a10d',1,'rm_ob1203_gain_t']]],
-  ['light_5fdata_5ftype',['light_data_type',['../group___r_m___o_b1203.html#a92cbb312b5e1e41706b4e68b38357f02',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['light_5fgain',['light_gain',['../group___r_m___o_b1203.html#aa3cb62edd73814ba315627754fd85266',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['light_5finterrupt_5fpersist',['light_interrupt_persist',['../group___r_m___o_b1203.html#a022942b085717470822f277c4b31ba3a',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['light_5finterrupt_5fsource',['light_interrupt_source',['../group___r_m___o_b1203.html#a717ea530db97b35669792d4402106037',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['light_5finterrupt_5ftype',['light_interrupt_type',['../group___r_m___o_b1203.html#a552c03c8de87ba18c02d7d92ccb492d4',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['light_5flower_5fthreshold',['light_lower_threshold',['../group___r_m___o_b1203.html#a3d101a3a796221fc394abb203998d492',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['light_5fprox_5fmode',['light_prox_mode',['../group___r_m___o_b1203___a_p_i.html#a098de06ea0c6b7261ccca0d471f964f6',1,'rm_ob1203_device_interrupt_cfg_t']]],
-  ['light_5fresolution_5fperiod',['light_resolution_period',['../group___r_m___o_b1203.html#a002e10b810510f6ddacf3636941b8ad3',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['light_5fsensor_5fmode',['light_sensor_mode',['../group___r_m___o_b1203.html#a2dff0d73a95082059f417d185b80cb8a',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['light_5fsleep',['light_sleep',['../group___r_m___o_b1203.html#aeb793e75865a9f62297d91034603aaf1',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['light_5fsource',['light_source',['../group___r_m___o_b1203___a_p_i.html#a464bef4e7cf70926e60bbed2c0b492af',1,'rm_ob1203_device_interrupt_cfg_t']]],
-  ['light_5ftype',['light_type',['../group___r_m___o_b1203___a_p_i.html#a53a1af5cbd0dd954d6e5cffbd217d834',1,'rm_ob1203_device_interrupt_cfg_t']]],
-  ['light_5fupper_5fthreshold',['light_upper_threshold',['../group___r_m___o_b1203.html#ac5d15bf27b5bcd1a6b721a0f67374372',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['light_5fvariance_5fthreshold',['light_variance_threshold',['../group___r_m___o_b1203.html#afd0c72c77c52c3eeb6c3c82649807cac',1,'rm_ob1203_mode_extended_cfg_t']]],
-  ['lightdatacalculate',['lightDataCalculate',['../group___r_m___o_b1203___a_p_i.html#aa3ca0efc07f8e5cdf3086fe422239b60',1,'rm_ob1203_api_t']]],
-  ['lightread',['lightRead',['../group___r_m___o_b1203___a_p_i.html#ad778eb596d6af74ccedec46ed4dec9f7',1,'rm_ob1203_api_t']]],
+  ['length',['length',['../group___a_d_c___a_p_i.html#a3f8dd9f7ffefcbc0180fc7252c0482c9',1,'adc_info_t::length()'],['../group___i3_c___a_p_i.html#a55133c6895655f647bad807fd6e0d136',1,'i3c_command_descriptor_t::length()'],['../group___t_r_a_n_s_f_e_r___a_p_i.html#a5aba602d71a6ba4e6be056a90b5ed9e8',1,'transfer_info_t::length()'],['../group___d_m_a_c___b.html#aac2bd3fe82819a7f868aa155b25459e9',1,'dmac_b_register_set_setting_t::length()'],['../group___t_r_a_n_s_f_e_r___a_p_i.html#a5aba602d71a6ba4e6be056a90b5ed9e8',1,'transfer_info_t::length()']]],
+  ['link',['link',['../group___e_l_c___a_p_i.html#ad58380dc39c1d257fc9128dda007865d',1,'elc_cfg_t']]],
+  ['linkbreak',['linkBreak',['../group___e_l_c___a_p_i.html#aded8ab0cdd59a636f2a5cc60313c54c5',1,'elc_api_t']]],
+  ['linkset',['linkSet',['../group___e_l_c___a_p_i.html#a05af30d0ca7743f5a033b10d664ded59',1,'elc_api_t']]],
   ['log_5fnonlog_5frcda',['log_nonlog_rcda',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a4bf54edf41460cfb0e6a8bd1cf9a825e',1,'rm_zmod4xxx_iaq_2nd_data_t']]],
-  ['log_5frcda',['log_rcda',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a04d026df23f93a2ccd598b7fc7546c5d',1,'rm_zmod4xxx_iaq_2nd_data_t']]]
+  ['log_5frcda',['log_rcda',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a04d026df23f93a2ccd598b7fc7546c5d',1,'rm_zmod4xxx_iaq_2nd_data_t']]],
+  ['low_5fpass_5ffilter_5fshift',['low_pass_filter_shift',['../group___p_d_m.html#ada9786751a8901b1f014d50f825692ed',1,'pdm_extended_cfg_t']]],
+  ['lpf_5fcoefficient_5fh0',['lpf_coefficient_h0',['../group___p_d_m.html#a8301f1ffd1bd3c06615b57cbab9f06cd',1,'pdm_extended_cfg_t']]],
+  ['lpf_5fcoefficient_5fh1',['lpf_coefficient_h1',['../group___p_d_m.html#ab0fba91eb36c8a90821d4fd7793ba4b9',1,'pdm_extended_cfg_t']]]
 ];

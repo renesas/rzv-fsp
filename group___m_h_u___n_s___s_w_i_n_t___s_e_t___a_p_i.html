@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RZ/V Flexible Software Package Documentation: MHU Interface (Software Interrupt Set)</title>
+<title>RZV Flexible Software Package Documentation: MHU Interface (Software Interrupt Set)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -32,24 +36,24 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">RZ/V Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.0</span>
+   <div id="projectname">RZV Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___m_h_u___n_s___s_w_i_n_t___s_e_t___a_p_i.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___m_h_u___n_s___s_w_i_n_t___s_e_
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
@@ -105,7 +173,8 @@ Summary</h1>
 <li>Generate software interrupt via MHU.</li>
 </ul>
 <p>Implemented by:</p><ul>
-<li><a class="el" href="group___m_h_u___n_s___s_w_i_n_t___s_e_t.html">Message Handling Unit for non-secure software interrupt generation (r_mhu_ns_swint_set)</a> </li>
+<li><a class="el" href="group___m_h_u___n_s___s_w_i_n_t___s_e_t.html">Message Handling Unit for non-secure software interrupt generation (r_mhu_ns_swint_set)</a></li>
+<li><a class="el" href="group___m_h_u___b___n_s___s_w_i_n_t___s_e_t.html">Message Handling Unit for non-secure software interrupt generation (r_mhu_b_ns_swint_set)</a> </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -223,6 +292,7 @@ p_context</td>
 </div><div class="memdoc">
 <p>Opens the MHU driver and initializes the hardware. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_h_u___n_s___s_w_i_n_t___s_e_t.html#gaa38f2de3d81a051565c900098d904543">R_MHU_NS_SWINT_SET_Open()</a></li>
+<li><a class="el" href="group___m_h_u___b___n_s___s_w_i_n_t___s_e_t.html#gaba5433742015125a5bf5d8e3ef75b980">R_MHU_B_NS_SWINT_SET_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -248,6 +318,7 @@ p_context</td>
 </div><div class="memdoc">
 <p>Performs a send operation on an MHU device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_h_u___n_s___s_w_i_n_t___s_e_t.html#ga192b92d34e30e2170c6fa7002589db8e">R_MHU_NS_SWINT_SET_InterruptSet()</a></li>
+<li><a class="el" href="group___m_h_u___b___n_s___s_w_i_n_t___s_e_t.html#gaddd83232518e56d27b705f7c8fc99f17">R_MHU_B_NS_SWINT_SET_InterruptSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -272,6 +343,7 @@ p_context</td>
 </div><div class="memdoc">
 <p>Closes the driver and releases the MHU device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_h_u___n_s___s_w_i_n_t___s_e_t.html#gaccf0e3ebba04709c5fa1818c6b9bff31">R_MHU_NS_SWINT_SET_Close()</a></li>
+<li><a class="el" href="group___m_h_u___b___n_s___s_w_i_n_t___s_e_t.html#gae96425edecc8f21ed9681028dfb81019">R_MHU_B_NS_SWINT_SET_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -347,7 +419,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">RZ/V FSP Release v1.1.0 API Reference Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

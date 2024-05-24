@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['serial_20communications_20interface_20_28scif_29_20uart_20_28r_5fscif_5fuart_29',['Serial Communications Interface (SCIF) UART (r_scif_uart)',['../group___s_c_i_f___u_a_r_t.html',1,'']]],
-  ['spi_20interface',['SPI Interface',['../group___s_p_i___a_p_i.html',1,'']]]
+  ['rzv2h',['RZV2H',['../group___b_s_p___m_c_u___r_z_v2_h.html',1,'']]],
+  ['rzv2l',['RZV2L',['../group___b_s_p___m_c_u___r_z_v2_l.html',1,'']]],
+  ['rtos',['RTOS',['../group___r_e_n_e_s_a_s___r_t_o_s___m_o_d_u_l_e_s.html',1,'']]],
+  ['renesas_20serial_20peripheral_20interface_20_28r_5frspi_29',['Renesas Serial Peripheral Interface (r_rspi)',['../group___r_s_p_i.html',1,'']]],
+  ['realtime_20clock_20_28r_5frtc_29',['Realtime Clock (r_rtc)',['../group___r_t_c.html',1,'']]],
+  ['rtc_20interface',['RTC Interface',['../group___r_t_c___a_p_i.html',1,'']]]
 ];

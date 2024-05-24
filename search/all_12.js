@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['uart_20_28r_5fsci_5fb_5fuart_29',['UART (r_sci_b_uart)',['../group___s_c_i___b___u_a_r_t.html',1,'']]],
   ['uart_20interface',['UART Interface',['../group___u_a_r_t___a_p_i.html',1,'']]],
   ['uart_5fapi_5ft',['uart_api_t',['../group___u_a_r_t___a_p_i.html#structuart__api__t',1,'']]],
   ['uart_5fcallback_5fargs_5ft',['uart_callback_args_t',['../group___u_a_r_t___a_p_i.html#structuart__callback__args__t',1,'']]],
@@ -35,5 +36,5 @@ var searchData=
   ['ulmair0',['ulMAIR0',['../structx_m_p_u___s_e_t_t_i_n_g_s.html#adbd29d7744b3526d1b0348789486343f',1,'xMPU_SETTINGS']]],
   ['ulrbar',['ulRBAR',['../struct_m_p_u_region_settings__t.html#a787743138d34bbae232204699cee75a9',1,'MPURegionSettings_t']]],
   ['ulrlar',['ulRLAR',['../struct_m_p_u_region_settings__t.html#a85dfb09938fe2cbecfd54fdc04645280',1,'MPURegionSettings_t']]],
-  ['unread_5fsamples',['unread_samples',['../group___r_m___o_b1203___a_p_i.html#a1ae36e22e66dbb0319f3f42931dfd9f7',1,'rm_ob1203_fifo_info_t']]]
+  ['unit',['unit',['../group___a_d_c___a_p_i.html#a3756c0cebdc1c304d48db67a5bcd16a6',1,'adc_callback_args_t::unit()'],['../group___a_d_c___a_p_i.html#a5da30f972881cd9d64f3a7add1ccd522',1,'adc_cfg_t::unit()'],['../group___p_d_m___a_p_i.html#a336b1d202eafdf805edd3cc274ef89e3',1,'pdm_cfg_t::unit()'],['../group___d_m_a_c___b.html#a3043a2a8f1838e56d4fcd50b5492e06f',1,'dmac_b_extended_cfg_t::unit()']]]
 ];

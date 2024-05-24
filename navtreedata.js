@@ -1,6 +1,6 @@
 var NAVTREE =
 [
-  [ "RZ/V Flexible Software Package Documentation", "index.html", [
+  [ "RZV Flexible Software Package Documentation", "index.html", [
     [ "Introduction", "index.html", [
       [ "Overview", "index.html#introduction-overview", null ],
       [ "Using this Manual", "index.html#how-to-read", null ],
@@ -20,40 +20,7 @@ var NAVTREE =
         [ "C99 Use", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#c99-use", null ],
         [ "Doxygen", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#doxygen", null ],
         [ "Weak Symbols", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#weak-symbols", null ],
-        [ "Memory Allocation", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#memory-allocation", null ],
-        [ "FSP Terms", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-terms", null ]
-      ] ],
-      [ "FSP Modules", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-modules", null ],
-      [ "FSP Stacks", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-stacks", null ],
-      [ "FSP Interfaces", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-interfaces", [
-        [ "FSP Interface Enumerations", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-interface-enumerations", null ],
-        [ "FSP Interface Callback Functions", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-interface-callback-functions", null ],
-        [ "FSP Interface Data Structures", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-internface-data-structures", [
-          [ "FSP Interface Configuration Structure", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-interface-configuration-structure", null ],
-          [ "FSP Interface API Structure", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-interface-api-structure", null ],
-          [ "FSP Interface Instance Structure", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-instance-structure", null ]
-        ] ]
-      ] ],
-      [ "FSP Instances", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-instances", [
-        [ "FSP Instance Control Structure", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#control-structure", null ],
-        [ "FSP Interface Extensions", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-interface-extensions", [
-          [ "FSP Extended Configuration Structure", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-extended-configuration-structure", null ]
-        ] ],
-        [ "FSP Instance API", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-instance-api", null ]
-      ] ],
-      [ "FSP API Standards", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-api-standards", [
-        [ "FSP Function Names", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-function-names", null ],
-        [ "Use of const in API parameters", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#use-of-const-in-api-parameters", null ],
-        [ "FSP Version Information", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-version-information", null ]
-      ] ],
-      [ "FSP Build Time Configurations", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-build-time-configurations", null ],
-      [ "FSP File Structure", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-file-structure", null ],
-      [ "FSP Architecture in Practice", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-architecture-in-practice", [
-        [ "FSP Connecting Layers", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-connecting-layers", null ],
-        [ "Using FSP Modules in an Application", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#using-fsp-modules-in-an-application", [
-          [ "Create a Module Instance in the RZ Configuration Editor", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#create-a-module-instance", null ],
-          [ "Use the Instance API in the Application", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#use-the-instance-api", null ]
-        ] ]
+        [ "Memory Allocation", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#memory-allocation", null ]
       ] ]
     ] ],
     [ "API Reference", "modules.html", "modules" ],
@@ -64,15 +31,22 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_c_o_p_y_r_i_g_h_t.html",
-"group___b_s_p___i_o.html#gga33a147902fb258f531c0bae40166f46eacee8ac33d0115b3997767c64527115ab",
-"group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246",
-"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840ea188e17e95c4825d3604cfe19e60ac21f",
-"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8afb9e29f050c27973d20c0273f88c6207",
-"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a479e63b946d94636f905fd9bace227e9",
-"group___r_m___h_s300_x___a_p_i.html#gaaab827d822b03dfceb75bb3071a4fad1",
-"group___r_m___o_b1203___a_p_i.html#gga463e63a319a589ebdcf29b0b482b2f00a6ace2781bd3f2b78dc2f1b8f51dbf245",
-"group___r_s_p_i.html#af4b65717f05932609172a0828cee1db4",
-"group___t_r_a_n_s_f_e_r___a_p_i.html#a12d4ba0d43dd22fda6b1b238d2fa17b6"
+"group___a_d_c___c.html#structadc__c__extended__cfg__t",
+"group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80aab4d640dac1a6dff63f33c79ee1e20c9e",
+"group___b_s_p___m_c_u.html#ga7880302f0edd7cc4290c037809975950ae2e4b37d45024125cbb660f1b3a3090e",
+"group___c_m_t_w.html#gga0d3145595cde1b2a26d8812cbb1aac5ca89b0a65698f2c9dad74c7ba53ba9de5d",
+"group___g_p_t.html#ga338dd3c38477ee40c90c13f3a4c9ecfd",
+"group___i2_c___s_l_a_v_e___a_p_i.html#a4fa45eb7423e7b93f78839b2bb612776",
+"group___i3_c___b.html#gaa9ce3fda0950ce2aaa0cd8cf51fb5f95",
+"group___i_o_p_o_r_t___a_p_i.html#af5b820497125b07a94537deb03a37f0d",
+"group___m_t_u3.html#gga4a8786cd182fb52e974c1214c2de627aa0b50c080f4d0da8eaebb4f8fbdcaffa4",
+"group___p_o_e_g___a_p_i.html#ggab482b24d14d1c94f6f4ba9f5e39f8d0ba8a559716ca4f1164b677818843e90715",
+"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8af39326ab50613d8779ebc84e5da8ffbc",
+"group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a026e4a40776c79cd6cf745c8446b4bfd",
+"group___s_c_i___b___i2_c.html#ga0d1ab3b59b204adb64bff01d4c83d10f",
+"group___s_p_i___b.html#a5e759f1a2e0e50733ffe773b84e009b0",
+"group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebab7b635fbf34ede5a3e2f55b5a60ac21b",
+"group___w_d_t___a_p_i.html#gga6b0f563a6311763e6204add68a018089a85b86587793408cd7b12fc4eb18e93c0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

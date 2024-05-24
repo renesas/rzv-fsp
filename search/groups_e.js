@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['zmod4xxx_20gas_20sensor_20_28rm_5fzmod4xxx_29',['ZMOD4XXX Gas Sensor (rm_zmod4xxx)',['../group___r_m___z_m_o_d4_x_x_x.html',1,'']]],
-  ['zmod4xxx_20middleware_20interface',['ZMOD4XXX Middleware Interface',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html',1,'']]]
+  ['uart_20_28r_5fsci_5fb_5fuart_29',['UART (r_sci_b_uart)',['../group___s_c_i___b___u_a_r_t.html',1,'']]],
+  ['uart_20interface',['UART Interface',['../group___u_a_r_t___a_p_i.html',1,'']]]
 ];
