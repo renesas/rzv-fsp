@@ -91,6 +91,8 @@ typedef enum e_can_test_mode
     CAN_TEST_MODE_INTERNAL_BUS      = 0x80 ///< CANFD Internal CAN Bus Communication Test Mode.
 } can_test_mode_t;
 
+#ifndef BSP_OVERRIDE_CAN_INFO_T
+
 /** CAN status info */
 typedef struct st_can_info
 {
@@ -101,6 +103,8 @@ typedef struct st_can_info
     uint8_t  error_count_receive;      ///< Receive error count.
     uint32_t error_code;               ///< Error code, cleared after reading.
 } can_info_t;
+
+#endif
 
 /** CAN ID modes */
 typedef enum e_can_id_mode

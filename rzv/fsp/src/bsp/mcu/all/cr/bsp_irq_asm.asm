@@ -33,7 +33,7 @@ IRQ_Handler:
     push    {r1, lr}
 
     ldr     r1,=bsp_common_interrupt_handler
-    blx     r1                  /* Jump to bsp_common_interrupt_handler, First argument (r0) = ICC_IAR1 read value. */
+    blx     r1                  /* Jump to bsp_common_interrupt_handler, First argument (r0) is ICC_IAR1 read value. */
 
     pop     {r1, lr}
     add     sp, sp, r1

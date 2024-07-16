@@ -62,6 +62,7 @@
 #define CANFD_PRV_AFL_RX_BUFFER_MASK      (0xFF00)
 #define CANFD_PRV_AFL_MINIMUM_DLC_MASK    (0x0F)
 #define CANFD_PRV_AFL_MINIMUM_DLC_POS     (28)
+#define CANFD_PRV_CFDRMND_BIT_NUM         (32)
 
 /***********************************************************************************************************************
  * Const data
@@ -707,7 +708,13 @@ fsp_err_t R_CANFD_Read (can_ctrl_t * const p_api_ctrl, uint32_t buffer, can_fram
     /* Return an error if the buffer or FIFO is empty */
     if (buffer < BSP_FEATURE_CANFD_RXMB_MAX)
     {
+#if BSP_FEATURE_CANFD_RXMB_MAX > CANFD_PRV_CFDRMND_BIT_NUM
+        uint32_t rmnd_reg_num = buffer / CANFD_PRV_CFDRMND_BIT_NUM;
+        uint32_t buffer_offset = buffer - CANFD_PRV_CFDRMND_BIT_NUM * rmnd_reg_num;
+        not_empty = p_ctrl->p_reg->CFDRMND[rmnd_reg_num] & (1U << buffer_offset);
+#else
         not_empty = p_ctrl->p_reg->CFDRMND0 & (1U << buffer);
+#endif
     }
     else
     {
@@ -861,7 +868,14 @@ fsp_err_t R_CANFD_InfoGet (can_ctrl_t * const p_api_ctrl, can_info_t * const p_i
     p_info->error_count_receive  = (uint8_t) ((cfdcnsts & R_CANFD_CFDC_STS_REC_Msk) >> R_CANFD_CFDC_STS_REC_Pos);
     p_info->error_count_transmit = (uint8_t) ((cfdcnsts & R_CANFD_CFDC_STS_TEC_Msk) >> R_CANFD_CFDC_STS_TEC_Pos);
     p_info->error_code           = p_ctrl->p_reg->CFDC[interlaced_channel].ERFL & UINT16_MAX;
+#if BSP_FEATURE_CANFD_RXMB_MAX > CANFD_PRV_CFDRMND_BIT_NUM
+    for(uint8_t i = 0; i < (BSP_FEATURE_CANFD_RXMB_MAX / CANFD_PRV_CFDRMND_BIT_NUM); i++)
+    {
+        p_info->rx_mb_status[i]  = p_ctrl->p_reg->CFDRMND[i];
+    }
+#else
     p_info->rx_mb_status         = p_ctrl->p_reg->CFDRMND0;
+#endif
     p_info->rx_fifo_status       = (~p_ctrl->p_reg->CFDFESTS) & R_CANFD_CFDFESTS_RFXEMP_Msk;
 
     /* Clear error flags */
@@ -1016,7 +1030,13 @@ static void r_canfd_mb_read (R_CANFD_Type * p_reg, uint32_t buffer, can_frame_t 
     if (is_mb)
     {
         /* Clear RXMB New Data bit */
-        p_reg->CFDRMND0 &= ~(1U << buffer);
+#if BSP_FEATURE_CANFD_RXMB_MAX > CANFD_PRV_CFDRMND_BIT_NUM
+        uint32_t rmnd_reg_num = buffer / CANFD_PRV_CFDRMND_BIT_NUM;
+        uint32_t buffer_offset = buffer - CANFD_PRV_CFDRMND_BIT_NUM * rmnd_reg_num;
+        p_reg->CFDRMND[rmnd_reg_num] = ~(1U << buffer_offset);
+#else
+        p_reg->CFDRMND0 = ~(1U << buffer);
+#endif
     }
     else
     {
@@ -1097,7 +1117,7 @@ static void r_canfd_global_error_handler (uint32_t instance)
     uint32_t cfdgerfl = p_ctrl->p_reg->CFDGERFL;
 
     /* Global errors are in the top halfword of canfd_error_t; move and preserve ECC error flags. */
-    args.error = ((cfdgerfl & UINT16_MAX) << 16) + ((cfdgerfl >> 16) << 28);
+    args.error = ((cfdgerfl & UINT16_MAX) << 16) + ((cfdgerfl >> 16) << BSP_FEATURE_CANFD_ERROR_GLOBAL_CH0_ECC_REG_POS);
 
     /* Clear global error flags. */
     p_ctrl->p_reg->CFDGERFL = 0;

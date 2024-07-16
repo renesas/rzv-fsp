@@ -239,6 +239,11 @@ typedef enum e_dmac_trigger_event
     DMAC_TRIGGER_EVENT_CANFD_COM_DMA1     = 739 | ACK_MODE_LEVEL_MODE | DETECTION_RISING_EDGE,
 } dmac_trigger_event_t;
 
+typedef enum e_dmac_b_external_input_pin
+{
+    DMAC_B_EXTERNAL_INPUT_PIN_NO_INPUT = 0x7F
+} dmac_b_external_input_pin_t;
+
 typedef enum e_dmac_b_external_output_pin
 {
     DMAC_B_EXTERNAL_OUTPUT_PIN_NO_OUTPUT = 0x7F

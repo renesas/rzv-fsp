@@ -29,6 +29,8 @@
 #define BSP_OVERRIDE_BSP_ACCESS_CONTROL
 #define BSP_OVERRIDE_BSP_PIN_T
 #define BSP_OVERRIDE_BSP_PORT_T
+#define BSP_OVERRIDE_CAN_INFO_T
+#define BSP_OVERRIDE_CANFD_ERROR_T
 #define BSP_OVERRIDE_CANFD_RX_BUFFER_T
 #define BSP_OVERRIDE_ELC_PERIPHERAL_T
 #define BSP_OVERRIDE_ELC_SOFTWARE_EVENT_T
@@ -36,6 +38,7 @@
 #define BSP_OVERRIDE_FSP_PRIV_CLOCK_T
 #define BSP_OVERRIDE_FSP_PRIV_CLOCK_DIVIDER_T
 #define BSP_OVERRIDE_FSP_PRIV_CLOCK_SELECTOR_T
+#define BSP_OVERRIDE_GPT_POEG_LINK_T
 #define BSP_OVERRIDE_GPT_SOURCE_T
 #define BSP_OVERRIDE_IOPORT_OPTIONS_T
 #define BSP_OVERRIDE_TRANSFER_ADDR_MODE_T
@@ -2048,8 +2051,54 @@ typedef enum e_bsp_io_port_pin_t
 } bsp_io_port_pin_t;
 
 /*==============================================
- * CANFD RX Buffer Overrides
+ * CAN API Overrides
  *==============================================*/
+
+/** CAN status info */
+typedef struct st_can_info
+{
+    uint32_t status;                   ///< Useful information from the CAN status register.
+    uint32_t rx_mb_status[3];          ///< RX Message Buffer New Data flags.
+    uint32_t rx_fifo_status;           ///< RX FIFO Empty flags.
+    uint8_t  error_count_transmit;     ///< Transmit error count.
+    uint8_t  error_count_receive;      ///< Receive error count.
+    uint32_t error_code;               ///< Error code, cleared after reading.
+} can_info_t;
+
+/*==============================================
+ * CANFD Overrides
+ *==============================================*/
+
+/** CANFD Error Code */
+typedef enum e_canfd_error
+{
+    CANFD_ERROR_CHANNEL_BUS              = 0x00000001, ///< Bus Error
+    CANFD_ERROR_CHANNEL_WARNING          = 0x00000002, ///< Error Warning (TX/RX error count over 0x5F)
+    CANFD_ERROR_CHANNEL_PASSIVE          = 0x00000004, ///< Error Passive (TX/RX error count over 0x7F)
+    CANFD_ERROR_CHANNEL_BUS_OFF_ENTRY    = 0x00000008, ///< Bus-Off State Entry
+    CANFD_ERROR_CHANNEL_BUS_OFF_RECOVERY = 0x00000010, ///< Recovery from Bus-Off State
+    CANFD_ERROR_CHANNEL_OVERLOAD         = 0x00000020, ///< Overload
+    CANFD_ERROR_CHANNEL_BUS_LOCK         = 0x00000040, ///< Bus Locked
+    CANFD_ERROR_CHANNEL_ARBITRATION_LOSS = 0x00000080, ///< Arbitration Lost
+    CANFD_ERROR_CHANNEL_STUFF            = 0x00000100, ///< Stuff Error
+    CANFD_ERROR_CHANNEL_FORM             = 0x00000200, ///< Form Error
+    CANFD_ERROR_CHANNEL_ACK              = 0x00000400, ///< ACK Error
+    CANFD_ERROR_CHANNEL_CRC              = 0x00000800, ///< CRC Error
+    CANFD_ERROR_CHANNEL_BIT_RECESSIVE    = 0x00001000, ///< Bit Error (recessive) Error
+    CANFD_ERROR_CHANNEL_BIT_DOMINANT     = 0x00002000, ///< Bit Error (dominant) Error
+    CANFD_ERROR_CHANNEL_ACK_DELIMITER    = 0x00004000, ///< ACK Delimiter Error
+    CANFD_ERROR_GLOBAL_DLC               = 0x00010000, ///< DLC Error
+    CANFD_ERROR_GLOBAL_MESSAGE_LOST      = 0x00020000, ///< Message Lost
+    CANFD_ERROR_GLOBAL_PAYLOAD_OVERFLOW  = 0x00080000, ///< FD Payload Overflow
+    CANFD_ERROR_GLOBAL_TXQ_OVERWRITE     = 0x00100000, ///< TX Queue Message Overwrite
+    CANFD_ERROR_GLOBAL_TXQ_MESSAGE_LOST  = 0x00400000, ///< TX Queue Message Lost
+    CANFD_ERROR_GLOBAL_CH0_ECC           = 0x04000000, ///< Channel 0 ECC Error
+    CANFD_ERROR_GLOBAL_CH1_ECC           = 0x08000000, ///< Channel 1 ECC Error
+    CANFD_ERROR_GLOBAL_CH2_ECC           = 0x10000000, ///< Channel 2 ECC Error
+    CANFD_ERROR_GLOBAL_CH3_ECC           = 0x20000000, ///< Channel 3 ECC Error
+    CANFD_ERROR_GLOBAL_CH4_ECC           = 0x40000000, ///< Channel 4 ECC Error
+    CANFD_ERROR_GLOBAL_CH5_ECC           = 0x80000000, ///< Channel 5 ECC Error
+} canfd_error_t;
 
 /** CANFD Receive Buffer (MB + FIFO) */
 typedef enum e_canfd_rx_buffer
@@ -2499,6 +2548,15 @@ typedef enum e_elc_software_event
 /*==============================================
  * GPT Overrides
  *==============================================*/
+
+/** POEG channel to link to this channel. */
+typedef enum e_gpt_poeg_link
+{
+    GPT_POEG_LINK_POEG0_POEG4 = 0U,    ///< Link this GPT channel to POEG channel 0 (GTETRGA) and channel 4 (GTETRGE)
+    GPT_POEG_LINK_POEG1_POEG5 = 1U,    ///< Link this GPT channel to POEG channel 1 (GTETRGB) and channel 5 (GTETRGF)
+    GPT_POEG_LINK_POEG2_POEG6 = 2U,    ///< Link this GPT channel to POEG channel 2 (GTETRGC) and channel 6 (GTETRGG)
+    GPT_POEG_LINK_POEG3_POEG7 = 3U,    ///< Link this GPT channel to POEG channel 3 (GTETRGD) and channel 7 (GTETRGH)
+} gpt_poeg_link_t;
 
 /** Sources can be used to start the timer, stop the timer, count up, or count down. These enumerations represent
  * a bitmask. Multiple sources can be ORed together. */

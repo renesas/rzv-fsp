@@ -185,7 +185,7 @@ typedef struct s_gpt_gtior_setting
  */
 typedef enum e_gpt_capture_filter
 {
-    GPT_CAPTURE_FILTER_NONE         = 0U, ///< None - no filtering
+    GPT_CAPTURE_FILTER_NONE                = 0U, ///< None - no filtering
     GPT_CAPTURE_FILTER_CLOCK_SOURCE_DIV_1  = 1U, ///< CLK/1 - fast sampling
     GPT_CAPTURE_FILTER_CLOCK_SOURCE_DIV_4  = 3U, ///< CLK/4
     GPT_CAPTURE_FILTER_CLOCK_SOURCE_DIV_16 = 5U, ///< CLK/16
@@ -202,6 +202,8 @@ typedef enum e_gpt_adc_trigger
     GPT_ADC_TRIGGER_DOWN_COUNT_START_ADC_B = 1U << 3, ///< Request A/D conversion from ADC unit 1 at down counting compare match of @ref gpt_extended_pwm_cfg_t::adc_b_compare_match
 } gpt_adc_trigger_t;
 
+#ifndef BSP_OVERRIDE_GPT_POEG_LINK_T
+
 /** POEG channel to link to this channel. */
 typedef enum e_gpt_poeg_link
 {
@@ -210,6 +212,8 @@ typedef enum e_gpt_poeg_link
     GPT_POEG_LINK_POEG2 = 2U,          ///< Link this GPT channel to POEG channel 2 (GTETRGC)
     GPT_POEG_LINK_POEG3 = 3U,          ///< Link this GPT channel to POEG channel 3 (GTETRGD)
 } gpt_poeg_link_t;
+
+#endif
 
 /** Select trigger to send output disable request to POEG. */
 typedef enum e_gpt_output_disable

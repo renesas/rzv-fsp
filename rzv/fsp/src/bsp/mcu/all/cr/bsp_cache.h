@@ -44,7 +44,7 @@ void R_BSP_CacheDisable(void);
 void R_BSP_CacheInvalidate(void);
 
 /*******************************************************************************************************************//**
- * Cache operation to all region.
+ * Cache operation to all area.
  *
  * @param[in] operate        Cache operation.
  *                           BSP_PRV_DCACHE_INV(0) - Cache invalidate.
@@ -165,6 +165,11 @@ __STATIC_INLINE void R_BSP_CacheDisableData (void)
 }
 
 /*******************************************************************************************************************//**
+ * @addtogroup BSP_MCU
+ * @{
+ **********************************************************************************************************************/
+
+/*******************************************************************************************************************//**
  * Clean whole of the data cache.
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_CacheCleanAllData (void)
@@ -202,10 +207,10 @@ __STATIC_INLINE void R_BSP_CacheCleanInvalidateAllData (void)
 }
 
 /*******************************************************************************************************************//**
- * Clean the cache for the specified region.
+ * Clean the cache for the specified area.
  *
- * @param[in] addr           Base address of region to clean.
- * @param[in] length         Length of region to clean.
+ * @param[in] addr           Base address of area to clean.
+ * @param[in] length         Length of area to clean.
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_CacheCleanRangeData (void * addr, uint32_t length)
 {
@@ -230,10 +235,10 @@ __STATIC_INLINE void R_BSP_CacheCleanRangeData (void * addr, uint32_t length)
 }
 
 /*******************************************************************************************************************//**
- * Invalidate the cache for the specified region.
+ * Invalidate the cache for the specified area.
  *
- * @param[in] addr           Base address of region to invalidate.
- * @param[in] length         Length of region to invalidate.
+ * @param[in] addr           Base address of area to invalidate.
+ * @param[in] length         Length of area to invalidate.
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_CacheInvalidateRangeData (void * addr, uint32_t length)
 {
@@ -258,10 +263,10 @@ __STATIC_INLINE void R_BSP_CacheInvalidateRangeData (void * addr, uint32_t lengt
 }
 
 /*******************************************************************************************************************//**
- * Invalidate the instruction cache for the specified region.
+ * Invalidate the instruction cache for the specified area.
  *
- * @param[in] addr           Base address of region to invalidate.
- * @param[in] length         Length of region to invalidate.
+ * @param[in] addr           Base address of area to invalidate.
+ * @param[in] length         Length of area to invalidate.
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_CacheInvalidateRangeInst (void * addr, uint32_t length)
 {
@@ -289,10 +294,10 @@ __STATIC_INLINE void R_BSP_CacheInvalidateRangeInst (void * addr, uint32_t lengt
 }
 
 /*******************************************************************************************************************//**
- * Clean and invalidate the cache for the specified region.
+ * Clean and invalidate the cache for the specified area.
  *
- * @param[in] addr           Base address of region to clean and invalidate.
- * @param[in] length         Length of region to clean and invalidate.
+ * @param[in] addr           Base address of area to clean and invalidate.
+ * @param[in] length         Length of area to clean and invalidate.
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_CacheCleanInvalidateRangeData (void * addr, uint32_t length)
 {
@@ -315,6 +320,8 @@ __STATIC_INLINE void R_BSP_CacheCleanInvalidateRangeData (void * addr, uint32_t 
         __asm volatile ("DMB");
     }
 }
+
+/** @} (end addtogroup BSP_MCU) */
 
 /*******************************************************************************************************************//**
  * Enable branch predictor.
@@ -354,8 +361,6 @@ __STATIC_INLINE void R_BSP_CacheInvalidateBtac (void)
         "ISB                                      \n"
         ::: "r0");
 }
-
-/** @} (end addtogroup BSP_MCU_PRV) */
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

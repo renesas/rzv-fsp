@@ -278,9 +278,9 @@ typedef struct
             __IOM uint32_t GAFLIFL0 : 1; /*!< [7..7] Global Acceptance Filter List Information Label 0                  */
             __IOM uint32_t GAFLRMDP : 5; /*!< [12..8] Global Acceptance Filter List RX Message Buffer Direction
                                           *   Pointer                                                                   */
-            uint32_t                : 2;
-            __IOM uint32_t GAFLRMV  : 1;  /*!< [15..15] Global Acceptance Filter List RX Message Buffer Valid            */
-            __IOM uint32_t GAFLPTR  : 16; /*!< [31..16] Global Acceptance Filter List Pointer Field                      */
+            uint32_t               : 2;
+            __IOM uint32_t GAFLRMV : 1;  /*!< [15..15] Global Acceptance Filter List RX Message Buffer Valid            */
+            __IOM uint32_t GAFLPTR : 16; /*!< [31..16] Global Acceptance Filter List Pointer Field                      */
         } P0_b;
     };
 
@@ -290,8 +290,8 @@ typedef struct
 
         struct
         {
-            __IOM uint32_t GAFLFDP : 14; /*!< [13..0] Global Acceptance Filter List FIFO Direction Pointer              */
-            uint32_t               : 18;
+            __IOM uint32_t GAFLFDP : 26; /*!< [25..0] Global Acceptance Filter List FIFO Direction Pointer              */
+            uint32_t               : 6;
         } P1_b;
     };
 } R_CANFD_CFDGAFL_Type;                  /*!< Size = 16 (0x10)                                                          */
@@ -579,11 +579,11 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
         struct
         {
-            __IOM uint32_t IPV    : 8;   /*!< [7..0] IP Version                                                         */
-            __IOM uint32_t IPT    : 2;   /*!< [9..8] IP Type                                                            */
-            uint32_t              : 6;
-            __IOM uint32_t PSI    : 14;  /*!< [29..16] Parameter Status Information                                     */
-            uint32_t              : 2;
+            __IOM uint32_t IPV : 8;    /*!< [7..0] IP Version                                                         */
+            __IOM uint32_t IPT : 2;    /*!< [9..8] IP Type                                                            */
+            uint32_t           : 6;
+            __IOM uint32_t PSI : 14;   /*!< [29..16] Parameter Status Information                                     */
+            uint32_t           : 2;
         } CFDGIPV_b;
     };
 
@@ -645,22 +645,26 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IOM uint32_t CFDGERFL;          /*!< (@ 0x00000090) Global Error Flag Register                                 */
+        __IOM uint32_t CFDGERFL;       /*!< (@ 0x00000090) Global Error Flag Register                                 */
 
         struct
         {
-            __IOM uint32_t DEF       : 1; /*!< [0..0] DLC Error Flag                                                     */
-            __IM uint32_t  MES       : 1; /*!< [1..1] Message Lost Error Status                                          */
-            __IM uint32_t  THLES     : 1; /*!< [2..2] TX History List Entry Lost Error Status                            */
-            __IOM uint32_t CMPOF     : 1; /*!< [3..3] CAN-FD message payload overflow Flag                               */
-            __IM uint32_t  QOWES     : 1; /*!< [4..4] TXQ Message overwrite Error Status                                 */
-            uint32_t                 : 1;
-            __IM uint32_t  QMES      : 1; /*!< [6..6] TXQ Message Lost Error Status                                      */
-            __IM uint32_t  MOWES     : 1; /*!< [7..7] Message Overwrite Error Status                                     */
-            uint32_t                 : 8;
-            __IOM uint32_t EEF0      : 1; /*!< [16..16] ECC Error Flag for Channel 0                                     */
-            __IOM uint32_t EEF1      : 1; /*!< [17..17] ECC Error Flag for Channel 1                                     */
-            uint32_t                 : 14;
+            __IOM uint32_t DEF   : 1;  /*!< [0..0] DLC Error Flag                                                     */
+            __IM uint32_t  MES   : 1;  /*!< [1..1] Message Lost Error Status                                          */
+            __IM uint32_t  THLES : 1;  /*!< [2..2] TX History List Entry Lost Error Status                            */
+            __IOM uint32_t CMPOF : 1;  /*!< [3..3] CAN-FD message payload overflow Flag                               */
+            __IM uint32_t  QOWES : 1;  /*!< [4..4] TXQ Message overwrite Error Status                                 */
+            uint32_t             : 1;
+            __IM uint32_t QMES   : 1;  /*!< [6..6] TXQ Message Lost Error Status                                      */
+            __IM uint32_t MOWES  : 1;  /*!< [7..7] Message Overwrite Error Status                                     */
+            uint32_t             : 8;
+            __IOM uint32_t EEF0  : 1;  /*!< [16..16] ECC Error Flag for Channel 0                                     */
+            __IOM uint32_t EEF1  : 1;  /*!< [17..17] ECC Error Flag for Channel 1                                     */
+            __IOM uint32_t EEF2  : 1;  /*!< [18..18] ECC Error Flag for Channel 2                                     */
+            __IOM uint32_t EEF3  : 1;  /*!< [19..19] ECC Error Flag for Channel 3                                     */
+            __IOM uint32_t EEF4  : 1;  /*!< [20..20] ECC Error Flag for Channel 4                                     */
+            __IOM uint32_t EEF5  : 1;  /*!< [21..21] ECC Error Flag for Channel 5                                     */
+            uint32_t             : 10;
         } CFDGERFL_b;
     };
 
@@ -690,7 +694,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IOM uint32_t CFDGAFLCFG[3];     /*!< (@ 0x0000009C) Global Acceptance Filter List Configuration Register       */
+        __IOM uint32_t CFDGAFLCFG[3];  /*!< (@ 0x0000009C) Global Acceptance Filter List Configuration Register       */
         struct
         {
             __IOM uint32_t RNC1 : 9;   /*!< [8..0] Rule Number for Channel 1                                          */
@@ -716,14 +720,14 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IOM uint32_t CFDRMND0;       /*!< (@ 0x000000B0) RX Message Buffer New Data Register 0                      */
+        __IOM uint32_t CFDRMND[3];     /*!< (@ 0x000000B0) RX Message Buffer New Data Register                      */
 
         struct
         {
-            __IOM uint32_t RMNS : 32; /*!< [31..0] RX Message Buffer New Data Status                                 */
-        } CFDRMND0_b;
+            __IOM uint32_t RMNS : 32;  /*!< [31..0] RX Message Buffer New Data Status                                 */
+        } CFDRMND_b[3];
     };
-    __IM uint8_t RESERVED2[12];
+    __IM uint8_t RESERVED2[4];
 
     union
     {
@@ -775,7 +779,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IOM uint32_t CFDCFCC[18];     /*!< (@ 0x00000120) Common FIFO Configuration / Control Registers              */
+        __IOM uint32_t CFDCFCC[18];    /*!< (@ 0x00000120) Common FIFO Configuration / Control Registers              */
 
         struct
         {
@@ -799,7 +803,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IOM uint32_t CFDCFCCE[18];      /*!< (@ 0x00000180) Common FIFO Configuration / Control Enhancement
+        __IOM uint32_t CFDCFCCE[18];     /*!< (@ 0x00000180) Common FIFO Configuration / Control Enhancement
                                           *                  Registers                                                  */
 
         struct
@@ -818,7 +822,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IOM uint32_t CFDCFSTS[18];      /*!< (@ 0x000001E0) Common FIFO Status Registers                               */
+        __IOM uint32_t CFDCFSTS[18];     /*!< (@ 0x000001E0) Common FIFO Status Registers                               */
 
         struct
         {
@@ -841,7 +845,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IOM uint32_t CFDCFPCTR[18];   /*!< (@ 0x00000240) Common FIFO Pointer Control Registers                      */
+        __IOM uint32_t CFDCFPCTR[18];  /*!< (@ 0x00000240) Common FIFO Pointer Control Registers                      */
 
         struct
         {
@@ -858,8 +862,8 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
         struct
         {
             __IM uint32_t RFXEMP : 8;  /*!< [7..0] RX FIF0 Empty Status                                               */
-            __IM uint32_t CFXEMP : 6;  /*!< [13..8] Common FIF0 Empty Status                                          */
-            uint32_t             : 18;
+            __IM uint32_t CFXEMP : 18; /*!< [25..8] Common FIF0 Empty Status                                          */
+            uint32_t             : 6;
         } CFDFESTS_b;
     };
 
@@ -870,8 +874,8 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
         struct
         {
             __IM uint32_t RFXFLL : 8;  /*!< [7..0] RX FIF0 Full Status                                                */
-            __IM uint32_t CFXFLL : 6;  /*!< [13..8] Common FIF0 Full Status                                           */
-            uint32_t             : 18;
+            __IM uint32_t CFXFLL : 18; /*!< [25..8] Common FIF0 Full Status                                           */
+            uint32_t             : 6;
         } CFDFFSTS_b;
     };
 
@@ -882,8 +886,8 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
         struct
         {
             __IM uint32_t RFXMLT : 8;  /*!< [7..0] RX FIFO Msg Lost Status                                            */
-            __IM uint32_t CFXMLT : 6;  /*!< [13..8] Common FIFO Msg Lost Status                                       */
-            uint32_t             : 18;
+            __IM uint32_t CFXMLT : 18; /*!< [25..8] Common FIFO Msg Lost Status                                       */
+            uint32_t             : 6;
         } CFDFMSTS_b;
     };
 
@@ -902,47 +906,47 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IOM uint32_t CFDCFRISTS;     /*!< (@ 0x000002B0) Common FIFO RX Interrupt Flag Status Register              */
+        __IOM uint32_t CFDCFRISTS;      /*!< (@ 0x000002B0) Common FIFO RX Interrupt Flag Status Register              */
 
         struct
         {
-            __IM uint32_t CFXRXIF : 6; /*!< [5..0] Common FIFO [x] RX Interrupt Flag Status                           */
-            uint32_t              : 26;
+            __IM uint32_t CFXRXIF : 18; /*!< [17..0] Common FIFO [x] RX Interrupt Flag Status                          */
+            uint32_t              : 14;
         } CFDCFRISTS_b;
     };
 
     union
     {
-        __IOM uint32_t CFDCFTISTS;     /*!< (@ 0x000002B4) Common FIFO TX Interrupt Flag Status Register              */
+        __IOM uint32_t CFDCFTISTS;      /*!< (@ 0x000002B4) Common FIFO TX Interrupt Flag Status Register              */
 
         struct
         {
-            __IM uint32_t CFXTXIF : 6; /*!< [5..0] Common FIFO [x] TX Interrupt Flag Status                           */
-            uint32_t              : 26;
+            __IM uint32_t CFXTXIF : 18; /*!< [17..0] Common FIFO [x] TX Interrupt Flag Status                          */
+            uint32_t              : 14;
         } CFDCFTISTS_b;
     };
 
     union
     {
-        __IM uint32_t CFDCFOFRISTS;      /*!< (@ 0x000002B8) Common FIFO One Frame RX Interrupt Flag Status
-                                          *                  Register                                                   */
+        __IM uint32_t CFDCFOFRISTS;       /*!< (@ 0x000002B8) Common FIFO One Frame RX Interrupt Flag Status
+                                           *                  Register                                                   */
 
         struct
         {
-            __IM uint32_t CFXOFRXIF : 6; /*!< [5..0] Common FIFO [x] One Frame RX Interrupt Flag Status                 */
-            uint32_t                : 26;
+            __IM uint32_t CFXOFRXIF : 18; /*!< [17..0] Common FIFO [x] One Frame RX Interrupt Flag Status                */
+            uint32_t                : 14;
         } CFDCFOFRISTS_b;
     };
 
     union
     {
-        __IM uint32_t CFDCFOFTISTS;      /*!< (@ 0x000002BC) Common FIFO One Frame TX Interrupt Flag Status
-                                          *                  Register                                                   */
+        __IM uint32_t CFDCFOFTISTS;       /*!< (@ 0x000002BC) Common FIFO One Frame TX Interrupt Flag Status
+                                           *                  Register                                                   */
 
         struct
         {
-            __IM uint32_t CFXOFTXIF : 6; /*!< [5..0] Common FIFO [x] One Frame TX Interrupt Flag Status                 */
-            uint32_t                : 26;
+            __IM uint32_t CFXOFTXIF : 18; /*!< [17..0] Common FIFO [x] One Frame TX Interrupt Flag Status                */
+            uint32_t                : 14;
         } CFDCFOFTISTS_b;
     };
 
@@ -952,20 +956,20 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
         struct
         {
-            __IM uint32_t CFXMOW : 6;  /*!< [5..0] Common FIFO [x] Massage overwrite status                           */
-            uint32_t             : 26;
+            __IM uint32_t CFXMOW : 18; /*!< [17..0] Common FIFO [x] Massage overwrite status                          */
+            uint32_t             : 14;
         } CFDCFMOWSTS_b;
     };
 
     union
     {
-        __IM uint32_t CFDFFFSTS;       /*!< (@ 0x000002C4) FIFO FDC Full Status Register                              */
+        __IM uint32_t CFDFFFSTS;        /*!< (@ 0x000002C4) FIFO FDC Full Status Register                              */
 
         struct
         {
-            __IM uint32_t RFXFFLL : 8; /*!< [7..0] RX FIFO FDC level full Status                                      */
-            __IM uint32_t CFXFFLL : 6; /*!< [13..8] COMMON FIFO FDC level full Status                                 */
-            uint32_t              : 18;
+            __IM uint32_t RFXFFLL : 8;  /*!< [7..0] RX FIFO FDC level full Status                                      */
+            __IM uint32_t CFXFFLL : 18; /*!< [25..8] COMMON FIFO FDC level full Status                                 */
+            uint32_t              : 6;
         } CFDFFFSTS_b;
     };
     __IM uint8_t RESERVED7[8];
@@ -1001,12 +1005,12 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IM uint32_t CFDTMTRSTS[12];       /*!< (@ 0x00000CD0) TX Message Buffer Transmission Request Status
-                                            *                  Register                                                   */
+        __IM uint32_t CFDTMTRSTS[12];   /*!< (@ 0x00000CD0) TX Message Buffer Transmission Request Status
+                                         *                  Register                                                   */
 
         struct
         {
-            __IM uint32_t TMTRSTS : 16;    /*!< [15..0] TX Message Buffer Transmission Request Status                     */
+            __IM uint32_t TMTRSTS : 16; /*!< [15..0] TX Message Buffer Transmission Request Status                     */
             uint32_t              : 16;
         } CFDTMTRSTS_b[12];
     };
@@ -1014,8 +1018,8 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IM uint32_t CFDTMTARSTS[12];       /*!< (@ 0x00000D70) TX Message Buffer Transmission Abort Request
-                                             *                  Status Register                                           */
+        __IM uint32_t CFDTMTARSTS[12];   /*!< (@ 0x00000D70) TX Message Buffer Transmission Abort Request
+                                          *                  Status Register                                           */
 
         struct
         {
@@ -1027,12 +1031,12 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IM uint32_t CFDTMTCSTS[12];       /*!< (@ 0x00000E10) TX Message Buffer Transmission Completion Status
-                                            *                  Register                                                   */
+        __IM uint32_t CFDTMTCSTS[12];   /*!< (@ 0x00000E10) TX Message Buffer Transmission Completion Status
+                                         *                  Register                                                   */
 
         struct
         {
-            __IM uint32_t TMTCSTS : 16;    /*!< [15..0] TX Message Buffer Transmission Completion Status                  */
+            __IM uint32_t TMTCSTS : 16; /*!< [15..0] TX Message Buffer Transmission Completion Status                  */
             uint32_t              : 16;
         } CFDTMTCSTS_b[12];
     };
@@ -1040,11 +1044,11 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IM uint32_t CFDTMTASTS[12];       /*!< (@ 0x00000EB0) TX Message Buffer Transmission Abort Status Register       */
+        __IM uint32_t CFDTMTASTS[12];   /*!< (@ 0x00000EB0) TX Message Buffer Transmission Abort Status Register       */
 
         struct
         {
-            __IM uint32_t TMTASTS : 16;    /*!< [15..0] TX Message Buffer Transmission abort Status                        */
+            __IM uint32_t TMTASTS : 16; /*!< [15..0] TX Message Buffer Transmission abort Status                        */
             uint32_t              : 16;
         } CFDTMTASTS_b[12];
     };
@@ -1052,13 +1056,13 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IOM uint32_t CFDTMIEC[12];    /*!< (@ 0x00000F50) TX Message Buffer Interrupt Enable Configuration
+        __IOM uint32_t CFDTMIEC[12];   /*!< (@ 0x00000F50) TX Message Buffer Interrupt Enable Configuration
                                         *                  Register                                                   */
 
         struct
         {
-            __IOM uint32_t TMIE  : 16;  /*!< [15..0] TX Message Buffer Interrupt Enable                                 */
-            uint32_t             : 16;
+            __IOM uint32_t TMIE : 16;  /*!< [15..0] TX Message Buffer Interrupt Enable                                 */
+            uint32_t            : 16;
         } CFDTMIEC_b[4];
     };
     __IM uint8_t RESERVED14[128];
@@ -1289,12 +1293,12 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IM uint32_t CFDTXQESTS;      /*!< (@ 0x00001180) TX Queue Empty Status Register                             */
+        __IM uint32_t CFDTXQESTS;       /*!< (@ 0x00001180) TX Queue Empty Status Register                             */
 
         struct
         {
-            __IM uint32_t TXQxEMP : 8; /*!< [7..0] TXQ empty Status                                                   */
-            uint32_t              : 24;
+            __IM uint32_t TXQxEMP : 24; /*!< [23..0] TXQ empty Status                                                   */
+            uint32_t              : 8;
         } CFDTXQESTS_b;
     };
 
@@ -1307,7 +1311,15 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             __IM uint32_t TXQ0FULL : 3; /*!< [2..0] TXQ Full Interrupt Status for channel 0                            */
             uint32_t               : 1;
             __IM uint32_t TXQ1FULL : 3; /*!< [6..4] TXQ Full Interrupt Status for channel 1                            */
-            uint32_t               : 25;
+            uint32_t               : 1;
+            __IM uint32_t TXQ2FULL : 3; /*!< [10..8] TXQ Full Interrupt Status for channel 2                           */
+            uint32_t               : 1;
+            __IM uint32_t TXQ3FULL : 3; /*!< [14..12] TXQ Full Interrupt Status for channel 3                          */
+            uint32_t               : 1;
+            __IM uint32_t TXQ4FULL : 3; /*!< [18..16] TXQ Full Interrupt Status for channel 4                          */
+            uint32_t               : 1;
+            __IM uint32_t TXQ5FULL : 3; /*!< [22..20] TXQ Full Interrupt Status for channel 5                          */
+            uint32_t               : 9;
         } CFDTXQFISTS_b;
     };
 
@@ -1320,7 +1332,15 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             __IM uint32_t TXQ0ML : 3;  /*!< [2..0] TXQ message lost Status for channel 0                              */
             uint32_t             : 1;
             __IM uint32_t TXQ1ML : 3;  /*!< [6..4] TXQ message lost Status for channel 1                              */
-            uint32_t             : 25;
+            uint32_t             : 1;
+            __IM uint32_t TXQ2ML : 3;  /*!< [10..8] TXQ message lost Status for channel 2                             */
+            uint32_t             : 1;
+            __IM uint32_t TXQ3ML : 3;  /*!< [14..12] TXQ message lost Status for channel 3                            */
+            uint32_t             : 1;
+            __IM uint32_t TXQ4ML : 3;  /*!< [18..16] TXQ message lost Status for channel 4                            */
+            uint32_t             : 1;
+            __IM uint32_t TXQ5ML : 3;  /*!< [22..20] TXQ message lost Status for channel 5                            */
+            uint32_t             : 9;
         } CFDTXQMSTS_b;
     };
     __IM uint8_t RESERVED27[4];
@@ -1333,7 +1353,11 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
         {
             __IM uint32_t TXQ0ISF : 4; /*!< [3..0] TXQ Interrupt Status Flag for channel 0                            */
             __IM uint32_t TXQ1ISF : 4; /*!< [7..4] TXQ Interrupt Status Flag for channel 1                            */
-            uint32_t              : 24;
+            __IM uint32_t TXQ2ISF : 4; /*!< [11..8] TXQ Interrupt Status Flag for channel 2                           */
+            __IM uint32_t TXQ3ISF : 4; /*!< [15..12] TXQ Interrupt Status Flag for channel 3                          */
+            __IM uint32_t TXQ4ISF : 4; /*!< [19..16] TXQ Interrupt Status Flag for channel 4                          */
+            __IM uint32_t TXQ5ISF : 4; /*!< [23..20] TXQ Interrupt Status Flag for channel 5                          */
+            uint32_t              : 8;
         } CFDTXQISTS_b;
     };
 
@@ -1345,7 +1369,11 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
         {
             __IM uint32_t TXQ0OFTISF : 4; /*!< [3..0] TXQ One Frame TX Interrupt Status Flag for channel 0               */
             __IM uint32_t TXQ1OFTISF : 4; /*!< [7..4] TXQ One Frame TX Interrupt Status Flag for channel 1               */
-            uint32_t                 : 24;
+            __IM uint32_t TXQ2OFTISF : 4; /*!< [11..8] TXQ One Frame TX Interrupt Status Flag for channel 2              */
+            __IM uint32_t TXQ3OFTISF : 4; /*!< [15..12] TXQ One Frame TX Interrupt Status Flag for channel 3             */
+            __IM uint32_t TXQ4OFTISF : 4; /*!< [19..16] TXQ One Frame TX Interrupt Status Flag for channel 4             */
+            __IM uint32_t TXQ5OFTISF : 4; /*!< [23..20] TXQ One Frame TX Interrupt Status Flag for channel 5             */
+            uint32_t                 : 8;
         } CFDTXQOFTISTS_b;
     };
 
@@ -1355,10 +1383,18 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
         struct
         {
-            __IM uint32_t TXQ0OFRISF : 3; /*!< [2..0] TXQ One Frame RX Interrupt Status Flag                             */
+            __IM uint32_t TXQ0OFRISF : 3; /*!< [2..0] TXQ One Frame RX Interrupt Status Flag for channel 0                             */
             uint32_t                 : 1;
-            __IM uint32_t TXQ1OFRISF : 3; /*!< [6..4] TXQ One Frame RX Interrupt Status Flag                             */
-            uint32_t                 : 25;
+            __IM uint32_t TXQ1OFRISF : 3; /*!< [6..4] TXQ One Frame RX Interrupt Status Flag for channel 1                             */
+            uint32_t                 : 1;
+            __IM uint32_t TXQ2OFRISF : 3; /*!< [10..8] TXQ One Frame RX Interrupt Status Flag for channel 2                            */
+            uint32_t                 : 1;
+            __IM uint32_t TXQ3OFRISF : 3; /*!< [14..12] TXQ One Frame RX Interrupt Status Flag for channel 3                           */
+            uint32_t                 : 1;
+            __IM uint32_t TXQ4OFRISF : 3; /*!< [18..16] TXQ One Frame RX Interrupt Status Flag for channel 4                           */
+            uint32_t                 : 1;
+            __IM uint32_t TXQ5OFRISF : 3; /*!< [22..20] TXQ One Frame RX Interrupt Status Flag for channel 5                           */
+            uint32_t                 : 9;
         } CFDTXQOFRISTS_b;
     };
 
@@ -1370,7 +1406,11 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
         {
             __IM uint32_t TXQ0FSF : 4; /*!< [3..0] TXQ Full Status Flag for channel 0                                 */
             __IM uint32_t TXQ1FSF : 4; /*!< [7..4] TXQ Full Status Flag for channel 1                                 */
-            uint32_t              : 24;
+            __IM uint32_t TXQ2FSF : 4; /*!< [11..8] TXQ Full Status Flag for channel 2                                */
+            __IM uint32_t TXQ3FSF : 4; /*!< [15..12] TXQ Full Status Flag for channel 3                               */
+            __IM uint32_t TXQ4FSF : 4; /*!< [19..16] TXQ Full Status Flag for channel 4                               */
+            __IM uint32_t TXQ5FSF : 4; /*!< [23..20] TXQ Full Status Flag for channel 5                               */
+            uint32_t              : 8;
         } CFDTXQFSTS_b;
     };
     __IM uint8_t RESERVED28[96];
@@ -1466,7 +1506,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
                                         *   3                                                                         */
             __IM uint32_t CFOTIF3 : 1; /*!< [30..30] COM FIFO One Frame Transmission Interrupt Flag Channel
                                         *   3                                                                         */
-            uint32_t              : 1;
+            uint32_t : 1;
         } CFDGTINTSTS0_b;
     };
 
@@ -1495,19 +1535,23 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
                                         *   5                                                                         */
             __IM uint32_t CFOTIF5 : 1; /*!< [14..14] COM FIFO One Frame Transmission Interrupt Flag Channel
                                         *   5                                                                         */
-            uint32_t              : 17;
+            uint32_t : 17;
         } CFDGTINTSTS1_b;
     };
 
     union
     {
-        __IOM uint32_t CFDGTSTCFG;     /*!< (@ 0x00001308) Global Test Configuration Register                           */
+        __IOM uint32_t CFDGTSTCFG;       /*!< (@ 0x00001308) Global Test Configuration Register                           */
 
         struct
         {
             __IOM uint32_t C0ICBCE : 1;  /*!< [0..0] Channel 0 Internal CAN Bus Communication Test Mode Enable          */
             __IOM uint32_t C1ICBCE : 1;  /*!< [1..1] Channel 1 Internal CAN Bus Communication Test Mode Enable          */
-            uint32_t               : 14;
+            __IOM uint32_t C2ICBCE : 1;  /*!< [2..2] Channel 2 Internal CAN Bus Communication Test Mode Enable          */
+            __IOM uint32_t C3ICBCE : 1;  /*!< [3..3] Channel 3 Internal CAN Bus Communication Test Mode Enable          */
+            __IOM uint32_t C4ICBCE : 1;  /*!< [4..4] Channel 4 Internal CAN Bus Communication Test Mode Enable          */
+            __IOM uint32_t C5ICBCE : 1;  /*!< [5..5] Channel 5 Internal CAN Bus Communication Test Mode Enable          */
+            uint32_t               : 10;
             __IOM uint32_t RTMPS   : 10; /*!< [25..16] RAM Test Mode Page Select                                        */
             uint32_t               : 6;
         } CFDGTSTCFG_b;
@@ -1569,7 +1613,11 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             __IOM uint32_t RFDMAE7 : 1; /*!< [7..7] DMA Transfer Enable for RXFIFO 7                                   */
             __IOM uint32_t CFDMAE0 : 1; /*!< [8..8] DMA Transfer Enable for Common FIFO 0 of channel 0                 */
             __IOM uint32_t CFDMAE1 : 1; /*!< [9..9] DMA Transfer Enable for Common FIFO 0 of channel 1                 */
-            uint32_t               : 22;
+            __IOM uint32_t CFDMAE2 : 1; /*!< [10..10] DMA Transfer Enable for Common FIFO 0 of channel 2                 */
+            __IOM uint32_t CFDMAE3 : 1; /*!< [11..11] DMA Transfer Enable for Common FIFO 0 of channel 3                 */
+            __IOM uint32_t CFDMAE4 : 1; /*!< [12..12] DMA Transfer Enable for Common FIFO 0 of channel 4                 */
+            __IOM uint32_t CFDMAE5 : 1; /*!< [13..13] DMA Transfer Enable for Common FIFO 0 of channel 5                 */
+            uint32_t               : 18;
         } CFDCDTCT_b;
     };
 
@@ -1587,11 +1635,13 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             __IM uint32_t RFDMASTS5 : 1; /*!< [5..5] DMA Transfer Status for RX FIFO 5                                  */
             __IM uint32_t RFDMASTS6 : 1; /*!< [6..6] DMA Transfer Status for RX FIFO 6                                  */
             __IM uint32_t RFDMASTS7 : 1; /*!< [7..7] DMA Transfer Status for RX FIFO 7                                  */
-            __IM uint32_t CFDMASTS0 : 1; /*!< [8..8] DMA Transfer Status only for Common FIFO 0 of channel
-                                          *   0                                                                         */
-            __IM uint32_t CFDMASTS1 : 1; /*!< [9..9] DMA Transfer Status only for Common FIFO 0 of channel
-                                          *   1                                                                         */
-            uint32_t : 22;
+            __IM uint32_t CFDMASTS0 : 1; /*!< [8..8] DMA Transfer Status only for Common FIFO 0 of channel 0            */
+            __IM uint32_t CFDMASTS1 : 1; /*!< [9..9] DMA Transfer Status only for Common FIFO 0 of channel 1            */
+            __IM uint32_t CFDMASTS2 : 1; /*!< [10..10] DMA Transfer Status only for Common FIFO 0 of channel 2          */
+            __IM uint32_t CFDMASTS3 : 1; /*!< [11..11] DMA Transfer Status only for Common FIFO 0 of channel 3          */
+            __IM uint32_t CFDMASTS4 : 1; /*!< [12..12] DMA Transfer Status only for Common FIFO 0 of channel 4          */
+            __IM uint32_t CFDMASTS5 : 1; /*!< [13..13] DMA Transfer Status only for Common FIFO 0 of channel 5          */
+            uint32_t                : 18;
         } CFDCDTSTS_b;
     };
     __IM uint8_t RESERVED35[8];
@@ -1618,15 +1668,15 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             uint32_t                : 2;
             __IOM uint32_t CFDMAE0  : 1; /*!< [16..16] DMA TX Transfer Enable for Common FIFO 2 of channel
                                           *   0                                                                         */
-            __IOM uint32_t CFDMAE1  : 1; /*!< [17..17] DMA TX Transfer Enable for Common FIFO 2 of channel
+            __IOM uint32_t CFDMAE1 : 1;  /*!< [17..17] DMA TX Transfer Enable for Common FIFO 2 of channel
                                           *   1                                                                         */
-            __IOM uint32_t CFDMAE2  : 1; /*!< [18..18] DMA TX Transfer Enable for Common FIFO 2 of channel
+            __IOM uint32_t CFDMAE2 : 1;  /*!< [18..18] DMA TX Transfer Enable for Common FIFO 2 of channel
                                           *   2                                                                         */
-            __IOM uint32_t CFDMAE3  : 1; /*!< [19..19] DMA TX Transfer Enable for Common FIFO 2 of channel
+            __IOM uint32_t CFDMAE3 : 1;  /*!< [19..19] DMA TX Transfer Enable for Common FIFO 2 of channel
                                           *   3                                                                         */
-            __IOM uint32_t CFDMAE4  : 1; /*!< [20..20] DMA TX Transfer Enable for Common FIFO 2 of channel
+            __IOM uint32_t CFDMAE4 : 1;  /*!< [20..20] DMA TX Transfer Enable for Common FIFO 2 of channel
                                           *   4                                                                         */
-            __IOM uint32_t CFDMAE5  : 1; /*!< [21..21] DMA TX Transfer Enable for Common FIFO 2 of channel
+            __IOM uint32_t CFDMAE5 : 1;  /*!< [21..21] DMA TX Transfer Enable for Common FIFO 2 of channel
                                           *   5                                                                         */
             uint32_t : 10;
         } CFDCDTTCT_b;
@@ -1654,15 +1704,15 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             uint32_t                 : 2;
             __IM uint32_t CFDMASTS0  : 1; /*!< [16..16] DMA TX Transfer Status only for Common FIFO 2 of channel
                                            *   0                                                                         */
-            __IM uint32_t CFDMASTS1  : 1; /*!< [17..17] DMA TX Transfer Status only for Common FIFO 2 of channel
+            __IM uint32_t CFDMASTS1 : 1;  /*!< [17..17] DMA TX Transfer Status only for Common FIFO 2 of channel
                                            *   1                                                                         */
-            __IM uint32_t CFDMASTS2  : 1; /*!< [18..18] DMA TX Transfer Status only for Common FIFO 2 of channel
+            __IM uint32_t CFDMASTS2 : 1;  /*!< [18..18] DMA TX Transfer Status only for Common FIFO 2 of channel
                                            *   2                                                                         */
-            __IM uint32_t CFDMASTS3  : 1; /*!< [19..19] DMA TX Transfer Status only for Common FIFO 2 of channel
+            __IM uint32_t CFDMASTS3 : 1;  /*!< [19..19] DMA TX Transfer Status only for Common FIFO 2 of channel
                                            *   3                                                                         */
-            __IM uint32_t CFDMASTS4  : 1; /*!< [20..20] DMA TX Transfer Status only for Common FIFO 2 of channel
+            __IM uint32_t CFDMASTS4 : 1;  /*!< [20..20] DMA TX Transfer Status only for Common FIFO 2 of channel
                                            *   4                                                                         */
-            __IM uint32_t CFDMASTS5  : 1; /*!< [21..21] DMA TX Transfer Status only for Common FIFO 2 of channel
+            __IM uint32_t CFDMASTS5 : 1;  /*!< [21..21] DMA TX Transfer Status only for Common FIFO 2 of channel
                                            *   5                                                                         */
             uint32_t : 10;
         } CFDCDTTSTS_b;
@@ -1712,9 +1762,9 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
         struct
         {
-            __IOM uint32_t FLXC0 : 1;   /*!< [0..0] Flexible CAN Mode between Channel 0 and Channel 1                      */
-            __IOM uint32_t FLXC1 : 1;   /*!< [1..1] Flexible CAN Mode between Channel 2 and Channel 3                      */
-            __IOM uint32_t FLXC3 : 1;   /*!< [2..2] Flexible CAN Mode between Channel 4 and Channel 5                      */
+            __IOM uint32_t FLXC0 : 1;  /*!< [0..0] Flexible CAN Mode between Channel 0 and Channel 1                      */
+            __IOM uint32_t FLXC1 : 1;  /*!< [1..1] Flexible CAN Mode between Channel 2 and Channel 3                      */
+            __IOM uint32_t FLXC3 : 1;  /*!< [2..2] Flexible CAN Mode between Channel 4 and Channel 5                      */
             uint32_t             : 29;
         } CFDGFCMC_b;
     };
@@ -1722,31 +1772,31 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
 
     union
     {
-        __IOM uint32_t CFDGFTBAC;       /*!< (@ 0x0000138C) Global Flexible Transmission Buffer Assignment Configuration Register   */
+        __IOM uint32_t CFDGFTBAC;      /*!< (@ 0x0000138C) Global Flexible Transmission Buffer Assignment Configuration Register   */
 
         struct
         {
-            __IOM uint32_t FLXMB0 : 4;   /*!< [3..0] Flexible Transmission Buffer Assignment between Channel 0 and Channel 1    */
+            __IOM uint32_t FLXMB0 : 4; /*!< [3..0] Flexible Transmission Buffer Assignment between Channel 0 and Channel 1    */
             uint32_t              : 4;
-            __IOM uint32_t FLXMB1 : 4;   /*!< [11..8] Flexible Transmission Buffer Assignment between Channel 2 and Channel 3   */
+            __IOM uint32_t FLXMB1 : 4; /*!< [11..8] Flexible Transmission Buffer Assignment between Channel 2 and Channel 3   */
             uint32_t              : 4;
-            __IOM uint32_t FLXMB3 : 4;   /*!< [19..16] Flexible Transmission Buffer Assignment between Channel 4 and Channel 5  */
+            __IOM uint32_t FLXMB3 : 4; /*!< [19..16] Flexible Transmission Buffer Assignment between Channel 4 and Channel 5  */
             uint32_t              : 12;
         } CFDGFTBAC_b;
     };
     __IM uint8_t RESERVED39[112];
 
     __IOM R_CANFD_CFDC2_Type   CFDC2[6];    /*!< (@ 0x00001400) Channel Configuration Registers                            */
-    __IM uint8_t RESERVED40[832];
+    __IM uint8_t               RESERVED40[832];
     __IOM R_CANFD_CFDGAFL_Type CFDGAFL[16]; /*!< (@ 0x00001800) Global Acceptance Filter List Registers                    */
-    __IM uint8_t RESERVED41[1792];
+    __IM uint8_t               RESERVED41[1792];
     __IOM R_CANFD_CFDRM_Type   CFDRM[96];   /*!< (@ 0x00002000) RX Message Buffer Access Registers                         */
-    __IM uint8_t RESERVED42[4096];
+    __IM uint8_t               RESERVED42[4096];
     __IOM R_CANFD_CFDRF_Type   CFDRF[8];    /*!< (@ 0x00006000) RX FIFO Access Registers                                   */
     __IOM R_CANFD_CFDCF_Type   CFDCF[18];   /*!< (@ 0x00006400) Common FIFO Access Registers                               */
-    __IM uint8_t RESERVED43[4864];
+    __IM uint8_t               RESERVED43[4864];
     __IOM R_CANFD_CFDTHL_Type  CFDTHL[2];   /*!< (@ 0x00008000) Channel TX History List                                    */
-    __IM uint8_t RESERVED44[1008];
+    __IM uint8_t               RESERVED44[1008];
 
     union
     {
@@ -1757,7 +1807,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             __IOM uint32_t RDTA : 32;    /*!< [31..0] RAM Data Test Access                                              */
         } CFDRPGACC_b[64];
     };
-    __IM uint8_t RESERVED45[31488];
+    __IM uint8_t             RESERVED45[31488];
     __IOM R_CANFD_CFDTM_Type CFDTM[384]; /*!< (@ 0x00010000) TX Message Buffer Access Registers                         */
 } R_CANFD_Type;                          /*!< Size = 81920 (0x14000)                                                    */
 

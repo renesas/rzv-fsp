@@ -44,6 +44,8 @@ typedef enum e_canfd_status
     CANFD_STATUS_ESI           = 0x100, ///< At least one CAN-FD message was received with the ESI flag set
 } canfd_status_t;
 
+#ifndef BSP_OVERRIDE_CANFD_ERROR_T
+
 /** CANFD Error Code */
 typedef enum e_canfd_error
 {
@@ -72,6 +74,8 @@ typedef enum e_canfd_error
     CANFD_ERROR_GLOBAL_CH0_ECC           = 0x10000000, ///< Channel 0 ECC Error
     CANFD_ERROR_GLOBAL_CH1_ECC           = 0x20000000, ///< Channel 1 ECC Error
 } canfd_error_t;
+
+#endif
 
 /** CANFD Transmit Message Buffer (TX MB) */
 typedef enum e_canfd_tx_mb

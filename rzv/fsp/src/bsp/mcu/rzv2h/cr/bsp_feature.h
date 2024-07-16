@@ -78,6 +78,7 @@
 #define BSP_FEATURE_CANFD_TXMB_OFFSET                        (32U)
 #define BSP_FEATURE_CANFD_TXMB_CHANNEL_OFFSET                (64U)
 #define BSP_FEATURE_CANFD_RXMB_MAX                           (96U)
+#define BSP_FEATURE_CANFD_ERROR_GLOBAL_CH0_ECC_REG_POS       (26U)
 
 /* CPG-Related Definitions */
 #define BSP_FEATURE_CPG_HAS_ICLK                             (1U)
@@ -194,6 +195,7 @@
 #define BSP_FEATURE_INTC_IRQ_PRIORITY_MASK                   ((0x000000FFU << BSP_FEATURE_INTC_IRQ_PRIORITY_POS_BIT) & \
                                                               0x000000FFU)
 #define BSP_FEATURE_INTC_SEL_REG                             (&R_INTC->INTR8SEL0)
+#define BSP_FEATURE_INTC_MAX_PRIORITY                        (15U)
 
 /* IOPORT-Related Definitions */
 #define BSP_FEATURE_IOPORT_PORT_GROUP_NUM                    (2U)
@@ -241,7 +243,7 @@
 #define BSP_FEATURE_MPU_REGION_NUM                           (16)
 
 /* POEG-Related Definitions */
-#define BSP_FEATURE_POEG_CHANNEL_MASK                        (0xFU)
+#define BSP_FEATURE_POEG_CHANNEL_MASK                        (0xFFU)
 
 /* RTC-Related Definitions */
 #define BSP_FEATURE_RTC_PES_256_HZ_UNSELECTABLE              (1)

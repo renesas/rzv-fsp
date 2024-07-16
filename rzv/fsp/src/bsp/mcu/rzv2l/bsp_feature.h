@@ -72,6 +72,7 @@
 #define BSP_FEATURE_CANFD_TXMB_OFFSET                          (16U)
 #define BSP_FEATURE_CANFD_TXMB_CHANNEL_OFFSET                  (16U)
 #define BSP_FEATURE_CANFD_RXMB_MAX                             (32U)
+#define BSP_FEATURE_CANFD_ERROR_GLOBAL_CH0_ECC_REG_POS         (28U)
 
 /* CPG-Related Definitions */
 #define BSP_FEATURE_CPG_HAS_ICLK                               (1U)

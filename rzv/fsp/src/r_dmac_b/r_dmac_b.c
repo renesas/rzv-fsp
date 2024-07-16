@@ -98,6 +98,9 @@ static const uint32_t volatile * p_dmac_b_base_address[BSP_FEATURE_DMAC_MAX_UNIT
  * Global Variables
  **********************************************************************************************************************/
 
+/** Channel control struct array */
+static dmac_b_instance_ctrl_t * gp_ctrl[BSP_FEATURE_DMAC_MAX_UNIT * BSP_FEATURE_DMAC_MAX_CHANNEL] = {NULL};
+
 /** DMAC implementation of transfer API. */
 const transfer_api_t g_transfer_on_dmac_b =
 {
@@ -149,6 +152,9 @@ fsp_err_t R_DMAC_B_Open (transfer_ctrl_t * const p_api_ctrl, transfer_cfg_t cons
 
     /* Mark driver as open by initializing "DMAC" in its ASCII equivalent.*/
     p_ctrl->open = DMAC_B_ID;
+
+    /* Track ctrl struct */
+    gp_ctrl[(p_extend->unit) * BSP_FEATURE_DMAC_MAX_CHANNEL + (p_extend->channel)] = p_ctrl;
 
     return FSP_SUCCESS;
 }
@@ -529,7 +535,7 @@ static fsp_err_t r_dmac_b_prv_enable (dmac_b_instance_ctrl_t * p_ctrl)
     R_BSP_DMAC_DREQ_DETECT_METHOD_SELECT(p_ctrl->p_reg,
                                          p_extend->channel,
                                          p_extend->external_detection_mode,
-                                         p_extend->activation_source);
+                                         p_extend->dreq_input_pin);
 
     FSP_CRITICAL_SECTION_EXIT;
 
@@ -836,7 +842,7 @@ void dmac_b_int_isr (void)
     }
 
     /* Clear the DREQ request status. */
-    R_BSP_DMAC_DREQ_STATUS_CLEAR(p_extend->activation_source);
+    R_BSP_DMAC_DREQ_STATUS_CLEAR(p_extend->dreq_input_pin);
 
     /* Clear interrupt condition. */
     p_ctrl->p_reg->GRP[group].CH[channel].CHCTRL = R_DMAC_B0_GRP_CH_CHCTRL_CLREND_Msk;
@@ -866,21 +872,56 @@ void dmac_b_err_isr (void)
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE
 
-    IRQn_Type                irq      = R_FSP_CurrentIrqGet();
+    /* Get the DMAC unit where the error occurred from the argument id. */
+    IRQn_Type irq = R_FSP_CurrentIrqGet();
     dmac_b_instance_ctrl_t * p_ctrl   = (dmac_b_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
     dmac_b_extended_cfg_t  * p_extend = (dmac_b_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
-    uint8_t group   = DMAC_B_PRV_GROUP(p_extend->channel);
-    uint8_t channel = DMAC_B_PRV_CHANNEL(p_extend->channel);
+    uint8_t unit = p_extend->unit;
 
-    /* Clear the error bit and software reset. */
-    p_ctrl->p_reg->GRP[group].CH[channel].CHCTRL_b.SWRST = 1;
+    /* Get the channel error information DSTAT_ER. */
+    R_DMAC_B0_Type * p_base_reg      = (R_DMAC_B0_Type *) p_dmac_b_base_address[unit];
+    uint32_t         dstat_err_upper = p_base_reg->GRP[1].DSTAT_ER;
+    uint32_t         dstat_err_lower = p_base_reg->GRP[0].DSTAT_ER;
+    uint32_t         dstat_err_mask  = (dstat_err_upper << 8) | dstat_err_lower;
 
-    /* Call user callback */
-    dmac_b_callback_args_t args;
-    args.p_context = p_extend->p_context;
-    args.event     = DMAC_B_EVENT_TRANSFER_ERROR;
-    p_extend->p_callback(&args);
+    uint32_t dmac_error_channel = 0;
+
+    /* After going through the event scan, the interrupt handler ends */
+    while (dstat_err_mask)
+    {
+        /* Scan and search for error factors one by one */
+        uint32_t next_err = __CLZ(__RBIT(dstat_err_mask));
+        dstat_err_mask    >>= next_err;
+        dmac_error_channel += next_err;
+
+        uint8_t group   = (uint8_t) DMAC_B_PRV_GROUP(dmac_error_channel);
+        uint8_t channel = (uint8_t) DMAC_B_PRV_CHANNEL(dmac_error_channel);
+
+        p_ctrl = gp_ctrl[unit * BSP_FEATURE_DMAC_MAX_CHANNEL + dmac_error_channel];
+
+        /* Call user registered callback */
+        if (NULL != p_ctrl)
+        {
+            /* Clear the error bit and software reset. */
+            p_ctrl->p_reg->GRP[group].CH[channel].CHCTRL_b.SWRST = 1;
+
+            p_extend = (dmac_b_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+            /* Invoke the callback function if it is set. */
+            if (NULL != p_extend->p_callback)
+            {
+                /* Call user callback */
+                dmac_b_callback_args_t args;
+                args.p_context = p_extend->p_context;
+                args.event     = DMAC_B_EVENT_TRANSFER_ERROR;
+                p_extend->p_callback(&args);
+            }
+        }
+
+        /* Clear the scanned flags one by one */
+        dstat_err_mask &= ~(1UL);
+    }
 
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE

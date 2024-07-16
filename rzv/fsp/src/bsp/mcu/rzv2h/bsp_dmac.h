@@ -47,26 +47,24 @@
 
 /* If this macro is intended for use only within r_dmac_b.c, it is advisable to redefine it as a file-scoped static
  * function inside r_dmac_b.c, instead of placing it in a header file. */
-#define R_BSP_DMAC_DREQ_DETECT_METHOD_SELECT(dmac_reg, channel, detection, activation)                          \
+#define R_BSP_DMAC_DREQ_DETECT_METHOD_SELECT(dmac_reg, channel, detection, dreq_pin)                            \
     do                                                                                                          \
     {                                                                                                           \
-        if (activation == DMAC_TRIGGER_EVENT_PFC_DREQ0 || activation == DMAC_TRIGGER_EVENT_PFC_DREQ1 ||         \
-            activation == DMAC_TRIGGER_EVENT_PFC_DREQ2 || activation == DMAC_TRIGGER_EVENT_PFC_DREQ3 ||         \
-            activation == DMAC_TRIGGER_EVENT_PFC_DREQ4)                                                         \
+        if (dreq_pin != DMAC_B_EXTERNAL_INPUT_PIN_NO_INPUT)                                                     \
         {                                                                                                       \
             uint32_t bit_position = 0U;                                                                         \
-            switch (activation)                                                                                 \
+            switch (dreq_pin)                                                                                   \
             {                                                                                                   \
-                case DMAC_TRIGGER_EVENT_PFC_DREQ0:                                                              \
+                case DMAC_B_EXTERNAL_INPUT_PIN0:                                                                \
                     bit_position = R_INTC_DRTSR_DRITSEL0_Pos;                                                   \
                     break;                                                                                      \
-                case DMAC_TRIGGER_EVENT_PFC_DREQ1:                                                              \
+                case DMAC_B_EXTERNAL_INPUT_PIN1:                                                                \
                     bit_position = R_INTC_DRTSR_DRITSEL1_Pos;                                                   \
                     break;                                                                                      \
-                case DMAC_TRIGGER_EVENT_PFC_DREQ2:                                                              \
+                case DMAC_B_EXTERNAL_INPUT_PIN2:                                                                \
                     bit_position = R_INTC_DRTSR_DRITSEL2_Pos;                                                   \
                     break;                                                                                      \
-                case DMAC_TRIGGER_EVENT_PFC_DREQ3:                                                              \
+                case DMAC_B_EXTERNAL_INPUT_PIN3:                                                                \
                     bit_position = R_INTC_DRTSR_DRITSEL3_Pos;                                                   \
                     break;                                                                                      \
                 default:                                                                                        \
@@ -130,27 +128,29 @@
 
 /* If this macro is intended for use only within r_dmac_b.c, it is advisable to redefine it as a file-scoped static
  * function inside r_dmac_b.c, instead of placing it in a header file. */
-#define R_BSP_DMAC_DREQ_STATUS_CLEAR(activation)             \
+#define R_BSP_DMAC_DREQ_STATUS_CLEAR(dreq_pin)               \
     do                                                       \
     {                                                        \
         if (R_INTC->DRCTR)                                   \
         {                                                    \
-            switch (activation)                              \
+            switch (dreq_pin)                                \
             {                                                \
-                case DMAC_TRIGGER_EVENT_PFC_DREQ0:           \
+                case DMAC_B_EXTERNAL_INPUT_PIN0:             \
                     R_INTC->DRCLR = R_INTC_DRCLR_DRCLR0_Msk; \
                     break;                                   \
-                case DMAC_TRIGGER_EVENT_PFC_DREQ1:           \
+                case DMAC_B_EXTERNAL_INPUT_PIN1:             \
                     R_INTC->DRCLR = R_INTC_DRCLR_DRCLR1_Msk; \
                     break;                                   \
-                case DMAC_TRIGGER_EVENT_PFC_DREQ2:           \
+                case DMAC_B_EXTERNAL_INPUT_PIN2:             \
                     R_INTC->DRCLR = R_INTC_DRCLR_DRCLR2_Msk; \
                     break;                                   \
-                case DMAC_TRIGGER_EVENT_PFC_DREQ3:           \
+                case DMAC_B_EXTERNAL_INPUT_PIN3:             \
                     R_INTC->DRCLR = R_INTC_DRCLR_DRCLR3_Msk; \
                     break;                                   \
-                default:                                     \
+                case DMAC_B_EXTERNAL_INPUT_PIN4:             \
                     R_INTC->DRCLR = R_INTC_DRCLR_DRCLR4_Msk; \
+                    break;                                   \
+                default:                                     \
                     break;                                   \
             }                                                \
         }                                                    \
@@ -660,6 +660,16 @@ typedef enum e_dmac_trigger_event
     DMAC_TRIGGER_EVENT_SCU_DMA_REQ_CMD_OUT0  = 435 | ACK_MODE_LEVEL_MODE | DETECTION_HIGH_LEVEL,
     DMAC_TRIGGER_EVENT_SCU_DMA_REQ_CMD_OUT1  = 436 | ACK_MODE_LEVEL_MODE | DETECTION_HIGH_LEVEL,
 } dmac_trigger_event_t;
+
+typedef enum e_dmac_b_external_input_pin
+{
+    DMAC_B_EXTERNAL_INPUT_PIN0         = 0,
+    DMAC_B_EXTERNAL_INPUT_PIN1         = 1,
+    DMAC_B_EXTERNAL_INPUT_PIN2         = 2,
+    DMAC_B_EXTERNAL_INPUT_PIN3         = 3,
+    DMAC_B_EXTERNAL_INPUT_PIN4         = 4,
+    DMAC_B_EXTERNAL_INPUT_PIN_NO_INPUT = 0x7F
+} dmac_b_external_input_pin_t;
 
 typedef enum e_dmac_b_external_output_pin
 {

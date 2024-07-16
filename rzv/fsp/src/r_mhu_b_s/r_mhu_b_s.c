@@ -16,7 +16,7 @@
 /** "MHU" in ASCII, used to determine if channel is open. */
 #define MHU_B_S_OPEN                      (0x00774855ULL)
 
-#define MHU_B_S_SHMEM_SECURE_CH_OFFSET    (0x8 * 6)
+#define MHU_B_S_SHMEM_SECURE_CH_OFFSET    (0x800)
 #define MHU_B_S_SHMEM_CH_SIZE             (0x8)
 #define MHU_B_S_RSP_TXD_OFFSET            (0x0)
 #define MHU_B_S_MSG_TXD_OFFSET            (0x4)

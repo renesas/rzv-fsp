@@ -151,6 +151,7 @@ typedef struct st_dmac_b_extended_cfg
     /** Select which event will trigger the transfer. */
     dmac_trigger_event_t         activation_source;
     dmac_b_ack_mode_t            ack_mode;                         ///< DACK output mode
+    dmac_b_external_input_pin_t  dreq_input_pin;                   ///< DREQ input pin name
     dmac_b_external_output_pin_t ack_output_pin;                   ///< DACK output pin name
     dmac_b_external_output_pin_t tend_output_pin;                  ///< TEND output pin name
 	dmac_b_external_detection_t  external_detection_mode;          ///< DMAC request detection method for external pin
