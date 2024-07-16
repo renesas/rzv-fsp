@@ -87,6 +87,7 @@ var searchData=
   ['dmac_5fint_5firq',['dmac_int_irq',['../group___d_m_a_c___b.html#ae98f5d3627d5c804de9b552f29ce5783',1,'dmac_b_extended_cfg_t']]],
   ['dmac_5fmode',['dmac_mode',['../group___d_m_a_c___b.html#a6b46edce846a6cb215c5f1c61f38fb23',1,'dmac_b_extended_cfg_t']]],
   ['double_5ftrigger_5fmode',['double_trigger_mode',['../group___a_d_c___e.html#a9fb46ca6ae270967f11502395de49e07',1,'adc_e_extended_cfg_t']]],
+  ['dreq_5finput_5fpin',['dreq_input_pin',['../group___d_m_a_c___b.html#aecc0eaf1b1c77687ef8d3a7cab485112',1,'dmac_b_extended_cfg_t']]],
   ['dummy_5fclocks',['dummy_clocks',['../group___s_p_i___f_l_a_s_h___a_p_i.html#a6b2d213cfd3ca4a9a0f1c3dfd11414ec',1,'spi_flash_cfg_t']]],
   ['dummy_5fcycles',['dummy_cycles',['../group___s_p_i___f_l_a_s_h___a_p_i.html#ad4a653cf90fd97dc9d0a5f8fce3c3795',1,'spi_flash_direct_transfer_t']]],
   ['duty_5fcycle_5fcounts',['duty_cycle_counts',['../group___t_i_m_e_r___a_p_i.html#a9da65b46c59a0543ec977f634bb0265d',1,'timer_cfg_t']]],

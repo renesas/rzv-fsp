@@ -17,6 +17,7 @@ var group___d_m_a_c___b =
       [ "dmac_int_ipl", "group___d_m_a_c___b.html#ad9ca631bfb2e8c33238e11cc75b0ebc3", null ],
       [ "activation_source", "group___d_m_a_c___b.html#a14515bc1b8a66a78c2fdc035fde0e2fa", null ],
       [ "ack_mode", "group___d_m_a_c___b.html#a7d92e1d7d0c259a61117cfae07481967", null ],
+      [ "dreq_input_pin", "group___d_m_a_c___b.html#aecc0eaf1b1c77687ef8d3a7cab485112", null ],
       [ "ack_output_pin", "group___d_m_a_c___b.html#ae5d6ef616f8c71b5511e8f0d21399585", null ],
       [ "tend_output_pin", "group___d_m_a_c___b.html#a4948302219c9409176bcc0ca3a2484d8", null ],
       [ "external_detection_mode", "group___d_m_a_c___b.html#a84613315363012283b6c3abdfd89faff", null ],

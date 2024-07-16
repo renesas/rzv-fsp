@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.0</span>
+   &#160;<span id="projectnumber">Release v2.0.1</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -213,20 +213,38 @@ Functions</h2></td></tr>
 <tr class="separator:ga50cae0c65c54074c32d30eb4108d9a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1273625a09a1d570dea0c5189f6b5fe8"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE bsp_unique_id_t const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga1273625a09a1d570dea0c5189f6b5fe8">R_BSP_UniqueIdGet</a> ()</td></tr>
 <tr class="separator:ga1273625a09a1d570dea0c5189f6b5fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa072f1c546faca4ca4bc984c1406ea59"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaa072f1c546faca4ca4bc984c1406ea59">R_BSP_CacheCleanAllData</a> (void)</td></tr>
+<tr class="separator:gaa072f1c546faca4ca4bc984c1406ea59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga000584fc4ca9d51ccfd4fb99d3fc3c2d"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga000584fc4ca9d51ccfd4fb99d3fc3c2d">R_BSP_CacheInvalidateAllData</a> (void)</td></tr>
+<tr class="separator:ga000584fc4ca9d51ccfd4fb99d3fc3c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf72b7570c0474a494868404340963b4c"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaf72b7570c0474a494868404340963b4c">R_BSP_CacheInvalidateAllInst</a> (void)</td></tr>
+<tr class="separator:gaf72b7570c0474a494868404340963b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9e462fa348b37daf0efe62b2c32ed91"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaf9e462fa348b37daf0efe62b2c32ed91">R_BSP_CacheCleanInvalidateAllData</a> (void)</td></tr>
+<tr class="separator:gaf9e462fa348b37daf0efe62b2c32ed91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1babf0fe4e9ade9cf39921bc14acc4b9"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga1babf0fe4e9ade9cf39921bc14acc4b9">R_BSP_CacheCleanRangeData</a> (void *addr, uint32_t length)</td></tr>
+<tr class="separator:ga1babf0fe4e9ade9cf39921bc14acc4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3cd4c105bce75607362b3189f1d9b9dc"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga3cd4c105bce75607362b3189f1d9b9dc">R_BSP_CacheInvalidateRangeData</a> (void *addr, uint32_t length)</td></tr>
+<tr class="separator:ga3cd4c105bce75607362b3189f1d9b9dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabfe23c9df06f861b706812b8fae9523d"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gabfe23c9df06f861b706812b8fae9523d">R_BSP_CacheInvalidateRangeInst</a> (void *addr, uint32_t length)</td></tr>
+<tr class="separator:gabfe23c9df06f861b706812b8fae9523d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89ffeae208b9cfb9289eff10e01d0574"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga89ffeae208b9cfb9289eff10e01d0574">R_BSP_CacheCleanInvalidateRangeData</a> (void *addr, uint32_t length)</td></tr>
+<tr class="separator:ga89ffeae208b9cfb9289eff10e01d0574"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>The BSP is responsible for getting the MCU from reset to the user's application. Before reaching the user's application, the BSP sets up the stacks, heap, clocks, interrupts, C runtime environment, and stack monitor. </p>
+<p>The BSP is responsible for getting the MPU from reset to the user's application. Before reaching the user's application, the BSP sets up the stacks, heap, clocks, interrupts, C runtime environment, and stack monitor. </p>
 <p><a class="anchor" id="um_bsp_data_initialization"></a><a class="anchor" id="um_stack_pointer_monitor"></a></p><ul>
 <li>
 <a href="#bsp-features">BSP Features</a> </li>
 <li>
 <a href="#bsp-clock-configuration">BSP Clock Configuration</a> </li>
 <li>
-<a href="#system-interrupts">System Interrupts</a> </li>
+<a href="#exception-handle">Exception Handling</a> </li>
 <li>
 <a href="#group-interrupts">Group Interrupts</a> </li>
 <li>
-<a href="#external-peripheral-interrupts">External and Peripheral Interrupts</a> </li>
+<a href="#peripheral-interrupts">Peripheral Interrupts</a> </li>
+<li>
+<a href="#select-class-interrupts">Select Class of Interrupts</a> </li>
 <li>
 <a href="#error-logging">Error Logging</a> </li>
 <li>
@@ -242,15 +260,17 @@ Functions</h2></td></tr>
 <li>
 <a href="#software-delay">Software Delay</a> </li>
 <li>
-<a href="#bsp-tfu">Trignometric Function</a> </li>
-<li>
 <a href="#octaclock-update">Octal-SPI Clock Update</a> </li>
 <li>
 <a href="#board-features">Board Specific Features</a> </li>
 <li>
 <a href="#bsp-configuration">Configuration</a> </li>
 <li>
-<a href="#cr8-secure">Secure state of CR8 cores (RZ/V2H)</a> </li>
+<a href="#setting-cache">Setting of the built-in cache</a> </li>
+<li>
+<p class="startli"><a href="#memory_attribute">Setting of Memory Attribute</a></p>
+<p class="endli"></p>
+</li>
 </ul>
 <h1><a class="anchor" id="bsp-overview"></a>
 Overview</h1>
@@ -258,57 +278,116 @@ Overview</h1>
 BSP Features</h2>
 <h3><a class="anchor" id="bsp-clock-configuration"></a>
 BSP Clock Configuration</h3>
-<p><a class="anchor" id="um_bsp_clock_initialization"></a>All system clocks are set up during BSP initialization based on the settings in bsp_clock_cfg.h. These settings are derived from clock configuration information provided from the Configuration editor <b>Clocks</b> tab.</p>
+<p><a class="anchor" id="um_bsp_clock_initialization"></a>The BSP and each driver operate according to the clock information output to bsp_clock_cfg.h. This clock information is provided from the <b>Clocks</b> tab of the configuration editor. The clock information is registered in a table inside the BSP when the BSP is initialized. The clock information is mainly used as follows.</p>
 <ul>
 <li>Clock configuration is performed prior to initializing the C runtime environment to speed up the startup process.</li>
 <li>The BSP implements the required delays to allow the selected clock to stabilize.</li>
 <li><a class="anchor" id="um_bsp_systemcoreclock"></a>The BSP will configure the CMSIS SystemCoreClock variable after clock initialization with the current system clock frequency.</li>
+<li>For the RZ MPU, the boot core sets the clock settings in the CPG register. Please set the clock frequency that the boot core sets in the configuration editor. This is because the BSP operates by referring to the clock information on the <b>Clocks</b> tab. If the BSP supports boot operation, the boot core be set the value to the CPG register according to the clock frequency information on the <b>Clocks</b> tab.</li>
 </ul>
-<h3><a class="anchor" id="system-interrupts"></a>
-System Interrupts</h3>
-<p><a class="anchor" id="um_bsp_initialize_icu"></a><a class="anchor" id="um_bsp_system_exceptions"></a>As RZ MPUs are based on the Cortex-M ARM architecture, the NVIC Nested Vectored Interrupt Controller (NVIC) handles exceptions and interrupt configuration, prioritization and interrupt masking. In the ARM architecture, the NVIC handles exceptions. Some exceptions are known as System Exceptions. System exceptions are statically located at the "top" of the vector table and occupy vector numbers 1 to 15. Vector zero is reserved for the MSP Main Stack Pointer (MSP). The remaining 15 system exceptions are shown below:</p>
-<ul>
-<li>Reset</li>
-<li>NMI</li>
-<li>Hard Fault Handler</li>
-<li>MPU Fault Handler</li>
-<li>Bus Fault Handler</li>
-<li>Usage Fault Handler</li>
-<li>Reserved</li>
-<li>Reserved</li>
-<li>Reserved</li>
-<li>Reserved</li>
-<li>SVCall Handler</li>
-<li>Debug Monitor Handler</li>
-<li>Reserved</li>
-<li>PendSV Handler</li>
-<li>SysTick Handler</li>
-</ul>
-<p>NMI and Hard Fault exceptions are enabled out of reset and have fixed priorities. Other exceptions have configurable priorities and some can be disabled.</p>
+<h3><a class="anchor" id="bsp-weak-symbols"></a>
+BSP Weak Symbols</h3>
+<p>Some BSP functions, such as exception handlers, can be replaced with user code if required. This is accomplished through the use of the 'weak' attribute. The weak attribute causes the declaration to be emitted as a weak symbol rather than a global. A weak symbol is one that can be overridden by an accompanying strong reference with the same name. When the BSP declares a function as weak, user code can define the same function and it will be used in place of the BSP function.</p>
+<p>Weak symbols are supported for ELF targets and also for a.out targets when using the GNU assembler and linker.</p>
+<p>Note that in CMSIS <code>system.c</code>, there is also a weak definition (and a function body) for the Warm Start callback function <a class="el" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart()</a>. Because this function is defined in the same file as the weak declaration, it will be called as the 'default' implementation. The function may be overridden by copying the body into their user application and modifying it as necessary. The linker identifies this as the 'strong' reference and uses it.</p>
+<h3><a class="anchor" id="exception-handle"></a>
+Exception Handling</h3>
+<p><a class="anchor" id="um_bsp_initialize_icu"></a><a class="anchor" id="um_bsp_system_exceptions"></a> RZ MPU controls exceptions based on the ARM architecture. The BSP for each core provides exception handler functions to handle exceptions. Except for some exception handler functions, these functions are defined with the Weak attribute, so you can use the symbols of these functions to add your own exception handling code. By doing so, the user's exception handler function will be called instead of the exception handler function provided by the BSP.</p>
+<p>Note that the exception handler functions provided by the BSP that are defined with the Weak attribute implement infinite loop processing to prevent runaways.</p>
+<p>Exception information for each core is shown below.</p>
+<p><b>Cortex-M core:</b></p>
+<p>The Cortex-M core and NVIC (Nested Vectored Interrupt Controller) handle exceptions, interrupt configuration, prioritization, and interrupt masking. To handle exceptions, the core refers to a vector table where exception handler functions are registered. The Cortex-M vector table manages the table by exception number, and exception handlers are registered from 1 to 15. Exception number 0 is reserved for the MSP (Main Stack Pointer). In addition, peripheral interrupt handler functions are registered from exception number 16 onwards, and the corresponding function is called according to the number of the interrupt that occurred.</p>
+<p>Below is a list of exception handler functions.</p>
+<table class="doxtable">
+<tr>
+<th>Exception number </th><th>Exception Type </th><th>Exception Handler Symbol  </th></tr>
+<tr>
+<td>0 </td><td>MSP initialize </td><td>None </td></tr>
+<tr>
+<td>1 </td><td>Reset </td><td>Reset_Handler_S (Note) </td></tr>
+<tr>
+<td>2 </td><td>NMI </td><td>NMI_Handler_S (Note) </td></tr>
+<tr>
+<td>3 </td><td>Hard Fault </td><td>HardFault_Handler_S </td></tr>
+<tr>
+<td>4 </td><td>MPU Fault </td><td>MemManage_Handler_S </td></tr>
+<tr>
+<td>5 </td><td>Bus Fault </td><td>BusFault_Handler_S </td></tr>
+<tr>
+<td>6 </td><td>Usage Fault </td><td>UsageFault_Handler_S </td></tr>
+<tr>
+<td>6 </td><td>Secure Fault </td><td>SecureFault_Handler (Note) </td></tr>
+<tr>
+<td>7 - 10 </td><td>Reserved </td><td>None </td></tr>
+<tr>
+<td>11 </td><td>SVCall </td><td>SVC_Handler_S </td></tr>
+<tr>
+<td>12 </td><td>Debug Monitor </td><td>DebugMon_Handler_S </td></tr>
+<tr>
+<td>13 </td><td>Reserved </td><td>None </td></tr>
+<tr>
+<td>14 </td><td>PendSV </td><td>PendSV_Handler_S </td></tr>
+<tr>
+<td>15 </td><td>SysTick </td><td>SysTick_Handler_S </td></tr>
+<tr>
+<td>16 to (16 + N) </td><td>Peripheral Interrput 0 to N </td><td>Interrupt Handler Functions </td></tr>
+</table>
+<p>(Note) These functions cannot be changed.</p>
+<p><b>Cortex-R core:</b></p>
+<p>The Cortex-R core and the ARM Generic Interrupt Controller (GIC) handle exceptions, interrupt configuration, prioritization, and interrupt masking. To handle exceptions, the core references a vector table in which exception handler functions are registered. The Cortex-R vector table manages the table with an offset from the top address of the table, and exception handlers are registered at offsets 0x00 to 0x1F. The interrupt handler function is called by software control in the IRQ_handler.</p>
+<p>The exception handler functions are listed below.</p>
+<table class="doxtable">
+<tr>
+<th>Offset </th><th>Exception Type </th><th>Exception Handler Symbol  </th></tr>
+<tr>
+<td>0x00 </td><td>Reset </td><td>Reset_Handler (Note) </td></tr>
+<tr>
+<td>0x04 </td><td>Undefined Instruction </td><td>Undefined_Handler </td></tr>
+<tr>
+<td>0x08 </td><td>Supervisor Call </td><td>SVC_Handler </td></tr>
+<tr>
+<td>0x0C </td><td>Prefetch Abort </td><td>Prefetch_Handler </td></tr>
+<tr>
+<td>0x10 </td><td>Data Abort </td><td>Abort_Handler </td></tr>
+<tr>
+<td>0x14 </td><td>Resorved </td><td>Reserved </td></tr>
+<tr>
+<td>0x18 </td><td>IRQ interrupt </td><td>IRQ_Handler </td></tr>
+<tr>
+<td>0x1C </td><td>FIQ interrupt </td><td>FIQ_Handler </td></tr>
+</table>
+<p>(Note) This function cannot be changed.</p>
 <h3><a class="anchor" id="group-interrupts"></a>
 Group Interrupts</h3>
 <p><a class="anchor" id="um_bsp_nmi_callback"></a>Group Interrupts are not supported in this device.</p>
 <p><a class="anchor" id="um_bsp_tz_nmi"></a> </p>
-<h3><a class="anchor" id="external-peripheral-interrupts"></a>
-External and Peripheral Interrupts</h3>
-<p><a class="anchor" id="um_bsp_support_user_isrs"></a>RZ MPU supports 480 interrupts by NVIC, and any factor can be registered in the vector table from the <b>Interrupts</b> tab of the Configuration editor.</p>
-<h3><a class="anchor" id="bsp-weak-symbols"></a>
-BSP Weak Symbols</h3>
-<p>You might wonder how the BSP is able to place ISR addresses in the NVIC table without the user having explicitly defined one. All that is required by the BSP is that the interrupt event be given a priority.</p>
-<p>This is accomplished through the use of the 'weak' attribute. The weak attribute causes the declaration to be emitted as a weak symbol rather than a global. A weak symbol is one that can be overridden by an accompanying strong reference with the same name. When the BSP declares a function as weak, user code can define the same function and it will be used in place of the BSP function. By defining all possible interrupt sources as weak, the vector table can be built at compile time and any user declarations (strong references) will be used at runtime.</p>
-<p>Weak symbols are supported for ELF targets and also for a.out targets when using the GNU assembler and linker.</p>
-<p>Note that in CMSIS <code>system.c</code>, there is also a weak definition (and a function body) for the Warm Start callback function <a class="el" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart()</a>. Because this function is defined in the same file as the weak declaration, it will be called as the 'default' implementation. The function may be overridden by the user by copying the body into their user application and modifying it as necessary. The linker identifies this as the 'strong' reference and uses it.</p>
+<h3><a class="anchor" id="peripheral-interrupts"></a>
+Peripheral Interrupts</h3>
+<p><a class="anchor" id="um_bsp_support_user_isrs"></a>RZ MPU supports 480 peripheral interrupts by NVIC or GIC, and any factor can be registered in the vector table from the <b>Interrupts</b> tab of the Configuration editor.</p>
+<h3><a class="anchor" id="select-class-interrupts"></a>
+Select Class of Interrupts</h3>
+<p>In the RZ/V2H, Interrupt No. 353 - 479 is called Select Class, and multiple interrupt sources can be assigned to it. When an interrupt that is the target of Select Class is registered on the Smart Configurator, a number is automatically assigned. Therefore, the interrupt can be used without being aware of the changing interrupt number. However, there is a limit to the number of Select Classes that can be used depending on the core used by the FSP Project.</p>
+<table class="doxtable">
+<tr>
+<th>Core </th><th>Number of Select Class </th><th>Interrupt No.  </th></tr>
+<tr>
+<td>Cortex-M33 </td><td>127 </td><td>No.353 - 479 </td></tr>
+<tr>
+<td>Cortex-R8 core0 </td><td>85 </td><td>No.353 - 437 </td></tr>
+<tr>
+<td>Cortex-R8 core1 </td><td>42 </td><td>No.438 - 479 </td></tr>
+</table>
 <h3><a class="anchor" id="warm-start-callbacks"></a>
 Warm Start Callbacks</h3>
-<p><a class="anchor" id="um_bsp_pre_clock_initialization_callback"></a><a class="anchor" id="um_bsp_post_clock_initialization_callback"></a><a class="anchor" id="um_bsp_post_data_initialization_callback"></a>As the BSP is in the process of bringing up the board out of reset, there are three points where the user can request a callback. These are defined as the 'Pre Clock Init', 'Post Clock Init' and 'Post C' warm start callbacks.</p>
+<p><a class="anchor" id="um_bsp_pre_clock_initialization_callback"></a><a class="anchor" id="um_bsp_post_clock_initialization_callback"></a><a class="anchor" id="um_bsp_post_data_initialization_callback"></a>As the BSP is in the process of bringing up the board out of reset, the callbacks are called at three points. These are defined as the 'Pre Clock Init', 'Post Clock Init' and 'Post C' warm start callbacks.</p>
 <p>As described above, this function is already weakly defined as <a class="el" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart()</a>, so it is a simple matter of redefining the function or copying the existing body from CMSIS system.c into the application code to get a callback. <a class="el" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart()</a> takes an event parameter of type <code>bsp_warm_start_event_t</code> which describes the type of warm start callback being made.</p>
-<p>This function is not enabled/disabled and is always called for both events as part of the BSP startup. Therefore it needs a function body, which will not be called if the user is overriding it. The function body is located in system.c. To use this function just copy this function into your own code and modify it to meet your needs.</p>
+<p>This function is not enabled/disabled and is always called for both events as part of the BSP startup. Therefore it needs a function body, but it will not be called if it is overridden by a function symbol of the same name added within your application code. The function body is located in system.c. To use this function just copy this function into your own code and modify it to meet your needs.</p>
 <h3><a class="anchor" id="c-runtime-initialization"></a>
 C Runtime Initialization</h3>
-<p>This BSP configuration allows the user to skip the FSP C runtime initialization code by setting the "C Runtime Initialization" to "Disabled" on the BSP tab of the Configuration editor. Disabling this option is useful in cases where a non-standard linker script is being used or other modifications to the runtime initialization are desired. If this macro is disabled, the user must use the 'Post Clock Init' event from the warm start (described above) to run their own runtime initialization code.</p>
+<p>In this BSP configuration, the FSP C runtime initialization code is skipped by setting "C Runtime Initialization" to "Disabled" on the BSP tab of the Configuration editor. Disabling this option is useful in cases where a non-standard linker script is being used or other modifications to the runtime initialization are desired. If this macro is disabled, your own run-time initialization code must be executed using the "Post Clock Init" event from a warm start (described above).</p>
 <h3><a class="anchor" id="heap-allocation"></a>
 Heap Allocation</h3>
-<p><a class="anchor" id="um_bsp_stacks_and_heap"></a>The relatively low amount of on-chip SRAM available and lack of memory protection in an MPU means that heap use must be very carefully controlled to avoid memory leaks, overruns and attempted overallocation. Further, many RTOSes provide their own dynamic memory allocation system. For these reasons the default heap size is set at 0 bytes, effectively disabling dynamic memory. If it is required for an application setting a positive value to the "Heap size (bytes)" option in the Common configurations on the <b>BSP</b> tab will allocate a heap.</p>
+<p><a class="anchor" id="um_bsp_stacks_and_heap"></a>There is a limited amount of on-chip SRAM available, and some MPU have no memory protection, so heap usage must be very carefully controlled to avoid memory leaks, overruns, and attempts to over-allocate. Depending on the amount of memory your application requires, allocate a heap by setting a positive value for the "Heap size (bytes)" option in the Common configurations on the <b>BSP</b> tab.</p>
 <dl class="section note"><dt>Note</dt><dd>When using printf/sprintf (and other variants) to output floating point numbers a heap is required. A minimum size of 0x1000 (4096) bytes is recommended when starting development in this case.</dd></dl>
 <h3><a class="anchor" id="error-logging"></a>
 Error Logging</h3>
@@ -333,7 +412,8 @@ Board Specific Features</h1>
 <p>The BSP will call the board's initialization function (bsp_init) which can initialize board specific features.</p>
 <h1><a class="anchor" id="bsp-configuration"></a>
 Configuration</h1>
-<p>The BSP is heavily data driven with most features and functionality being configured based on the content from configuration files. Configuration files represent the settings specified by the user and are generated when the project is built and/or when the Generate Project Content button is clicked in the Configuration editor.</p>
+<p>The BSP is heavily data driven with most features and functionality being configured based on the content from configuration files. Configuration files represent the settings on the Configuration editor and are generated when the project is built and/or when the Generate Project Content button is clicked in the Configuration editor.</p>
+<p><b>Cortex-M core:</b></p>
 <p><h2>Build Time Configurations for fsp_common</h2>
 The following build time configurations are defined in fsp_cfg/bsp/bsp_cfg.h:<br />
 </p><table class="doxtable">
@@ -399,11 +479,284 @@ Disabled</li>
 </td><td>Enabled </td><td>Select if the C runtime initialization in the BSP is to be used. If disabled, use the BSP_WARM_START_POST_CLOCK event to run user defined equivalent. </td></tr>
 </table>
 </p>
-<h1><a class="anchor" id="cr8-secure"></a>
-Secure state of CR8 cores (RZ/V2H)</h1>
-<p>The default setting for bus access from the Cortex-R8 core is Non-Secure access.</p>
-<p>If you want to change to secure and privileged access, change the setting value of the SYS_MSTACCCTL2 register in src/cr8_start.c to 0x00999999.</p>
-<p>src/cr8_start.c</p>
+<p><b>Cortex-R core:</b></p>
+<h2>Build Time Configurations for fsp_common</h2>
+<p>The following build time configurations are defined in fsp_cfg/bsp/bsp_cfg.h:</p>
+<table class="doxtable">
+<tr>
+<th>Configuration </th><th>Options </th><th>Default </th><th>Description  </th></tr>
+<tr>
+<td>FIQ stack size </td><td>Value must be an integer multiple of 8 and between 8 and 0xFFFFFFFF </td><td>0x1000 </td><td>Set the size of the FIQ mode program stack. </td></tr>
+<tr>
+<td>IRQ stack size </td><td>Value must be an integer multiple of 8 and between 8 and 0xFFFFFFFF </td><td>0x1000 </td><td>Set the size of the IRQ mode program stack. </td></tr>
+<tr>
+<td>ABT stack size </td><td>Value must be an integer multiple of 8 and between 8 and 0xFFFFFFFF </td><td>0x1000 </td><td>Set the size of the Abort mode program stack. </td></tr>
+<tr>
+<td>UND stack size </td><td>Value must be an integer multiple of 8 and between 8 and 0xFFFFFFFF </td><td>0x1000 </td><td>Set the size of the Undefined mode program stack. </td></tr>
+<tr>
+<td>SYS stack size </td><td>Value must be an integer multiple of 8 and between 8 and 0xFFFFFFFF </td><td>0x1000 </td><td>Set the size of the System mode program stack. </td></tr>
+<tr>
+<td>SVC stack size </td><td>Value must be an integer multiple of 8 and between 8 and 0xFFFFFFFF </td><td>0x1000 </td><td>Set the size of the Supervisor mode program stack. </td></tr>
+<tr>
+<td>Heap size (bytes) </td><td>Value must be an integer multiple of 8 and between 8 and 0xFFFFFFFF </td><td>0x1000 </td><td>Set the heap size to a positive integer divisible by 8 to enable it. <br />
+ A minimum of 4K (0x1000) is recommended if standard library functions are to be used. </td></tr>
+<tr>
+<td>MCU Vcc (mV) </td><td>Value must between 0 and 5500 (5.5V) </td><td>3300 </td><td>Some peripherals require different settings based on the supplied voltage. Entering Vcc here (in mV) allows the relevant driver modules to configure the associated peripherals accordingly. </td></tr>
+<tr>
+<td>Parameter checking </td><td>- Disabled <br />
+ - Enabled </td><td>Disabled </td><td>When enabled, parameter checking for the BSP is turned on. In addition, any modules whose parameter checking configuration is set to 'Default (BSP)' will perform parameter checking as well. </td></tr>
+<tr>
+<td>Assert Failures </td><td>- Return FSP_ERR_ASSERTION <br />
+ - Call fsp_error_log then Return FSP_ERR_ASSERTION <br />
+ - Use assert() to Halt Execution <br />
+ - Disable checks that would return FSP_ERR_ASSERTION </td><td>Return FSP_ERR_ASSERTION </td><td>Define the behavior of the <a class="el" href="group___b_s_p___m_c_u.html#gaa4fa8ae9390afa996af2dabee6552732">FSP_ASSERT()</a> macro. </td></tr>
+<tr>
+<td>Error Log </td><td>- No Error Log <br />
+ - No Error Log </td><td>No Error Log </td><td>Specify error logging behavior. </td></tr>
+<tr>
+<td>PFS Protect </td><td>- Disabled <br />
+ - Enabled </td><td>Enabled </td><td>Keep the PFS registers locked when they are not being modified. If disabled they will be unlocked during startup. </td></tr>
+<tr>
+<td>C Runtime Initialization </td><td>- Disabled <br />
+ - Enabled </td><td>Enabled </td><td>Select if the C runtime initialization in the BSP is to be used. If disabled, use the BSP_WARM_START_POST_CLOCK event to run user defined equivalent. </td></tr>
+<tr>
+<td>Caches </td><td>- Disabled <br />
+ - Enabled </td><td>Enabled </td><td>Specifies whether to enable or disable the built-in cache. </td></tr>
+</table>
+<h1><a class="anchor" id="setting-cache"></a>
+Setting of the Built-in Cache</h1>
+<p>Some cores have built-in cache. According to the BSP configuration, the cache is enabled after the clock information is registered in the table during the BSP initialization sequence. Enabling the cache will be available both the instruction cache and the data cache. For data cache, the memory space where the cache is enabled must be set as an attribute.</p>
+<p>Below is a list of cores that have cache.</p>
+<table class="doxtable">
+<tr>
+<th>Core </th><th>Cache  </th></tr>
+<tr>
+<td>RZ/V2H Cortex-M33 </td><td>unsupprted </td></tr>
+<tr>
+<td>RZ/V2H Cortex-R8 core0/core1 </td><td>supported </td></tr>
+<tr>
+<td>RZ/V2L Cortex-M33 </td><td>unsupprted </td></tr>
+</table>
+<h1><a class="anchor" id="memory_attribute"></a>
+Setting of the Memory Attribute</h1>
+<p>Memory Attributes and can be set in the Memory Protection Unit (MPU, "MPU" refers to this unit in this chapter). The MPU is configured after anabling cache in the BSP initialization sequence. Below is a list of cores that have MPU.</p>
+<table class="doxtable">
+<tr>
+<th>Core </th><th>MPU  </th></tr>
+<tr>
+<td>RZ/V2H Cortex-M33 </td><td>unsupprted </td></tr>
+<tr>
+<td>RZ/V2H Cortex-R8 core0/core1 </td><td>support </td></tr>
+<tr>
+<td>RZ/V2L Cortex-M33 </td><td>unsupprted </td></tr>
+</table>
+<p>Configure it in the g_mpu_region_table_array[] table in the following file.</p>
+<p>src/mpu_region_table.c</p>
+<p>The structure of the table is shown below.</p>
+<div class="fragment"><div class="line"></div><div class="line">    __WEAK mpu_region_table_cfg_t <span class="keyword">const</span> g_mpu_region_table_array[BSP_FEATURE_MPU_REGION_NUM] =</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if (0 == BSP_CR8_CORE_NUM)</span></div><div class="line"></div><div class="line">        <span class="comment">/* MPU definition table for CR8 core0 */</span></div><div class="line">        <span class="comment">/* region 0 (ITCM) */</span></div><div class="line">        {0,                                                                                                              <span class="comment">/* region number */</span></div><div class="line">         0x00000000,                                                                                                     <span class="comment">/* base address */</span></div><div class="line">         BSP_MPU_SIZE_128KB,                                                                                             <span class="comment">/* size */</span></div><div class="line">         BSP_MPU_SUB_REGION_ALL_ENABLE,                                                                                  <span class="comment">/* sub region enable */</span></div><div class="line">         BSP_MPU_ATTR_AP_PRIVILEGED_READWRITE_USER_READWRITE | BSP_MPU_ATTR_TEX_C_B_NORMAL_OUTER_DISABLE_INNER_DISABLE}, <span class="comment">/* attribute */</span></div><div class="line">        ...</div><div class="line">#endif</div><div class="line">    };</div><div class="line"></div></div><!-- fragment --><p> <b>region number:</b></p>
+<p>The MPU divides the memory space into several regions and sets Memory Attributes for each region. This parameter is the memory region number of the MPU for managing Memory Attribute setting.</p>
+<p>On RZ/V2H Cortex-R8, region 0 to 15 are available.</p>
+<p><b>base address:</b></p>
+<p>Set the base address of the Memory Region. The address must be set to a value aligned with the size set in the size parameter.</p>
+<p><b>size:</b></p>
+<p>Set the macro shown below to determine the size of the Memory Region. The address and size parameters must be set to cover the address range in which the memory is installed.</p>
+<table class="doxtable">
+<tr>
+<th>Name </th><th>Description  </th></tr>
+<tr>
+<td>BSP_MPU_SIZE_256B </td><td>region size = 256byte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_512B </td><td>region size = 512byte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_1KB </td><td>region size = 1Kbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_2KB </td><td>region size = 2Kbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_4KB </td><td>region size = 4Kbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_8KB </td><td>region size = 8Kbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_16KB </td><td>region size = 16Kbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_32KB </td><td>region size = 32Kbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_64KB </td><td>region size = 64Kbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_128KB </td><td>region size = 128Kbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_256KB </td><td>region size = 256Kbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_512KB </td><td>region size = 512Kbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_1MB </td><td>region size = 1Mbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_2MB </td><td>region size = 2Mbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_4MB </td><td>region size = 4Mbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_8MB </td><td>region size = 8Mbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_16MB </td><td>region size = 16Mbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_32MB </td><td>region size = 32Mbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_64MB </td><td>region size = 64Mbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_128MB </td><td>region size = 128Mbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_256MB </td><td>region size = 256Mbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_512MB </td><td>region size = 512Mbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_1GB </td><td>region size = 1Gbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_2GB </td><td>region size = 2Gbyte </td></tr>
+<tr>
+<td>BSP_MPU_SIZE_4GB </td><td>region size = 4Gbyte </td></tr>
+</table>
+<p><b>sub region enable:</b></p>
+<p>Each Memory Region is divided into eight Sub regions, and Sub region 0 is the beginning of the Memory Region and Sub region 7 is the end of the Memory Region. You can disable MPU settings for each Sub region. For the area setting of a Sub region set to disable, the Memory Attribute settings of the lower priority region mapped there will be valid.</p>
+<p>Configure it by setting the macro shown below to Sub region parameter.</p>
+<table class="doxtable">
+<tr>
+<th>Name </th><th>Description  </th></tr>
+<tr>
+<td>BSP_MPU_SUB_REGION_ALL_ENABLE </td><td>Enable all Sub regions. This macro cannot be used in combination with the Sub region disable macros. </td></tr>
+<tr>
+<td>BSP_MPU_SUB_REGION0_DISABLE </td><td>Disable Sub region 0. (Note) </td></tr>
+<tr>
+<td>BSP_MPU_SUB_REGION1_DISABLE </td><td>Disable Sub region 1. (Note) </td></tr>
+<tr>
+<td>BSP_MPU_SUB_REGION2_DISABLE </td><td>Disable Sub region 2. (Note) </td></tr>
+<tr>
+<td>BSP_MPU_SUB_REGION3_DISABLE </td><td>Disable Sub region 3. (Note) </td></tr>
+<tr>
+<td>BSP_MPU_SUB_REGION4_DISABLE </td><td>Disable Sub region 4. (Note) </td></tr>
+<tr>
+<td>BSP_MPU_SUB_REGION5_DISABLE </td><td>Disable Sub region 5. (Note) </td></tr>
+<tr>
+<td>BSP_MPU_SUB_REGION6_DISABLE </td><td>Disable Sub region 6. (Note) </td></tr>
+<tr>
+<td>BSP_MPU_SUB_REGION7_DISABLE </td><td>Disable Sub region 7. (Note) </td></tr>
+</table>
+<p>(Note) You can disable multiple Sub regions by combining macros that disable each Sub region.</p>
+<p>To combine macros, write them as follows:</p>
+<div class="fragment"><div class="line"></div><div class="line">    __WEAK mpu_region_table_cfg_t <span class="keyword">const</span> g_mpu_region_table_array[1] =</div><div class="line">    {</div><div class="line">        {0,</div><div class="line">         0x00000000,</div><div class="line">         BSP_MPU_SIZE_256KB,</div><div class="line">         BSP_MPU_SUB_REGION0_DISABLE | BSP_MPU_SUB_REGION1_DISABLE, <span class="comment">/* sub region 0 and sub region 1 are disabled */</span></div><div class="line">         BSP_MPU_ATTR_AP_PRIVILEGED_READWRITE_USER_READWRITE | BSP_MPU_ATTR_TEX_C_B_NORMAL_OUTER_DISABLE_INNER_ENABLE},</div><div class="line">    };</div><div class="line"></div></div><!-- fragment --><p> <b>attribute:</b></p>
+<p>Sets the Memory Region's Attributes. This value is set using a combination of Access Permission macro and Memory Attribute macro and Other macro.</p>
+<p><b>Permission macro</b></p>
+<table class="doxtable">
+<tr>
+<th>Name </th><th>Description  </th></tr>
+<tr>
+<td>BSP_MPU_ATTR_AP_PRIVILEGED_NOACCESS_USER_NOACCESS </td><td>Privileged mode: not accessible, user mode: not accessible </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_AP_PRIVILEGED_READWRITE_USER_NOACCESS </td><td>Privileged mode: read/write possible, user mode: not accessible </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_AP_PRIVILEGED_READWRITE_USER_READONLY </td><td>Privileged mode: read/write possible, user mode: read only </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_AP_PRIVILEGED_READWRITE_USER_READWRITE </td><td>Privileged mode: read/write possible, user mode: read/write possible </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_AP_PRIVILEGED_READONLY_USER_NOACCESS </td><td>Privileged mode: read only, user mode: not accessible </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_AP_PRIVILEGED_READONLY_USER_READONLY </td><td>Privileged mode: readonly , user mode: read ony </td></tr>
+</table>
+<p><b>Memory Attribute macro</b></p>
+<table class="doxtable">
+<tr>
+<th>Name </th><th>Description  </th></tr>
+<tr>
+<td>BSP_MPU_ATTR_TEX_C_B_STRONGLY_ORDERED </td><td>Memory Attribute: Strongly-Ordered memory </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_TEX_C_B_DEVICE_SHAREABLE </td><td>Memory Attribute: Device memory, Shared </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_TEX_C_B_DEVICE_NON_SHAREABLE </td><td>Memory Attribute: Device memory, Non-Shared </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_TEX_C_B_NORMAL_OUTER_DISABLE_INNER_DISABLE </td><td>Memory Attribute: Normal memory, Outer Non-Cacheable, Inner Non-Cacheable </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_TEX_C_B_NORMAL_OUTER_DISABLE_INNER_ENABLE </td><td>Memory Attribute: Normal memory, Outer Non-Cacheable, Inner Cacheable </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_TEX_C_B_NORMAL_OUTER_ENABLE_INNER_DISABLE </td><td>Memory Attribute: Normal memory, Outer Cacheable, Inner Non-Cacheable </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_TEX_C_B_NORMAL_OUTER_ENABLE_INNER_ENABLE </td><td>Memory Attribute: Normal memory, Outer Cacheable, Inner Cacheable </td></tr>
+</table>
+<p><b>Other Attribute macro</b></p>
+<table class="doxtable">
+<tr>
+<th>Name </th><th>Description  </th></tr>
+<tr>
+<td>BSP_MPU_ATTR_XN </td><td>If this macro is set, programs will be prohibited from running in the region. If this macro is not set, programs will be allowed to run in the region. </td></tr>
+<tr>
+<td>BSP_MPU_ATTR_S </td><td>This is a macro to set Shared Normal memory. If this macro is not set, Non-shared Normal memory will be used. <br />
+This macro can only be combined if the Normal memory attribute is set. Do not combine with Device memory or Strongly Ordered memory settings. </td></tr>
+</table>
+<p>An example of a setting using a combination of attribute macros is shown below.</p>
+<p>This is an example of setting Shared Normal memory, program execution prohibited, and Read/Rrite permission in Privileged mode and User mode.</p>
+<div class="fragment"><div class="line"></div><div class="line">    __WEAK mpu_region_table_cfg_t <span class="keyword">const</span> g_mpu_region_table_array[1] =</div><div class="line">    {</div><div class="line">        {0,</div><div class="line">         0x00000000,</div><div class="line">         BSP_MPU_SIZE_256KB,</div><div class="line">         BSP_MPU_SUB_REGION_ALL_ENABLE,</div><div class="line">         BSP_MPU_ATTR_AP_PRIVILEGED_READWRITE_USER_READWRITE | BSP_MPU_ATTR_TEX_C_B_NORMAL_OUTER_DISABLE_INNER_DISABLE |</div><div class="line">         BSP_MPU_ATTR_S | BSP_MPU_ATTR_XN}, <span class="comment">/* setting to memory attribute */</span></div><div class="line">    };</div><div class="line"></div></div><!-- fragment --><p> <b>Example of attribute setting by region overlaping:</b></p>
+<p>In the MPU, multiple regions can be set to the same address. When multiple regions overlap, the Memory Attributes of the region with the highest priority are set in the memory space. The priority depends on the region number, with larger numbers indicating higher priorities. This feature can be used to realize complex memory space layout.</p>
+<p>The following Pattern 1 and Pattern 2 show examples of settings for complex memory space layout.</p>
+<p><b>Pattern 1:</b> Example of dividing one memory space into two memory spaces of different sizes.</p>
+<div class="fragment"><div class="line">    __WEAK mpu_region_table_cfg_t <span class="keyword">const</span> g_mpu_region_table_array[2] =</div><div class="line">    {</div><div class="line">        {0,                                                                                                              <span class="comment">/* region number */</span></div><div class="line">         0x00000000,                                                                                                     <span class="comment">/* base address */</span></div><div class="line">         BSP_MPU_SIZE_256KB,                                                                                             <span class="comment">/* size */</span></div><div class="line">         BSP_MPU_SUB_REGION_ALL_ENABLE,                                                                                  <span class="comment">/* sub region enable */</span></div><div class="line">         BSP_MPU_ATTR_AP_PRIVILEGED_READWRITE_USER_READWRITE | BSP_MPU_ATTR_TEX_C_B_NORMAL_OUTER_DISABLE_INNER_ENABLE},  <span class="comment">/* attribute */</span></div><div class="line">        {1,                                                                                                              <span class="comment">/* region number */</span></div><div class="line">         0x0003E000,                                                                                                     <span class="comment">/* base address */</span></div><div class="line">         BSP_MPU_SIZE_8KB,                                                                                               <span class="comment">/* size */</span></div><div class="line">         BSP_MPU_SUB_REGION_ALL_ENABLE,                                                                                  <span class="comment">/* sub region enable */</span></div><div class="line">         BSP_MPU_ATTR_AP_PRIVILEGED_READWRITE_USER_READWRITE | BSP_MPU_ATTR_TEX_C_B_NORMAL_OUTER_DISABLE_INNER_DISABLE}, <span class="comment">/* attribute */</span></div><div class="line">    };</div><div class="line"></div></div><!-- fragment --> <div class="image">
+<img src="rzv_mpu_overlap.jpg" alt="rzv_mpu_overlap.jpg"/>
+</div>
+<p> <b>Pattern 2:</b> Example of setting four memory space layouts with two memory regions.</p>
+<p>This example configuration uses the disable feature of the Sub region. When a Sub region is disabled, the memory space will have the attributes of the next highest priority region.</p>
+<div class="fragment"><div class="line">    __WEAK mpu_region_table_cfg_t <span class="keyword">const</span> g_mpu_region_table_array[2] =</div><div class="line">    {</div><div class="line">        {0,                                                                                                              <span class="comment">/* region number */</span></div><div class="line">         0x00000000,                                                                                                     <span class="comment">/* base address */</span></div><div class="line">         BSP_MPU_SIZE_256KB,                                                                                             <span class="comment">/* size */</span></div><div class="line">         BSP_MPU_SUB_REGION_ALL_ENABLE,                                                                                  <span class="comment">/* sub region enable */</span></div><div class="line">         BSP_MPU_ATTR_AP_PRIVILEGED_READWRITE_USER_READWRITE | BSP_MPU_ATTR_TEX_C_B_NORMAL_OUTER_DISABLE_INNER_DISABLE}, <span class="comment">/* attribute */</span></div><div class="line">        {1,                                                                                                              <span class="comment">/* region number */</span></div><div class="line">         0x00000000,                                                                                                     <span class="comment">/* base address */</span></div><div class="line">         BSP_MPU_SIZE_256KB,                                                                                             <span class="comment">/* size */</span></div><div class="line">         BSP_MPU_SUB_REGION0_DISABLE | BSP_MPU_SUB_REGION1_DISABLE |</div><div class="line">         BSP_MPU_SUB_REGION4_DISABLE | BSP_MPU_SUB_REGION5_DISABLE,                                                      <span class="comment">/* sub region enable */</span></div><div class="line">         BSP_MPU_ATTR_AP_PRIVILEGED_READWRITE_USER_READWRITE | BSP_MPU_ATTR_TEX_C_B_NORMAL_OUTER_DISABLE_INNER_ENABLE},  <span class="comment">/* attribute */</span></div><div class="line">    };</div><div class="line"></div></div><!-- fragment --> <div class="image">
+<img src="rzv_mpu_subregion.jpg" alt="rzv_mpu_subregion.jpg"/>
+</div>
+<p> <b>Default Memory Attribute for FSP:</b></p>
+<p>The following list is the default Memory Attribute settings for FSP. This Memory Attribute is set in mpu_region_table.c.</p>
+<p><b>for Cortex-R8 core0</b></p>
+<table class="doxtable">
+<tr>
+<th>Region Number </th><th>Address </th><th>Memory Space Name </th><th>Attribute  </th></tr>
+<tr>
+<td>0 </td><td>0x00000000 - 0x0001FFFF </td><td>ITCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>1 </td><td>0x00020000 - 0x0003FFFF </td><td>DTCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>2 </td><td>0x08100000 - 0x0819FFFF </td><td>RCPU SRAM (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<tr>
+<td>3 </td><td>0x081A0000 - 0x081BFFFF </td><td>RCPU SRAM (Non-Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>4 </td><td>0x10000000 - 0x1FFFFFFF </td><td>Peripheral I/O </td><td>Device Memory, Non-Shareable, Read/Write Enable, Execute Disable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>5 </td><td>0x20000000 - 0x2FFFFFFF </td><td>xSPI memory </td><td>Normal Memory, Non-Shareable, Read Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<tr>
+<td>6 </td><td>0x40800000 - 0x40FFFFFF </td><td>DDR (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<tr>
+<td>7 </td><td>0x41000000 - 0x417FFFFF </td><td>DDR (Non-cache) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>8 </td><td>0x42F00000 - 0x42F01FFF </td><td>OpenAMP RSCTBL + MHU SHMEM </td><td>Normal Memory, Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>9 </td><td>0x43000000 - 0x43FFFFFF </td><td>OpenAMP VRING </td><td>Normal Memory, Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+</table>
+<p>Regions 10 - 15 are unused.</p>
+<p><b>for Cortex-R8 core1</b></p>
+<table class="doxtable">
+<tr>
+<th>Region Number </th><th>Address </th><th>Memory Space Name </th><th>Attribute  </th></tr>
+<tr>
+<td>0 </td><td>0x00000000 - 0x0001FFFF </td><td>ITCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>1 </td><td>0x00020000 - 0x0003FFFF </td><td>DTCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>2 </td><td>0x081C0000 - 0x081DFFFF </td><td>RCPU SRAM (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<tr>
+<td>3 </td><td>0x081E0000 - 0x081FFFFF </td><td>RCPU SRAM (Non-Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>4 </td><td>0x10000000 - 0x1FFFFFFF </td><td>Peripheral I/O </td><td>Device Memory, Non-Shareable, Read/Write Enable, Execute Disable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>5 </td><td>0x20000000 - 0x2FFFFFFF </td><td>xSPI memory </td><td>Normal Memory, Non-Shareable, Read Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<tr>
+<td>6 </td><td>0x40800000 - 0x40FFFFFF </td><td>DDR (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<tr>
+<td>7 </td><td>0x41000000 - 0x417FFFFF </td><td>DDR (Non-cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>8 </td><td>0x42F00000 - 0x42F01FFF </td><td>OpenAMP RSCTBL + MHU SHMEM </td><td>Normal Memory, Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<tr>
+<td>9 </td><td>0x43000000 - 0x43FFFFFF </td><td>OpenAMP VRING </td><td>Normal Memory, Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+</table>
+<p>Regions 10 - 15 are unused.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
@@ -2796,6 +3149,226 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="gaa072f1c546faca4ca4bc984c1406ea59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa072f1c546faca4ca4bc984c1406ea59">&#9670;&nbsp;</a></span>R_BSP_CacheCleanAllData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void R_BSP_CacheCleanAllData </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clean whole of the data cache. </p>
+
+</div>
+</div>
+<a id="ga000584fc4ca9d51ccfd4fb99d3fc3c2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga000584fc4ca9d51ccfd4fb99d3fc3c2d">&#9670;&nbsp;</a></span>R_BSP_CacheInvalidateAllData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void R_BSP_CacheInvalidateAllData </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invalidate whole of the data cache. </p>
+
+</div>
+</div>
+<a id="gaf72b7570c0474a494868404340963b4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf72b7570c0474a494868404340963b4c">&#9670;&nbsp;</a></span>R_BSP_CacheInvalidateAllInst()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void R_BSP_CacheInvalidateAllInst </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invalidate whole of the instruction cache. </p>
+
+</div>
+</div>
+<a id="gaf9e462fa348b37daf0efe62b2c32ed91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf9e462fa348b37daf0efe62b2c32ed91">&#9670;&nbsp;</a></span>R_BSP_CacheCleanInvalidateAllData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void R_BSP_CacheCleanInvalidateAllData </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clean and invalidate the whole of data cache. </p>
+
+</div>
+</div>
+<a id="ga1babf0fe4e9ade9cf39921bc14acc4b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1babf0fe4e9ade9cf39921bc14acc4b9">&#9670;&nbsp;</a></span>R_BSP_CacheCleanRangeData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void R_BSP_CacheCleanRangeData </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clean the cache for the specified area.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>Base address of area to clean. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Length of area to clean. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga3cd4c105bce75607362b3189f1d9b9dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3cd4c105bce75607362b3189f1d9b9dc">&#9670;&nbsp;</a></span>R_BSP_CacheInvalidateRangeData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void R_BSP_CacheInvalidateRangeData </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invalidate the cache for the specified area.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>Base address of area to invalidate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Length of area to invalidate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gabfe23c9df06f861b706812b8fae9523d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabfe23c9df06f861b706812b8fae9523d">&#9670;&nbsp;</a></span>R_BSP_CacheInvalidateRangeInst()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void R_BSP_CacheInvalidateRangeInst </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invalidate the instruction cache for the specified area.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>Base address of area to invalidate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Length of area to invalidate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga89ffeae208b9cfb9289eff10e01d0574"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga89ffeae208b9cfb9289eff10e01d0574">&#9670;&nbsp;</a></span>R_BSP_CacheCleanInvalidateRangeData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void R_BSP_CacheCleanInvalidateRangeData </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clean and invalidate the cache for the specified area.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>Base address of area to clean and invalidate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Length of area to clean and invalidate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="gaa3cd3e43291e81e795d642b79b6088e6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaa3cd3e43291e81e795d642b79b6088e6">&#9670;&nbsp;</a></span>SystemCoreClock <span class="overload">[1/2]</span></h2>
@@ -2867,7 +3440,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.1 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

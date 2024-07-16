@@ -132,10 +132,14 @@ var group___g_p_t =
       [ "GPT_ADC_TRIGGER_DOWN_COUNT_START_ADC_B", "group___g_p_t.html#gga6dfe4ddfb53ba52c674039fd20b6c2b6a0d5922b5221be7b92ce2218c2d8fb50c", null ]
     ] ],
     [ "gpt_poeg_link_t", "group___g_p_t.html#gac13c16f82e0b7cafcdb8eb6892722943", [
-      [ "GPT_POEG_LINK_POEG0", "group___g_p_t.html#ggac13c16f82e0b7cafcdb8eb6892722943ae96e3845c4ea884a6d610a745a2c343c", null ],
-      [ "GPT_POEG_LINK_POEG1", "group___g_p_t.html#ggac13c16f82e0b7cafcdb8eb6892722943ae9be405a3d64f348534f67710b37658c", null ],
-      [ "GPT_POEG_LINK_POEG2", "group___g_p_t.html#ggac13c16f82e0b7cafcdb8eb6892722943a41eefcd7c70c85413a47d006127e112e", null ],
-      [ "GPT_POEG_LINK_POEG3", "group___g_p_t.html#ggac13c16f82e0b7cafcdb8eb6892722943a7d98bec67e920f1f0f8a98ac18aaa7b5", null ]
+      [ "GPT_POEG_LINK_POEG0", "group___g_p_t.html#gac13c16f82e0b7cafcdb8eb6892722943ae96e3845c4ea884a6d610a745a2c343c", null ],
+      [ "GPT_POEG_LINK_POEG1", "group___g_p_t.html#gac13c16f82e0b7cafcdb8eb6892722943ae9be405a3d64f348534f67710b37658c", null ],
+      [ "GPT_POEG_LINK_POEG2", "group___g_p_t.html#gac13c16f82e0b7cafcdb8eb6892722943a41eefcd7c70c85413a47d006127e112e", null ],
+      [ "GPT_POEG_LINK_POEG3", "group___g_p_t.html#gac13c16f82e0b7cafcdb8eb6892722943a7d98bec67e920f1f0f8a98ac18aaa7b5", null ],
+      [ "GPT_POEG_LINK_POEG0_POEG4", "group___g_p_t.html#gac13c16f82e0b7cafcdb8eb6892722943a529d1db4a781606828f88617f39aee3a", null ],
+      [ "GPT_POEG_LINK_POEG1_POEG5", "group___g_p_t.html#gac13c16f82e0b7cafcdb8eb6892722943a1a1e469afcc07a4c501a3c24a81c50f6", null ],
+      [ "GPT_POEG_LINK_POEG2_POEG6", "group___g_p_t.html#gac13c16f82e0b7cafcdb8eb6892722943a4bffa9423f8d95ed7ced2cc5a8323722", null ],
+      [ "GPT_POEG_LINK_POEG3_POEG7", "group___g_p_t.html#gac13c16f82e0b7cafcdb8eb6892722943a17daf104a45acbbacb5d43e56b375d1f", null ]
     ] ],
     [ "gpt_output_disable_t", "group___g_p_t.html#ga7e57d68f5f5d9757bab01857e8252ade", [
       [ "GPT_OUTPUT_DISABLE_NONE", "group___g_p_t.html#gga7e57d68f5f5d9757bab01857e8252adeaa35910cb9d2f17f2488b4efdcb1b1fe9", null ],
