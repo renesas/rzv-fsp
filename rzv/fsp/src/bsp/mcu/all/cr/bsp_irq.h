@@ -126,7 +126,6 @@ __STATIC_INLINE void R_BSP_IrqStatusClear (IRQn_Type irq)
 __STATIC_INLINE void R_BSP_IrqClearPending (IRQn_Type irq)
 {
     volatile uint32_t * p_reg_addr;
-    uint32_t            mask;
     uint32_t            shift;
     uint32_t            irq_no = (uint32_t) irq + BSP_CORTEX_VECTOR_TABLE_ENTRIES;
 
@@ -135,11 +134,9 @@ __STATIC_INLINE void R_BSP_IrqClearPending (IRQn_Type irq)
     /* The bit field width is 1 bit                          */
     /* The target bit can be calculated by irq mod 32        */
     p_reg_addr = &R_INTC_GIC->GICD_ICDICPRn;
-    shift      = (irq_no % BSP_PRV_GIC_STRIDE32);           /* 1bits per unit */
-    mask       = (uint32_t) (0x00000001UL << shift);        /* 1bits per unit */
+    shift      = (irq_no % BSP_PRV_GIC_STRIDE32); /* 1bits per unit */
 
-    *(p_reg_addr + (irq_no / BSP_PRV_GIC_STRIDE32)) = mask; /* Write GICD_ICDICPRn */
-    R_BSP_IoRegWrite32((p_reg_addr + (irq_no / BSP_PRV_GIC_STRIDE32)), 1, shift, mask);
+    R_BSP_IoRegWrite32((p_reg_addr + (irq_no / BSP_PRV_GIC_STRIDE32)), 1, shift, BSP_IO_NONMASK_ACCESS_32);
 }
 
 /*******************************************************************************************************************//**

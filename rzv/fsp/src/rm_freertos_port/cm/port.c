@@ -1270,12 +1270,6 @@ __attribute__((weak)) IRQn_Type vPortGetWakeUpIrq (void)
  **********************************************************************************************************************/
 void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
 {
-    /* Get IRQ number for the return factor. */
-    IRQn_Type irq_for_wakeup = vPortGetWakeUpIrq();
-
-    /* This program jumps to IRQ handler of the return factor. */
- #define portJUMP_TO_IRQ_HANDLER_OF_RETURN_FACTOR    (1)
-
     /* Sleep until something happens.  configPRE_SLEEP_PROCESSING() can
      * set its parameter to 0 to indicate that its implementation contains
      * its own wait for interrupt or wait for event instruction, and so wfi
@@ -1284,89 +1278,49 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
     configPRE_SLEEP_PROCESSING(xExpectedIdleTime);
     if (xExpectedIdleTime > 0)
     {
-        uint32_t nvic_iser_backup[sizeof(NVIC->ISER) / sizeof(uint32_t)];
-        uint32_t nvic_icer[sizeof(NVIC->ICER) / sizeof(uint32_t)];
-
-        /* Go to Cortex-M33 Sleep Mode. Refer to "Cortex-M33 Sleep Mode" section of Hardware Manual */
-
-        /* Sequence "1. Slow down the speed of Cortex-M33 clock" is not mandatory. */
+        /* Procedure for transition to the sleep mode
+         * (Refer to "Sleep Mode" section of the User's Manual for details.)
+         * NOTE: Sequences 2-5 are ignored as this isn't a deep sleep transition, aiming for better performance.
+         *
+         * Sequence 1. Set the request for transition to sleep mode state. */
         BSP_SLEEP_SET_SLEEP_REQ();
 
         /* Sequence 2.
-         * Set the IM33_MASK bit of the SYS_LP_CTL7 register to 1.
-         * Interrupts to IM33 are masked and interrupts from IM33 to Cortex-M33 are not accepted.
-         * The IM33_MASK bit is automatically cleared after completing the transition to Cortex-M33 Sleep Mode.
-         * Refer to the SYS_LP_CTL7 register in the SYSC section.
-         */
-        R_BSP_IM33_ENABLE();
-
-        /* Sequence 3.
-         * Set the return factor to NVIC. Enables only the interrupts used for return from Cortex-M33 Sleep Mode and
-         * disables the interrupts used for the normal operation.
-         *//* Backup all NVIC ISER registers */
-        memcpy((void *) nvic_iser_backup, (void *) NVIC->ISER, sizeof(NVIC->ISER));
-
-        /* Set all NVIC ICER registers except the return factor */
-        memset((void *) nvic_icer, ICER1, sizeof(nvic_icer));
-        nvic_icer[irq_for_wakeup / ICER2] = (uint32_t) ~(1U << (uint32_t) (irq_for_wakeup % ICER2));
-        memcpy((void *) NVIC->ICER, (void *) nvic_icer, sizeof(NVIC->ICER));
-
-        /* Sequence 4.
-         * Issue Barrier instruction.
+         * Reduce the clock frequency if necessary.
          *
-         * DSB should be last instruction executed before WFI
-         * infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0321a/BIHICBGB.html
+         * Sequence 3.
+         * Disable interrupts from being accepted by the core from the Interrupt Controller Unit (ICU), if necessary.
+         *
+         * Sequence 4.
+         * Enable only the interrupt that will wake the core, from the core's interrupt controller (such as the
+         * NVIC or GIC).
+         *
+         * Sequence 5.
+         * Configure the core-specific registers to enable deep sleep mode (if it is supported).
+         *
+         * Sequence 6.
+         * Execute the WFI or WFE instruction after issuing a memory barrier instruction.
          */
         __DSB();
-
-        /* Sequence 5.
-         * Set the SLEEPDEEP bit of the SCR register in Cortex-M33 to 1.
-         * Note that to do above in the case of non-secure mode, SLEEPDEEPS bit is required to be 0.
-         */
-        SCB->SCR = (SCB->SCR & (~SCB_SCR_SLEEPDEEP_Msk)) |
-                   ((1 << SCB_SCR_SLEEPDEEP_Pos) & SCB_SCR_SLEEPDEEP_Msk);
-
-        /* Sequence 6.
-         * Read SCR register to confirm whether the SLEEPDEEP bit is set to 1.
-         */
-        while (!(SCB->SCR & SCB_SCR_SLEEPDEEP_Msk))
-        {
-            ;
-        }
-
-        /* Sequence 7.
-         * Issue a WFI instruction to enter Cortex-M33 Sleep Mode.
-         *
-         * If there is a pending interrupt (wake up condition for WFI is true), the MCU does not enter low power mode:
-         * http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0552a/BABHHGEB.html
-         * Note that interrupt will bring the CPU out of the low power mode.  After exiting from low power mode,
-         * interrupt will be re-enabled. */
         __WFI();
         __ISB();
 
-        /* Sequence 8.
-         * Return from Cortex-M33 Sleep Mode when the event ocurrs or the interrupt set in NVIC occurs.
+        /* Procedures for returning from sleep mode
+         *
+         * NOTE: Sequence 1 - 3 are ignored, as this isn't a deep sleep transition, aiming for better performance.
+         *
+         * Sequence 1.
+         * Perform core-specific processing to exit deep sleep mode.
+         *
+         * Sequence 2.
+         * Restore the interrupt settings that were modified before entering deep sleep mode.
+         *
+         * Sequence 3.
+         * Restore the clock frequency if it was changed.
+         *
+         * Sequence 4.
+         * Clear the request for transition to sleep mode state.
          */
-
-        /* Sequence 9.
-         * Confirm the interrupt cause and perform the processing required for returning from Cortex-M33 Sleep Mode.
-         */
-
-        /* Sequence 10.
-         * And then clear the interrupt cause.
-         */
- #if !portJUMP_TO_IRQ_HANDLER_OF_RETURN_FACTOR
-        R_BSP_IrqClearPending(irq_for_wakeup);
- #endif
-
-        /* Sequence 11.
-         * Set the interrupt causes for the normal operation to NVIC.
-         */
-
-        /* Restore NVIC ISER register from backup */
-        memcpy((void *) NVIC->ISER, (void *) nvic_iser_backup, sizeof(NVIC->ISER));
-
-        /* Sequence "12. Recover the speed of Cortex-M33 clock." is not mandatory. */
         BSP_SLEEP_CLEAR_SLEEP_REQ();
 
         /* Re-enable interrupts to allow the interrupt that brought the MCU
