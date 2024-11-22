@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Microsoft Visio、SVG Export により生成 figure-fsp-interface-implementation-example_RZV.svg figure-fsp-interface-implemen~1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="9.19792in" height="1.72917in"
+		viewBox="0 0 662.25 124.5" xml:space="preserve" color-interpolation-filters="sRGB" class="st13">
+	<v:documentProperties v:langID="1041"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#70ad47;stroke:#939393;stroke-linecap:butt;stroke-width:0.75}
+		.st2 {fill:none;stroke:none;stroke-linecap:butt;stroke-width:0.75}
+		.st3 {fill:#ffffff;font-family:Arial;font-size:0.916672em}
+		.st4 {font-size:1em}
+		.st5 {fill:#5b9bd5;fill-opacity:0.33;stroke:#000000;stroke-dasharray:3,1.5;stroke-linecap:butt;stroke-width:0.75}
+		.st6 {fill:#000000;font-family:Arial;font-size:0.916672em}
+		.st7 {fill:#5b9bd5;stroke:#939393;stroke-linecap:butt;stroke-width:0.75}
+		.st8 {fill:#c55a11;stroke:#939393;stroke-linecap:butt;stroke-width:0.75}
+		.st9 {fill:none;stroke:none;stroke-width:1}
+		.st10 {fill:none}
+		.st11 {stroke:#000000;stroke-linecap:butt;stroke-width:0.75}
+		.st12 {fill:#000000;stroke:#000000;stroke-linecap:butt;stroke-width:0.75}
+		.st13 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<v:userDefs/>
+		<title>figure-fsp-interface-implementa</title>
+		<v:pageProperties v:drawingScale="1" v:pageScale="1" v:drawingUnits="19" v:shadowOffsetX="9" v:shadowOffsetY="-9"/>
+		<g id="group1-1" transform="translate(-50.65,-0.375196)" v:mID="1" v:groupContext="group">
+			<title>シート.1</title>
+			<g id="shape2-2" v:mID="2" v:groupContext="shape" transform="translate(51.025,9.9476E-14)">
+				<title>シート.2</title>
+				<path d="M0 100.88 L0 119.74 C0 122.91 1.59 124.5 4.76 124.5 L118.24 124.5 C121.41 124.5 123 122.91 123 119.74 L123
+							 82.01 C123 78.84 121.41 77.25 118.24 77.25 L4.76 77.25 C1.59 77.25 0 78.84 0 82.01 L0 100.88 Z"
+						class="st1"/>
+			</g>
+			<g id="shape3-4" v:mID="3" v:groupContext="shape" transform="translate(-1.15108E-12,-16.8)">
+				<title>シート.3</title>
+				<desc>Peripheral: RIIC Module: r_riic</desc>
+				<v:userDefs/>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="112.525" cy="119.1" width="225.08" height="10.8"/>
+				<rect x="0" y="113.7" width="225.05" height="10.8" class="st2"/>
+				<text x="77.37" y="115.8" class="st3" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Peripheral: IIC<v:newlineChar/><tspan
+							x="59.65" dy="1.2em" class="st4">Module: r_riic</tspan>_master</text>			</g>
+			<g id="shape4-8" v:mID="4" v:groupContext="shape" transform="translate(118.525,-76.5)">
+				<title>シート.4</title>
+				<path d="M0 100.88 L0 119.74 C0 122.91 1.59 124.5 4.76 124.5 L118.24 124.5 C121.41 124.5 123 122.91 123 119.74 L123
+							 82.01 C123 78.84 121.41 77.25 118.24 77.25 L4.76 77.25 C1.59 77.25 0 78.84 0 82.01 L0 100.88 Z"
+						class="st5"/>
+			</g>
+			<g id="shape5-10" v:mID="5" v:groupContext="shape" transform="translate(67.5,-93.3)">
+				<title>シート.5</title>
+				<desc>Interface: I2C r_i2c_master_api.h</desc>
+				<v:userDefs/>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="112.525" cy="119.1" width="225.08" height="10.8"/>
+				<rect x="0" y="113.7" width="225.05" height="10.8" class="st2"/>
+				<text x="79.51" y="115.8" class="st6" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Interface: I2C<v:newlineChar/><tspan
+							x="65.75" dy="1.2em" class="st4">r_i2c_master_api.h</tspan></text>			</g>
+			<g id="shape6-14" v:mID="6" v:groupContext="shape" transform="translate(320.275,9.9476E-14)">
+				<title>シート.6</title>
+				<path d="M0 100.88 L0 119.74 C0 122.91 1.59 124.5 4.76 124.5 L118.24 124.5 C121.41 124.5 123 122.91 123 119.74 L123
+							 82.01 C123 78.84 121.41 77.25 118.24 77.25 L4.76 77.25 C1.59 77.25 0 78.84 0 82.01 L0 100.88 Z"
+						class="st7"/>
+			</g>
+			<g id="shape7-16" v:mID="7" v:groupContext="shape" transform="translate(269.25,-16.8)">
+				<title>シート.7</title>
+				<desc>Peripheral: RSCI Module: r_sci_b_uart</desc>
+				<v:userDefs/>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="112.525" cy="119.1" width="225.08" height="10.8"/>
+				<rect x="0" y="113.7" width="225.05" height="10.8" class="st2"/>
+				<text x="75.23" y="115.8" class="st3" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Peripheral: SCI<v:newlineChar/><tspan
+							x="61.16" dy="1.2em" class="st4">Module: r_sci_b_uart</tspan></text>			</g>
+			<g id="shape8-20" v:mID="8" v:groupContext="shape" transform="translate(320.275,-76.5)">
+				<title>シート.8</title>
+				<path d="M0 100.88 L0 119.74 C0 122.91 1.59 124.5 4.76 124.5 L118.24 124.5 C121.41 124.5 123 122.91 123 119.74 L123
+							 82.01 C123 78.84 121.41 77.25 118.24 77.25 L4.76 77.25 C1.59 77.25 0 78.84 0 82.01 L0 100.88 Z"
+						class="st5"/>
+			</g>
+			<g id="shape9-22" v:mID="9" v:groupContext="shape" transform="translate(269.25,-93.3)">
+				<title>シート.9</title>
+				<desc>Interface: UART r_uart_api.h</desc>
+				<v:userDefs/>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="112.525" cy="119.1" width="225.08" height="10.8"/>
+				<rect x="0" y="113.7" width="225.05" height="10.8" class="st2"/>
+				<text x="73.1" y="115.8" class="st6" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Interface: UART<v:newlineChar/><tspan
+							x="83.17" dy="1.2em" class="st4">r_uart_api.h</tspan></text>			</g>
+			<g id="shape10-26" v:mID="10" v:groupContext="shape" transform="translate(186.025,9.9476E-14)">
+				<title>シート.10</title>
+				<path d="M0 100.88 L0 119.74 C0 122.91 1.59 124.5 4.76 124.5 L118.24 124.5 C121.41 124.5 123 122.91 123 119.74 L123
+							 82.01 C123 78.84 121.41 77.25 118.24 77.25 L4.76 77.25 C1.59 77.25 0 78.84 0 82.01 L0 100.88 Z"
+						class="st7"/>
+			</g>
+			<g id="shape11-28" v:mID="11" v:groupContext="shape" transform="translate(135,-16.8)">
+				<title>シート.11</title>
+				<desc>Peripheral: RSCI Module: r_sci_b_i2c</desc>
+				<v:userDefs/>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="112.525" cy="119.1" width="225.07" height="10.8"/>
+				<rect x="0" y="113.7" width="225.05" height="10.8" class="st2"/>
+				<text x="75.23" y="115.8" class="st3" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Peripheral: SCI<v:newlineChar/><tspan
+							x="63.61" dy="1.2em" class="st4">Module: r_sci_b_i2c</tspan></text>			</g>
+			<g id="shape12-32" v:mID="12" v:groupContext="shape" transform="translate(455.275,9.9476E-14)">
+				<title>シート.12</title>
+				<path d="M0 100.88 L0 119.74 C0 122.91 1.59 124.5 4.76 124.5 L118.24 124.5 C121.41 124.5 123 122.91 123 119.74 L123
+							 82.01 C123 78.84 121.41 77.25 118.24 77.25 L4.76 77.25 C1.59 77.25 0 78.84 0 82.01 L0 100.88 Z"
+						class="st7"/>
+			</g>
+			<g id="shape13-34" v:mID="13" v:groupContext="shape" transform="translate(404.25,-16.8)">
+				<title>シート.13</title>
+				<desc>Peripheral: RSCI Module: r_sci_b_spi</desc>
+				<v:userDefs/>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="112.525" cy="119.1" width="225.08" height="10.8"/>
+				<rect x="0" y="113.7" width="225.05" height="10.8" class="st2"/>
+				<text x="75.23" y="115.8" class="st3" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Peripheral: SCI<v:newlineChar/><tspan
+							x="63.61" dy="1.2em" class="st4">Module: r_sci_b_spi</tspan></text>			</g>
+			<g id="shape14-38" v:mID="14" v:groupContext="shape" transform="translate(522.775,-76.5)">
+				<title>シート.14</title>
+				<path d="M0 100.88 L0 119.74 C0 122.91 1.59 124.5 4.76 124.5 L118.24 124.5 C121.41 124.5 123 122.91 123 119.74 L123
+							 82.01 C123 78.84 121.41 77.25 118.24 77.25 L4.76 77.25 C1.59 77.25 0 78.84 0 82.01 L0 100.88 Z"
+						class="st5"/>
+			</g>
+			<g id="shape15-40" v:mID="15" v:groupContext="shape" transform="translate(471.75,-93.3)">
+				<title>シート.15</title>
+				<desc>Interface: SPI r_spi_api.h</desc>
+				<v:userDefs/>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="112.525" cy="119.1" width="225.08" height="10.8"/>
+				<rect x="0" y="113.7" width="225.05" height="10.8" class="st2"/>
+				<text x="79.2" y="115.8" class="st6" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Interface: SPI<v:newlineChar/><tspan
+							x="85.62" dy="1.2em" class="st4">r_spi_api.h</tspan></text>			</g>
+			<g id="shape16-44" v:mID="16" v:groupContext="shape" transform="translate(589.525,9.9476E-14)">
+				<title>シート.16</title>
+				<path d="M0 100.88 L0 119.74 C0 122.91 1.59 124.5 4.76 124.5 L118.24 124.5 C121.41 124.5 123 122.91 123 119.74 L123
+							 82.01 C123 78.84 121.41 77.25 118.24 77.25 L4.76 77.25 C1.59 77.25 0 78.84 0 82.01 L0 100.88 Z"
+						class="st8"/>
+			</g>
+			<g id="shape17-46" v:mID="17" v:groupContext="shape" transform="translate(538.5,-16.8)">
+				<title>シート.17</title>
+				<desc>Peripheral: RSPI Module: r_spi_b</desc>
+				<v:userDefs/>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="112.525" cy="119.1" width="225.08" height="10.8"/>
+				<rect x="0" y="113.7" width="225.05" height="10.8" class="st2"/>
+				<text x="75.53" y="115.8" class="st3" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Peripheral: SPI<v:newlineChar/><tspan
+							x="73.39" dy="1.2em" class="st4">Module: r_spi_b</tspan></text>			</g>
+			<g id="group18-50" transform="translate(584.275,-52.5825)" v:mID="18" v:groupContext="group">
+				<title>シート.18</title>
+				<g id="shape19-51" v:mID="19" v:groupContext="shape">
+					<title>シート.19</title>
+					<path d="M0 100.58 L0 114.87 L67.35 114.87 L66.97 124.5 L0 100.58 Z" class="st9"/>
+				</g>
+				<g id="group20-53" v:mID="20" v:groupContext="group">
+					<title>シート.20</title>
+					<g id="shape21-54" v:mID="21" v:groupContext="shape">
+						<title>シート.21</title>
+						<path d="M0 100.58 L0 114.87 L67.35 114.87 L66.97 124.5 L0 100.58 Z" class="st9"/>
+					</g>
+					<g id="shape22-56" v:mID="22" v:groupContext="shape">
+						<title>シート.22</title>
+						<path d="M0 100.58 L0 114.87 L67.35 114.87 L66.97 124.5 L0 100.58 Z" class="st10"/>
+						<path d="M0 100.58 L0 114.87 L67.35 114.87 L66.97 124.5" class="st11"/>
+					</g>
+				</g>
+			</g>
+			<g id="shape23-59" v:mID="23" v:groupContext="shape" transform="translate(648.992,-48.09)">
+				<title>シート.19</title>
+				<path d="M2.06 124.5 L0 119.92 L4.49 120.1 L2.06 124.5 Z" class="st12"/>
+			</g>
+			<g id="group24-61" transform="translate(112.578,-52.59)" v:mID="24" v:groupContext="group">
+				<title>シート.20</title>
+				<g id="shape25-62" v:mID="25" v:groupContext="shape">
+					<title>シート.23</title>
+					<path d="M67.45 100.59 L67.45 114.88 L0.1 114.88 L0 124.5 L67.45 100.59 Z" class="st9"/>
+				</g>
+				<g id="group26-64" v:mID="26" v:groupContext="group">
+					<title>シート.24</title>
+					<g id="shape27-65" v:mID="27" v:groupContext="shape">
+						<title>シート.27</title>
+						<path d="M67.45 100.59 L67.45 114.88 L0.1 114.88 L0 124.5 L67.45 100.59 Z" class="st9"/>
+					</g>
+					<g id="shape28-67" v:mID="28" v:groupContext="shape">
+						<title>シート.28</title>
+						<path d="M67.45 100.59 L67.45 114.88 L0.1 114.88 L0 124.5 L67.45 100.59 Z" class="st10"/>
+						<path d="M67.45 100.59 L67.45 114.88 L0.1 114.88 L0 124.5" class="st11"/>
+					</g>
+				</g>
+			</g>
+			<g id="shape29-70" v:mID="29" v:groupContext="shape" transform="translate(110.328,-48.09)">
+				<title>シート.21</title>
+				<path d="M2.21 124.5 L0 119.98 L4.5 120.02 L2.21 124.5 Z" class="st12"/>
+			</g>
+			<g id="group30-72" transform="translate(381.775,-52.59)" v:mID="30" v:groupContext="group">
+				<title>シート.22</title>
+				<g id="shape31-73" v:mID="31" v:groupContext="shape">
+					<title>シート.27</title>
+					<path d="M0 100.59 L0 124.5 L0 100.59 Z" class="st9"/>
+				</g>
+				<g id="group32-75" v:mID="32" v:groupContext="group">
+					<title>シート.28</title>
+					<g id="shape33-76" v:mID="33" v:groupContext="shape">
+						<title>シート.33</title>
+						<path d="M0 100.59 L0 124.5 L0 100.59 Z" class="st9"/>
+					</g>
+					<g id="shape34-78" v:mID="34" v:groupContext="shape">
+						<title>シート.34</title>
+						<path d="M0 100.59 L0 124.5 L0 100.59 Z" class="st10"/>
+						<path d="M0 100.59 L0 124.5" class="st11"/>
+					</g>
+				</g>
+			</g>
+			<g id="shape35-81" v:mID="35" v:groupContext="shape" transform="translate(379.525,-48.09)">
+				<title>シート.23</title>
+				<path d="M2.25 124.5 L0 120 L4.5 120 L2.25 124.5 Z" class="st12"/>
+			</g>
+			<g id="group36-83" transform="translate(516.828,-52.59)" v:mID="36" v:groupContext="group">
+				<title>シート.24</title>
+				<g id="shape37-84" v:mID="37" v:groupContext="shape">
+					<title>シート.31</title>
+					<path d="M67.45 100.59 L67.45 114.88 L0.1 114.88 L0 124.5 L67.45 100.59 Z" class="st9"/>
+				</g>
+				<g id="group38-86" v:mID="38" v:groupContext="group">
+					<title>シート.32</title>
+					<g id="shape39-87" v:mID="39" v:groupContext="shape">
+						<title>シート.39</title>
+						<path d="M67.45 100.59 L67.45 114.88 L0.1 114.88 L0 124.5 L67.45 100.59 Z" class="st9"/>
+					</g>
+					<g id="shape40-89" v:mID="40" v:groupContext="shape">
+						<title>シート.40</title>
+						<path d="M67.45 100.59 L67.45 114.88 L0.1 114.88 L0 124.5 L67.45 100.59 Z" class="st10"/>
+						<path d="M67.45 100.59 L67.45 114.88 L0.1 114.88 L0 124.5" class="st11"/>
+					</g>
+				</g>
+			</g>
+			<g id="shape41-92" v:mID="41" v:groupContext="shape" transform="translate(514.578,-48.09)">
+				<title>シート.25</title>
+				<path d="M2.2 124.5 L0 119.98 L4.5 120.02 L2.2 124.5 Z" class="st12"/>
+			</g>
+			<g id="group42-94" transform="translate(180.025,-52.59)" v:mID="42" v:groupContext="group">
+				<title>シート.26</title>
+				<g id="shape43-95" v:mID="43" v:groupContext="shape">
+					<title>シート.35</title>
+					<path d="M0 100.59 L0 114.88 L67.35 114.88 L67.45 124.5 L0 100.59 Z" class="st9"/>
+				</g>
+				<g id="group44-97" v:mID="44" v:groupContext="group">
+					<title>シート.36</title>
+					<g id="shape45-98" v:mID="45" v:groupContext="shape">
+						<title>シート.45</title>
+						<path d="M0 100.59 L0 114.88 L67.35 114.88 L67.45 124.5 L0 100.59 Z" class="st9"/>
+					</g>
+					<g id="shape46-100" v:mID="46" v:groupContext="shape">
+						<title>シート.46</title>
+						<path d="M0 100.59 L0 114.88 L67.35 114.88 L67.45 124.5 L0 100.59 Z" class="st10"/>
+						<path d="M0 100.59 L0 114.88 L67.35 114.88 L67.45 124.5" class="st11"/>
+					</g>
+				</g>
+			</g>
+			<g id="shape47-103" v:mID="47" v:groupContext="shape" transform="translate(245.223,-48.09)">
+				<title>シート.27</title>
+				<path d="M2.3 124.5 L0 120.02 L4.5 119.98 L2.3 124.5 Z" class="st12"/>
+			</g>
+		</g>
+	</g>
+</svg>

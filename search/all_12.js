@@ -30,11 +30,12 @@ var searchData=
   ['uart_5fparity_5fodd',['UART_PARITY_ODD',['../group___u_a_r_t___a_p_i.html#gga6bcc37e31dd40c204b4ac6f6189e8878ad90cc425f5ba447773a44a75be6593e2',1,'r_uart_api.h']]],
   ['uart_5fparity_5foff',['UART_PARITY_OFF',['../group___u_a_r_t___a_p_i.html#gga6bcc37e31dd40c204b4ac6f6189e8878acdbc0c60cf74e4febad92afc44b88641',1,'r_uart_api.h']]],
   ['uart_5fparity_5ft',['uart_parity_t',['../group___u_a_r_t___a_p_i.html#ga6bcc37e31dd40c204b4ac6f6189e8878',1,'r_uart_api.h']]],
+  ['uart_5fparity_5fzero',['UART_PARITY_ZERO',['../group___u_a_r_t___a_p_i.html#gga6bcc37e31dd40c204b4ac6f6189e8878aa59d216d22b58e7d95e093c8e7ca1c84',1,'r_uart_api.h']]],
   ['uart_5fstop_5fbits_5f1',['UART_STOP_BITS_1',['../group___u_a_r_t___a_p_i.html#gga6da57a73bbdbf830b845d4116f8341d7a44b3bfbe90aebe2b23227f5c011f41cc',1,'r_uart_api.h']]],
   ['uart_5fstop_5fbits_5f2',['UART_STOP_BITS_2',['../group___u_a_r_t___a_p_i.html#gga6da57a73bbdbf830b845d4116f8341d7a00c73c92b3d624bc86cfa63636dd99b3',1,'r_uart_api.h']]],
   ['uart_5fstop_5fbits_5ft',['uart_stop_bits_t',['../group___u_a_r_t___a_p_i.html#ga6da57a73bbdbf830b845d4116f8341d7',1,'r_uart_api.h']]],
   ['ulmair0',['ulMAIR0',['../structx_m_p_u___s_e_t_t_i_n_g_s.html#adbd29d7744b3526d1b0348789486343f',1,'xMPU_SETTINGS']]],
   ['ulrbar',['ulRBAR',['../struct_m_p_u_region_settings__t.html#a787743138d34bbae232204699cee75a9',1,'MPURegionSettings_t']]],
   ['ulrlar',['ulRLAR',['../struct_m_p_u_region_settings__t.html#a85dfb09938fe2cbecfd54fdc04645280',1,'MPURegionSettings_t']]],
-  ['unit',['unit',['../group___a_d_c___a_p_i.html#a3756c0cebdc1c304d48db67a5bcd16a6',1,'adc_callback_args_t::unit()'],['../group___a_d_c___a_p_i.html#a5da30f972881cd9d64f3a7add1ccd522',1,'adc_cfg_t::unit()'],['../group___p_d_m___a_p_i.html#a336b1d202eafdf805edd3cc274ef89e3',1,'pdm_cfg_t::unit()'],['../group___d_m_a_c___b.html#a3043a2a8f1838e56d4fcd50b5492e06f',1,'dmac_b_extended_cfg_t::unit()']]]
+  ['unit',['unit',['../group___a_d_c___a_p_i.html#a3756c0cebdc1c304d48db67a5bcd16a6',1,'adc_callback_args_t::unit()'],['../group___a_d_c___a_p_i.html#a5da30f972881cd9d64f3a7add1ccd522',1,'adc_cfg_t::unit()'],['../group___p_d_m___a_p_i.html#a336b1d202eafdf805edd3cc274ef89e3',1,'pdm_cfg_t::unit()'],['../group___p_o_e_g___a_p_i.html#ac2badeb47b925853a420e184f35074e3',1,'poeg_cfg_t::unit()'],['../group___d_m_a_c___b.html#a3043a2a8f1838e56d4fcd50b5492e06f',1,'dmac_b_extended_cfg_t::unit()']]]
 ];

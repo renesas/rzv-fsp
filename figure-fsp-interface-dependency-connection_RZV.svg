@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Microsoft Visio、SVG Export により生成 figure-fsp-interface-dependency-connection_RZV.svg figure-fsp-interface-dependency -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="2.125in" height="2.78125in"
+		viewBox="0 0 153 200.25" xml:space="preserve" color-interpolation-filters="sRGB" class="st10">
+	<v:documentProperties v:langID="1041" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#5b9bd5;stroke:#939393;stroke-linecap:butt;stroke-width:0.75}
+		.st2 {fill:none;stroke:none;stroke-linecap:butt;stroke-width:0.75}
+		.st3 {fill:#ffffff;font-family:Arial;font-size:0.916672em}
+		.st4 {fill:#ff0000;font-size:1em}
+		.st5 {font-size:1em}
+		.st6 {fill:#f59d56;font-size:1em}
+		.st7 {fill:none}
+		.st8 {stroke:#000000;stroke-linecap:butt;stroke-width:0.75}
+		.st9 {fill:#000000;stroke:#000000;stroke-linecap:butt;stroke-width:0.75}
+		.st10 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>figure-fsp-interface-dependency</title>
+		<v:pageProperties v:drawingScale="1" v:pageScale="1" v:drawingUnits="19" v:shadowOffsetX="9" v:shadowOffsetY="-9"/>
+		<g id="group1-1" transform="translate(0.375,-0.375)" v:mID="1" v:groupContext="group">
+			<title>シート.1</title>
+			<g id="shape2-2" v:mID="2" v:groupContext="shape" transform="translate(0,-76.5)">
+				<title>シート.2</title>
+				<path d="M0 176.62 L0 195.49 C0 198.66 1.59 200.25 4.76 200.25 L147.49 200.25 C150.66 200.25 152.25 198.66 152.25
+							 195.49 L152.25 157.76 C152.25 154.59 150.66 153 147.49 153 L4.76 153 C1.59 153 0 154.59 0 157.76 L0
+							 176.62 Z" class="st1"/>
+			</g>
+			<g id="shape3-4" v:mID="3" v:groupContext="shape" transform="translate(-0.025,-93.3)">
+				<title>シート.3</title>
+				<desc>Interface: Y FSP Module 2 Dependency Z</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="76.525" cy="194.85" width="153.06" height="10.8"/>
+				<rect x="0" y="189.45" width="153.05" height="10.8" class="st2"/>
+				<text x="48.4" y="184.95" class="st3" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Interface: <tspan
+							class="st4">Y<v:newlineChar/></tspan><tspan x="41.67" dy="1.2em" class="st5">FSP Module 2<v:newlineChar/></tspan><tspan
+							x="40.75" dy="1.2em" class="st5">Dependency </tspan><tspan class="st6">Z</tspan></text>			</g>
+			<g id="shape4-11" v:mID="4" v:groupContext="shape">
+				<title>シート.4</title>
+				<path d="M0 176.62 L0 195.49 C0 198.66 1.59 200.25 4.76 200.25 L147.49 200.25 C150.66 200.25 152.25 198.66 152.25
+							 195.49 L152.25 157.76 C152.25 154.59 150.66 153 147.49 153 L4.76 153 C1.59 153 0 154.59 0 157.76 L0
+							 176.62 Z" class="st1"/>
+			</g>
+			<g id="shape5-13" v:mID="5" v:groupContext="shape" transform="translate(-0.025,-16.8)">
+				<title>シート.5</title>
+				<desc>Interface: Z FSP Module 3 Dependency: None</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="76.525" cy="194.85" width="153.06" height="10.8"/>
+				<rect x="0" y="189.45" width="153.05" height="10.8" class="st2"/>
+				<text x="48.71" y="184.95" class="st3" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Interface: <tspan
+							class="st6">Z<v:newlineChar/></tspan><tspan x="41.67" dy="1.2em" class="st5">FSP Module 3<v:newlineChar/></tspan><tspan
+							x="29.44" dy="1.2em" class="st5">Dependency: None</tspan></text>			</g>
+			<g id="shape6-19" v:mID="6" v:groupContext="shape" transform="translate(0,-152.25)">
+				<title>シート.6</title>
+				<path d="M0 176.62 L0 195.49 C0 198.66 1.59 200.25 4.76 200.25 L147.49 200.25 C150.66 200.25 152.25 198.66 152.25
+							 195.49 L152.25 157.76 C152.25 154.59 150.66 153 147.49 153 L4.76 153 C1.59 153 0 154.59 0 157.76 L0
+							 176.62 Z" class="st1"/>
+			</g>
+			<g id="shape7-21" v:mID="7" v:groupContext="shape" transform="translate(-0.025,-169.05)">
+				<title>シート.7</title>
+				<desc>Interface: X FSP Module 1 Dependency: Y</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="76.525" cy="194.85" width="153.06" height="10.8"/>
+				<rect x="0" y="189.45" width="153.05" height="10.8" class="st2"/>
+				<text x="48.4" y="184.95" class="st3" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Interface: X<v:newlineChar/><tspan
+							x="41.67" dy="1.2em" class="st5">FSP Module 1<v:newlineChar/></tspan><tspan x="38.92" dy="1.2em"
+							class="st5">Dependency: </tspan><tspan class="st4">Y</tspan></text>			</g>
+			<g id="shape8-27" v:mID="8" v:groupContext="shape" transform="translate(75.75,-52.59)">
+				<title>シート.8</title>
+				<path d="M0 177.09 L0 200.25 L0 177.09 Z" class="st7"/>
+				<path d="M0 177.09 L0 200.25" class="st8"/>
+			</g>
+			<g id="shape9-30" v:mID="9" v:groupContext="shape" transform="translate(73.5,-48.09)">
+				<title>シート.9</title>
+				<path d="M2.25 200.25 L0 195.75 L4.5 195.75 L2.25 200.25 Z" class="st9"/>
+			</g>
+			<g id="shape10-32" v:mID="10" v:groupContext="shape" transform="translate(75.75,-129.09)">
+				<title>シート.10</title>
+				<path d="M0 177.09 L0 200.25 L0 177.09 Z" class="st7"/>
+				<path d="M0 177.09 L0 200.25" class="st8"/>
+			</g>
+			<g id="shape11-35" v:mID="11" v:groupContext="shape" transform="translate(73.5,-124.59)">
+				<title>シート.11</title>
+				<path d="M2.25 200.25 L0 195.75 L4.5 195.75 L2.25 200.25 Z" class="st9"/>
+			</g>
+		</g>
+	</g>
+</svg>

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bankset',['bankSet',['../group___s_p_i___f_l_a_s_h___a_p_i.html#a14581133205383b71df54a65439c0dcf',1,'spi_flash_api_t']]],
+  ['bankset',['bankSet',['../group___s_p_i___f_l_a_s_h___a_p_i.html#ae581e587fb514ab784257d07a77d6b32',1,'spi_flash_api_t']]],
   ['baud_5frate_5fprescaler',['baud_rate_prescaler',['../group___c_a_n___a_p_i.html#a33ae62d869abaf989823b7bb1563de41',1,'can_bit_timing_cfg_t']]],
   ['baudset',['baudSet',['../group___u_a_r_t___a_p_i.html#a8b0f901bcc26bd6836fe620235585f98',1,'uart_api_t']]],
   ['bit_5forder',['bit_order',['../group___c_r_c___a_p_i.html#a1647f8768f919a79d36f7dba45ff0bb4',1,'crc_cfg_t::bit_order()'],['../group___s_p_i___a_p_i.html#a91d7ce46956168e975b7c9f5fc738724',1,'spi_cfg_t::bit_order()']]],
@@ -17,10 +17,12 @@ var searchData=
   ['brl_5fvalue',['brl_value',['../group___r_i_i_c___m_a_s_t_e_r.html#a505dbb8fdf8f4ffac481adab9c08b3fc',1,'iic_master_clock_settings_t::brl_value()'],['../group___r_i_i_c___s_l_a_v_e.html#a41382084c8a91226db001a7321176112',1,'iic_slave_clock_settings_t::brl_value()']]],
   ['brr',['brr',['../group___s_c_i_f___u_a_r_t.html#acc601128ecd5e04fcc306b249a2bb7bf',1,'scif_baud_setting_t']]],
   ['brr_5fvalue',['brr_value',['../group___s_c_i___b___i2_c.html#a68f4a0d78c3d47e252f292aa0025b3a9',1,'sci_b_i2c_clock_settings_t']]],
+  ['bsp_5fsection_5fearly_5finit',['BSP_SECTION_EARLY_INIT',['../group___b_s_p___m_c_u.html#ga4244c3a2d457987d4a9ab21738c8c617',1,'BSP_SECTION_EARLY_INIT():&#160;system.c'],['../group___b_s_p___m_c_u.html#ga4244c3a2d457987d4a9ab21738c8c617',1,'BSP_SECTION_EARLY_INIT():&#160;system.c']]],
   ['buf',['buf',['../group___r_m___h_s300_x.html#a486df3e0ed2af6c8c038e1357572da53',1,'rm_hs300x_instance_ctrl_t::buf()'],['../group___r_m___z_m_o_d4_x_x_x.html#a0a1702cc41dc3a4c35e5c81f95b55295',1,'rm_zmod4xxx_instance_ctrl_t::buf()']]],
   ['buffer_5finit_5fvalue',['buffer_init_value',['../group___i_o_p_o_r_t.html#a8cacbb5efbafad8505bd0140ece21b08',1,'ioport_event_group_input_t']]],
   ['buffer_5fmode',['buffer_mode',['../group___a_d_c___c.html#a8ccf8c0714c173bc9e9d536df5df56f9',1,'adc_c_extended_cfg_t']]],
   ['buffer_5foverwrite_5fdetection_5fenable',['buffer_overwrite_detection_enable',['../group___p_d_m.html#a9cbd930664bb8b7902a78d5dc07ff1b0',1,'pdm_extended_cfg_t']]],
+  ['build',['build',['../group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#ac43952692411ec98dc1a9b9ac2a828a8',1,'fsp_pack_version_t::version_id_b_s']]],
   ['bus_5favailable_5fdetection_5ftime',['bus_available_detection_time',['../group___i3_c___b.html#af62dc925b22147aff968321a8ba10fef',1,'i3c_b_extended_cfg_t']]],
   ['bus_5ffree_5fdetection_5ftime',['bus_free_detection_time',['../group___i3_c___b.html#a8ed749153af0e8311373e3d2d446ee5d',1,'i3c_b_extended_cfg_t']]],
   ['bus_5fidle_5fdetection_5ftime',['bus_idle_detection_time',['../group___i3_c___b.html#a7e9d0d85bd1aefa8de414728f18b32de',1,'i3c_b_extended_cfg_t']]],

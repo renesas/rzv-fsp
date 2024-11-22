@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Microsoft Visio、SVG Export により生成 figure-fsp-module_RZV.svg figure-fsp-module -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="2.125in" height="1.86458in"
+		viewBox="0 0 153 134.25" xml:space="preserve" color-interpolation-filters="sRGB" class="st10">
+	<v:documentProperties v:langID="1041"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#5b9bd5;stroke:#939393;stroke-linecap:butt;stroke-width:0.749999}
+		.st2 {fill:none;stroke:none;stroke-linecap:butt;stroke-width:0.749999}
+		.st3 {fill:#ffffff;font-family:Arial;font-size:1.00001em}
+		.st4 {fill:none;stroke:none;stroke-width:0.999998}
+		.st5 {fill:none}
+		.st6 {stroke:#000000;stroke-linecap:butt;stroke-width:0.749999}
+		.st7 {fill:#000000;stroke:#000000;stroke-linecap:butt;stroke-width:0.749999}
+		.st8 {fill:#ffffff;stroke:none;stroke-linecap:butt;stroke-width:0.749999}
+		.st9 {fill:#000000;font-family:Arial;font-size:0.75em}
+		.st10 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>figure-fsp-module</title>
+		<v:pageProperties v:drawingScale="1" v:pageScale="1" v:drawingUnits="19" v:shadowOffsetX="8.99998"
+				v:shadowOffsetY="-8.99998"/>
+		<g id="group1-1" transform="translate(0.350136,-6.46499)" v:mID="1" v:groupContext="group">
+			<title>シート.1</title>
+			<g id="shape2-2" v:mID="2" v:groupContext="shape" transform="translate(0.025,-37.4099)">
+				<title>シート.2</title>
+				<path d="M0 110.62 L0 129.49 C0 132.66 1.59 134.25 4.76 134.25 L147.49 134.25 C150.66 134.25 152.25 132.66 152.25
+							 129.49 L152.25 91.76 C152.25 88.59 150.66 87 147.49 87 L4.76 87 C1.59 87 0 88.59 0 91.76 L0 110.62 Z"
+						class="st1"/>
+			</g>
+			<g id="shape3-4" v:mID="3" v:groupContext="shape" transform="translate(1.43885E-13,-54.7349)">
+				<title>シート.3</title>
+				<desc>Module</desc>
+				<v:userDefs/>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="76.5247" cy="128.85" width="153.06" height="10.8"/>
+				<rect x="0" y="123.45" width="153.05" height="10.8" class="st2"/>
+				<text x="56.85" y="132.45" class="st3" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Module</text>			</g>
+			<g id="group4-7" transform="translate(76.5249,-4.49999)" v:mID="4" v:groupContext="group">
+				<title>シート.4</title>
+				<g id="shape5-8" v:mID="5" v:groupContext="shape">
+					<title>シート.5</title>
+					<path d="M0 101.34 L0 134.25 L0 101.34 Z" class="st4"/>
+				</g>
+				<g id="shape6-10" v:mID="6" v:groupContext="shape">
+					<title>シート.6</title>
+					<path d="M0 101.34 L0 134.25 L0 101.34 Z" class="st5"/>
+					<path d="M0 101.34 L0 134.25" class="st6"/>
+				</g>
+			</g>
+			<g id="shape7-13" v:mID="7" v:groupContext="shape" transform="translate(74.2749,-2.84217E-14)">
+				<title>シート.5</title>
+				<path d="M2.25 134.25 L0 129.75 L4.5 129.75 L2.25 134.25 Z" class="st7"/>
+			</g>
+			<g id="shape8-15" v:mID="8" v:groupContext="shape" transform="translate(1.43885E-13,-21.525)">
+				<title>シート.6</title>
+				<desc>Requires</desc>
+				<v:userDefs/>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="76.5247" cy="129.3" width="153.06" height="9.89998"/>
+				<rect x="0" y="124.35" width="153.05" height="9.89998" class="st8"/>
+				<text x="58.52" y="132" class="st9" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Requires</text>			</g>
+			<g id="group9-18" transform="translate(76.5249,-84.6598)" v:mID="9" v:groupContext="group">
+				<title>シート.7</title>
+				<g id="shape10-19" v:mID="10" v:groupContext="shape">
+					<title>シート.10</title>
+					<path d="M0 134.25 L0 101.34 L0 134.25 Z" class="st4"/>
+				</g>
+				<g id="shape11-21" v:mID="11" v:groupContext="shape">
+					<title>シート.11</title>
+					<path d="M0 134.25 L0 101.34 L0 134.25 Z" class="st5"/>
+					<path d="M0 134.25 L0 101.34" class="st6"/>
+				</g>
+			</g>
+			<g id="shape12-24" v:mID="12" v:groupContext="shape" transform="translate(74.2749,-117.57)">
+				<title>シート.8</title>
+				<path d="M2.25 129.75 L4.5 134.25 L0 134.25 L2.25 129.75 Z" class="st7"/>
+			</g>
+			<g id="shape13-26" v:mID="13" v:groupContext="shape" transform="translate(0.749999,-92.535)">
+				<title>シート.9</title>
+				<desc>Provides</desc>
+				<v:userDefs/>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="76.5247" cy="129.3" width="153.06" height="9.89998"/>
+				<rect x="0" y="124.35" width="153.05" height="9.89998" class="st8"/>
+				<text x="59.02" y="132" class="st9" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Provides</text>			</g>
+		</g>
+	</g>
+</svg>

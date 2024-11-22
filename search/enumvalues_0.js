@@ -189,6 +189,7 @@ var searchData=
   ['adc_5fevent_5fscan_5fcomplete_5fgroup_5fc',['ADC_EVENT_SCAN_COMPLETE_GROUP_C',['../group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847ab7538351ad7e4ed3d866212b0e3b3099',1,'r_adc_api.h']]],
   ['adc_5fevent_5fwindow_5fcompare_5fa',['ADC_EVENT_WINDOW_COMPARE_A',['../group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a0194955f4f59f8d6952adc058539632b',1,'r_adc_api.h']]],
   ['adc_5fevent_5fwindow_5fcompare_5fb',['ADC_EVENT_WINDOW_COMPARE_B',['../group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847ab32572630797968579adeed03f19bcd3',1,'r_adc_api.h']]],
+  ['adc_5fevent_5fzero_5fcross_5fdetection',['ADC_EVENT_ZERO_CROSS_DETECTION',['../group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a7cfc303adbef8d07936d89275852ded3',1,'r_adc_api.h']]],
   ['adc_5fgroup_5fid_5f0',['ADC_GROUP_ID_0',['../group___a_d_c___a_p_i.html#gga625267e574e3f26d9d55918652e91176af4886d3826fb26d4bbdfaeb2195a5ddc',1,'r_adc_api.h']]],
   ['adc_5fgroup_5fid_5f1',['ADC_GROUP_ID_1',['../group___a_d_c___a_p_i.html#gga625267e574e3f26d9d55918652e91176a5affde6af0ba379220ade2c4ca8a027e',1,'r_adc_api.h']]],
   ['adc_5fgroup_5fid_5f2',['ADC_GROUP_ID_2',['../group___a_d_c___a_p_i.html#gga625267e574e3f26d9d55918652e91176a3bbc61292808df4caf5c0991e7b9f73c',1,'r_adc_api.h']]],

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.2</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -191,6 +191,10 @@ Functions</h2></td></tr>
 <tr class="separator:ga311898f6b0ddd44d9b4c1b34defb0cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa6b50d916a9243792c0ea8b13744d25f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#gaa6b50d916a9243792c0ea8b13744d25f">R_RTC_CallbackSet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:gaa6b50d916a9243792c0ea8b13744d25f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf108544fc4c11e21b0ca5f52e2abff42"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#gaf108544fc4c11e21b0ca5f52e2abff42">R_RTC_TimeCaptureSet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__time__capture__t">rtc_time_capture_t</a> *const p_time_capture)</td></tr>
+<tr class="separator:gaf108544fc4c11e21b0ca5f52e2abff42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4fb9f8c81c2a0fed49c8b688dc173fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#gae4fb9f8c81c2a0fed49c8b688dc173fa">R_RTC_TimeCaptureGet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__time__capture__t">rtc_time_capture_t</a> *const p_time_capture)</td></tr>
+<tr class="separator:gae4fb9f8c81c2a0fed49c8b688dc173fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the RTC peripheral on RZ MPUs. This module implements the <a class="el" href="group___r_t_c___a_p_i.html">RTC Interface</a>. </p>
@@ -300,6 +304,8 @@ Subtraction</li>
 <td>Period Interrupt</td><td>MCU Specific Options</td><td></td><td>Enable the Periodic interrupt. </td></tr>
 <tr>
 <td>Period Interrupt Priority</td><td>Value must be a non-negative integer</td><td>12 </td><td>Select the period interrupt priority. </td></tr>
+<tr>
+<td>Carry Interrupt</td><td>MCU Specific Options</td><td></td><td>Enable the Carry interrupt. </td></tr>
 <tr>
 <td>Carry Interrupt Priority</td><td>Value must be a non-negative integer</td><td>12 </td><td>Select the carry interrupt priority. </td></tr>
 </table>
@@ -854,13 +860,95 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
+<a id="gaf108544fc4c11e21b0ca5f52e2abff42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf108544fc4c11e21b0ca5f52e2abff42">&#9670;&nbsp;</a></span>R_RTC_TimeCaptureSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_TimeCaptureSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#structrtc__time__capture__t">rtc_time_capture_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_time_capture</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set time capture configuration for the provided channel.</p>
+<p>Implements <a class="el" href="group___r_t_c___a_p_i.html#ad94675c314c58dc82d170e37fe88c176">rtc_api_t::timeCaptureSet</a></p>
+<dl class="section note"><dt>Note</dt><dd>Updating capture settings requires significant software delay. Timing considerations should be carefully considered when calling this function.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Setting for Time capture was successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open already for operation. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>Invalid input channel set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Hardware not support this feature. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae4fb9f8c81c2a0fed49c8b688dc173fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae4fb9f8c81c2a0fed49c8b688dc173fa">&#9670;&nbsp;</a></span>R_RTC_TimeCaptureGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_TimeCaptureGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#structrtc__time__capture__t">rtc_time_capture_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_time_capture</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get time capture value of the provided channel.</p>
+<p>Implements <a class="el" href="group___r_t_c___a_p_i.html#a8d7348b2c176659c6453b75f2d4d66b9">rtc_api_t::timeCaptureGet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Get time capture successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open already for operation. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>Invalid input channel get. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Invalid operation state. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Hardware not support this feature. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.2 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

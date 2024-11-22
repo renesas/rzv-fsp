@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.2</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -285,21 +285,11 @@ The following build time configurations are defined in fsp_cfg/r_canfd_cfg.h:<br
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
+<td>Global Error Interrupt &gt; Callback Channel</td><td>MCU Specific Options</td><td></td><td>Specify which channel callback should be called to handle global errors. When starting the driver this channel must be opened first. </td></tr>
+<tr>
 <td>Global Error Interrupt &gt; Priority</td><td>Value must be an integer between 0 and 255</td><td>12 </td><td>This interrupt is fired for each of the error sources selected below. </td></tr>
 <tr>
 <td>Global Error Interrupt &gt; Sources</td><td>MCU Specific Options</td><td></td><td>Select which errors should trigger an interrupt. </td></tr>
-<tr>
-<td>Global Error Interrupt &gt; Callback Channel</td><td>MCU Specific Options</td><td></td><td>Specify which channel callback should be called to handle global errors. When starting the driver this channel must be opened first. </td></tr>
-<tr>
-<td>Flexible Data (FD) &gt; Protocol Exceptions</td><td>MCU Specific Options</td><td></td><td>Select whether to enter the protocol exception handling state when a RES bit is sampled recessive as defined in ISO 11898-1. </td></tr>
-<tr>
-<td>Flexible Data (FD) &gt; Payload Overflow</td><td>MCU Specific Options</td><td></td><td>Configure whether received messages larger than the destination buffer should be truncated or rejected. </td></tr>
-<tr>
-<td>Reception &gt; Message Buffers &gt; Number of Buffers</td><td>Manual Entry</td><td>0 </td><td>Number of message buffers available for reception.<br />
-<br />
-As there is no interrupt for message buffer reception it is recommended to use RX FIFOs instead. Set this value to 0 to disable RX Message Buffers. </td></tr>
-<tr>
-<td>Reception &gt; Message Buffers &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Payload size for all RX Message Buffers. </td></tr>
 <tr>
 <td>Reception &gt; FIFOs &gt; FIFO 0 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -431,6 +421,12 @@ Disabled</li>
 <tr>
 <td>Reception &gt; FIFOs &gt; Interrupt Priority</td><td>Value must be an integer between 0 and 255</td><td>12 </td><td>This priority level will apply to all FIFO interrupts globally. </td></tr>
 <tr>
+<td>Reception &gt; Message Buffers &gt; Number of Buffers</td><td>Manual Entry</td><td>0 </td><td>Number of message buffers available for reception.<br />
+<br />
+As there is no interrupt for message buffer reception it is recommended to use RX FIFOs instead. Set this value to 0 to disable RX Message Buffers. </td></tr>
+<tr>
+<td>Reception &gt; Message Buffers &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Payload size for all RX Message Buffers. </td></tr>
+<tr>
 <td>Reception &gt; Acceptance Filtering &gt; Channel 0 Rule Count</td><td>Value must be a non-negative integer</td><td>64 </td><td>Number of acceptance filter list rules dedicated to Channel 0. </td></tr>
 <tr>
 <td>Reception &gt; Acceptance Filtering &gt; Channel 1 Rule Count</td><td>Value must be a non-negative integer</td><td>64 </td><td>Number of acceptance filter list rules dedicated to Channel 1. </td></tr>
@@ -442,6 +438,1198 @@ Disabled</li>
 <td>Reception &gt; Acceptance Filtering &gt; Channel 4 Rule Count</td><td>Value must be a non-negative integer</td><td>0 </td><td>Number of acceptance filter list rules dedicated to Channel 4. </td></tr>
 <tr>
 <td>Reception &gt; Acceptance Filtering &gt; Channel 5 Rule Count</td><td>Value must be a non-negative integer</td><td>0 </td><td>Number of acceptance filter list rules dedicated to Channel 5. </td></tr>
+<tr>
+<td>Flexible Data (FD) &gt; Protocol Exceptions</td><td>MCU Specific Options</td><td></td><td>Select whether to enter the protocol exception handling state when a RES bit is sampled recessive as defined in ISO 11898-1. </td></tr>
+<tr>
+<td>Flexible Data (FD) &gt; Payload Overflow</td><td>MCU Specific Options</td><td></td><td>Configure whether received messages larger than the destination buffer should be truncated or rejected. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 0. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 0. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 0. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 0. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 0. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 0. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 0. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 0. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 0. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 0 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 0. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 0 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 0. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 1. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 1. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 1. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 1. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 1. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 1. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 1. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 1. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 1. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 1 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 1. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 1 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 1. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 2. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 2. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 2. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 2. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 2. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 2. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 2. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 2. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 2. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 2 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 2. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 2 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 2. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 3. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 3. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 3. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 3. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 3. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 3. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 3. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 3. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 3. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 3 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 3. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 3 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 3. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 4. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 4. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 4. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 4. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 4. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 4. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 4. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 4. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 4. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 4 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 4. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 4 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 4. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 5. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 5. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 5. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 5. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 5. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 5. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 5. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 5. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 5. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 5 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 5. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 5 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 5. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 6. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 6. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 6. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 6. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 6. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 6. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 6. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 6. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 6. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 6 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 6. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 6 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 6. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 7. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 7. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 7. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 7. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 7. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 7. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 7. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 7. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 7. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 7 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 7. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 7 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 7. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 8. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 8. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 8. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 8. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 8. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 8. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 8. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 8. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 8. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 8 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 8. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 8 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 8. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 9. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 9. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 9. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 9. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 9. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 9. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 9. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 9. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 9. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 9 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 9. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 9 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 9. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 10. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 10. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 10. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 10. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 10. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 10. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 10. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 10. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 10. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 10 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 10. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 10 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 10. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 11. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 11. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 11. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 11. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 11. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 11. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 11. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 11. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 11. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 11 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 11. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 11 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 11. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 12. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 12. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 12. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 12. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 12. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 12. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 12. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 12. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 12. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 12 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 12. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 12 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 12. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 13. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 13. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 13. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 13. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 13. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 13. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 13. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 13. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 13. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 13 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 13. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 13 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 13. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 14. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 14. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 14. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 14. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 14. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 14. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 14. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 14. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 14. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 14 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 14. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 14 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 14. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 15. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 15. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 15. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 15. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 15. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 15. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 15. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 15. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 15. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 15 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 15. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 15 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 15. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 16. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 16. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 16. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 16. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 16. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 16. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 16. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 16. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 16. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 16 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 16. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 16 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 16. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable Common FIFO 17. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Receive</li>
+<li>
+Transmit</li>
+</ul>
+</td><td>Receive </td><td>Select the operation mode for Common FIFO 17. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; RX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message receiption for Common FIFO 17. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; TX Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to allow interrupts on message transmission for Common FIFO 17. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Threshold</li>
+<li>
+Every frame</li>
+</ul>
+</td><td>Threshold </td><td>Set the interrupt mode for Common FIFO 17. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below or when all messages have been transmitted. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; Interrupt Threshold</td><td>MCU Specific Options</td><td></td><td>Set the interrupt threshold value for Common FIFO 17. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; Payload Size</td><td>MCU Specific Options</td><td></td><td>Select the message payload size for Common FIFO 17. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; Depth</td><td>MCU Specific Options</td><td></td><td>Select the number of stages for Common FIFO 17. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; TX Message Buffer</td><td>MCU Specific Options</td><td></td><td>Select the TX message buffer that participates in TX scans related to Common FIFO 17. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; Interval TX Delay</td><td>TX delay must be an integer between 0 and 255.</td><td>0 </td><td>Selects the delay between successive transmission for Common FIFO 17 in units of the Interval Timer Clock. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; Interval Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reference clock</li>
+<li>
+Bit time clock</li>
+</ul>
+</td><td>Reference clock </td><td>Select the source of the interval timer clock for Common FIFO 17. The reference clock can be scaled by x10 below. </td></tr>
+<tr>
+<td>Common FIFOs &gt; FIFO 17 &gt; Interval Timer Reference Clock Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+x1</li>
+<li>
+x10</li>
+</ul>
+</td><td>x1 </td><td>Selects the timer resolution if the reference clock is selected as the timer source for Common FIFO 17. </td></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -458,6 +1646,8 @@ Disabled</li>
 <td>DLC Check</td><td>MCU Specific Options</td><td></td><td>When enabled received messages will be rejected if their DLC field is less than the value configured in the associated AFL rule. If 'Enabled w/truncate' is selected and a message passes the DLC check the DLC field is set to the value in the associated AFL rule and any excess data is discarded. </td></tr>
 <tr>
 <td>Clock Source</td><td>MCU Specific Options</td><td></td><td>Select the CANFD clock source. </td></tr>
+<tr>
+<td>Interval Timer Prescaler</td><td>Timer prescaler must be an integer between 0 and 65535.</td><td>0 </td><td>FIFO interval timer prescaler, required for Interval TX Delay. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; CANFD Driver on r_canfd</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; CANFD Driver on r_canfd.<br />
@@ -660,6 +1850,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga9bc23367cb7fb757b5ce2f29323524c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1598f08872dd960675f060c7e8c35cf4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n_f_d.html#ga1598f08872dd960675f060c7e8c35cf4">canfd_error_t</a> </td></tr>
 <tr class="separator:ga1598f08872dd960675f060c7e8c35cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga785e3753523bf1cf87d70553285ba4af"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n_f_d.html#ga785e3753523bf1cf87d70553285ba4af">canfd_tx_buffer_t</a> </td></tr>
+<tr class="separator:ga785e3753523bf1cf87d70553285ba4af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa7408bbf08466fb0f6025a8dfd93c714"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n_f_d.html#gaa7408bbf08466fb0f6025a8dfd93c714">canfd_tx_mb_t</a> </td></tr>
 <tr class="separator:gaa7408bbf08466fb0f6025a8dfd93c714"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacccf33f0942180054dd71c26c512844d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n_f_d.html#gacccf33f0942180054dd71c26c512844d">canfd_rx_buffer_t</a> </td></tr>
@@ -741,6 +1933,12 @@ Global Error interrupt priority. </td></tr>
 rx_fifo_ipl</td>
 <td class="fielddoc">
 RX FIFO interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6320b1972c53eb8a265ce383c4dec620"></a>uint32_t</td>
+<td class="fieldname">
+common_fifo_config[BSP_FEATURE_CANFD_NUM_COMMON_FIFOS]</td>
+<td class="fielddoc">
+Common FIFO configurations. </td></tr>
 </table>
 
 </div>
@@ -954,7 +2152,74 @@ TXMB buffer marge mode configuration. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4aa053c3468744ac9febf50c16cc5e6abd"></a>CANFD_ERROR_GLOBAL_CH5_ECC&#160;</td><td class="fielddoc"><p>Channel 5 ECC Error. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a4fa7f77f606948c2409343b262b9a6a6"></a>CANFD_ERROR_CHANNEL_BUS&#160;</td><td class="fielddoc"><p>Bus Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a1e8de2fee13f446d6d7f218420af1a75"></a>CANFD_ERROR_CHANNEL_WARNING&#160;</td><td class="fielddoc"><p>Error Warning (TX/RX error count over 0x5F) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a30a620f848af57cf1da8fce485c518ee"></a>CANFD_ERROR_CHANNEL_PASSIVE&#160;</td><td class="fielddoc"><p>Error Passive (TX/RX error count over 0x7F) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a0fe1987f2df69fa7787ccae5a020968e"></a>CANFD_ERROR_CHANNEL_BUS_OFF_ENTRY&#160;</td><td class="fielddoc"><p>Bus-Off State Entry. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4ad1f966b89bb8ff0403a70e3a0170383f"></a>CANFD_ERROR_CHANNEL_BUS_OFF_RECOVERY&#160;</td><td class="fielddoc"><p>Recovery from Bus-Off State. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4ac0191e933ec767fbc545ff93697aaafb"></a>CANFD_ERROR_CHANNEL_OVERLOAD&#160;</td><td class="fielddoc"><p>Overload. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a62b2afdb4d00175d7ee90c4f86b917d9"></a>CANFD_ERROR_CHANNEL_BUS_LOCK&#160;</td><td class="fielddoc"><p>Bus Locked. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a38ec5eabdb1b8b29cece678ae973e1b8"></a>CANFD_ERROR_CHANNEL_ARBITRATION_LOSS&#160;</td><td class="fielddoc"><p>Arbitration Lost. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a47a1524b5138710ca7fd5b55325a823d"></a>CANFD_ERROR_CHANNEL_STUFF&#160;</td><td class="fielddoc"><p>Stuff Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4abee54fb0333c85f37a216959e18b7a11"></a>CANFD_ERROR_CHANNEL_FORM&#160;</td><td class="fielddoc"><p>Form Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4abc967223593d6928cfa24aef349f5e64"></a>CANFD_ERROR_CHANNEL_ACK&#160;</td><td class="fielddoc"><p>ACK Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a529535a14f0b9aa29b20ba5b22abb225"></a>CANFD_ERROR_CHANNEL_CRC&#160;</td><td class="fielddoc"><p>CRC Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4acdd82b46241db3cd909c4950a263cb36"></a>CANFD_ERROR_CHANNEL_BIT_RECESSIVE&#160;</td><td class="fielddoc"><p>Bit Error (recessive) Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4afe7d23457db11eedaa48cec9b1d9b3a6"></a>CANFD_ERROR_CHANNEL_BIT_DOMINANT&#160;</td><td class="fielddoc"><p>Bit Error (dominant) Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a5c4e3bece7c60441a51d3899e73a158f"></a>CANFD_ERROR_CHANNEL_ACK_DELIMITER&#160;</td><td class="fielddoc"><p>ACK Delimiter Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4ac1b7da9fdca7a6fa3c9b9ba33371f4a8"></a>CANFD_ERROR_GLOBAL_DLC&#160;</td><td class="fielddoc"><p>DLC Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4abee1888c27382c7121781db44c31bc2b"></a>CANFD_ERROR_GLOBAL_MESSAGE_LOST&#160;</td><td class="fielddoc"><p>Message Lost. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a5d38f69b80c5a2ca136cc2372885dd15"></a>CANFD_ERROR_GLOBAL_PAYLOAD_OVERFLOW&#160;</td><td class="fielddoc"><p>FD Payload Overflow. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4aabb74eb7c63e572823fdc251ee430510"></a>CANFD_ERROR_GLOBAL_TXQ_OVERWRITE&#160;</td><td class="fielddoc"><p>TX Queue Message Overwrite. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a46568698565919a0a2f47cb8f3641799"></a>CANFD_ERROR_GLOBAL_TXQ_MESSAGE_LOST&#160;</td><td class="fielddoc"><p>TX Queue Message Lost. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4acc2641aa9a3f9543af9d27313ba09001"></a>CANFD_ERROR_GLOBAL_CH0_ECC&#160;</td><td class="fielddoc"><p>Channel 0 ECC Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4a632b3d6e96c5d7f468dfd4c0b33b1f86"></a>CANFD_ERROR_GLOBAL_CH1_ECC&#160;</td><td class="fielddoc"><p>Channel 1 ECC Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4ad3513bd3bfe83f7c2c1a0bc6804fb7d3"></a>CANFD_ERROR_GLOBAL_CH2_ECC&#160;</td><td class="fielddoc"><p>Channel 2 ECC Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4aba8cdb007a45cb55ca37d73de57779ab"></a>CANFD_ERROR_GLOBAL_CH3_ECC&#160;</td><td class="fielddoc"><p>Channel 3 ECC Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4abe217d59095db7a31c1f2f3c6093f993"></a>CANFD_ERROR_GLOBAL_CH4_ECC&#160;</td><td class="fielddoc"><p>Channel 4 ECC Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga1598f08872dd960675f060c7e8c35cf4aa053c3468744ac9febf50c16cc5e6abd"></a>CANFD_ERROR_GLOBAL_CH5_ECC&#160;</td><td class="fielddoc"><p>Channel 5 ECC Error. </p>
+</td></tr>
 </table>
+
+</div>
+</div>
+<a id="ga785e3753523bf1cf87d70553285ba4af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga785e3753523bf1cf87d70553285ba4af">&#9670;&nbsp;</a></span>canfd_tx_buffer_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___c_a_n_f_d.html#ga785e3753523bf1cf87d70553285ba4af">canfd_tx_buffer_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CANFD Transmit Buffer (MB + CFIFO) </p>
 
 </div>
 </div>
@@ -984,7 +2249,7 @@ TXMB buffer marge mode configuration. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>CANFD Receive Buffer (MB + FIFO) </p>
+<p>CANFD Receive Buffer (MB + FIFO + CFIFO) </p>
 
 </div>
 </div>
@@ -1350,7 +2615,7 @@ TXMB buffer marge mode configuration. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___c_a_n___a_p_i.html#a0eeb3995e651ce4b77e8860ab50597a9">can_api_t::callbackSet</a>.</p>
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___c_a_n___a_p_i.html#aaaa249bba4ab5dffc6bf5655432eac85">can_api_t::callbackSet</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -1369,7 +2634,7 @@ TXMB buffer marge mode configuration. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.2 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

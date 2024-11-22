@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.2</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,17 +163,14 @@ $(document).ready(function(){initNavTree('group___c_r_c___a_p_i.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">CRC Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+<div class="title">CRC Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_n_i_t_o_r_i_n_g___i_n_t_e_r_f_a_c_e_s.html">Monitoring</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Interface for cyclic redundancy checking. </p>
 <h1><a class="anchor" id="CRC_API_SUMMARY"></a>
 Summary</h1>
-<p>The CRC (Cyclic Redundancy Check) calculator generates CRC codes using five different polynomials including 8 bit, 16 bit, and 32 bit variations. Calculation can be performed by sending data to the block using the CPU or by snooping on read or write activity on one of SCI channels.</p>
-<p>Implemented by:</p><ul>
-<li><a class="el" href="group___c_r_c.html">CRC (r_crc)</a> </li>
-</ul>
+<p>The CRC (Cyclic Redundancy Check) calculator generates CRC codes using five different polynomials including 8 bit, 16 bit, and 32 bit variations. Calculation can be performed by sending data to the block using the CPU or by snooping on read or write activity on one of SCI channels. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -213,7 +210,28 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Structure for CRC inputs </p>
-</div>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aaed97c9ce40d9d7209348114b819bf02"></a>uint32_t</td>
+<td class="fieldname">
+num_bytes</td>
+<td class="fielddoc">
+Length of input buffer. It must be 4-byte aligned when a 32-bit CRC polynomial function is used. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae8fc2e64bb3b34a84f38f84d68bdad0d"></a>uint32_t</td>
+<td class="fieldname">
+crc_seed</td>
+<td class="fielddoc">
+CRC seed value. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0b250255a080533eb07854cbfd9ca73b"></a>const void *</td>
+<td class="fieldname">
+p_input_buffer</td>
+<td class="fielddoc">
+Pointer to input buffer. </td></tr>
+</table>
+
 </div>
 </div>
 <a name="structcrc__cfg__t" id="structcrc__cfg__t"></a>
@@ -303,10 +321,7 @@ CRC Hardware Dependent Configuration. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Open the CRC driver module. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_r_c.html#gae4cc2bba5d6aeaadd9f4d43948fca5ac">R_CRC_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Open the CRC driver module.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to CRC device handle. </td></tr>
@@ -328,10 +343,7 @@ CRC Hardware Dependent Configuration. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close the CRC module driver </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_r_c.html#gab1ba556ab77f9f3d32ed5a448ebc7f9c">R_CRC_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Close the CRC module driver</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to CRC device handle </td></tr>
@@ -358,10 +370,7 @@ CRC Hardware Dependent Configuration. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Return the current calculated value. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_r_c.html#ga5bb7766a9c3217d2da7b77ea203b8c74">R_CRC_CalculatedValueGet()</a></li>
-</ul>
-</dd></dl>
+<p>Return the current calculated value.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to CRC device handle. </td></tr>
@@ -383,10 +392,7 @@ CRC Hardware Dependent Configuration. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Configure and Enable snooping. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_r_c.html#ga606b389497fa4cba30b0d8f9a658331f">R_CRC_SnoopEnable()</a></li>
-</ul>
-</dd></dl>
+<p>Configure and Enable snooping.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to CRC device handle. </td></tr>
@@ -408,10 +414,7 @@ CRC Hardware Dependent Configuration. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Disable snooping. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_r_c.html#ga5bda4df2557aeaaf312b23fb31568f20">R_CRC_SnoopDisable()</a></li>
-</ul>
-</dd></dl>
+<p>Disable snooping.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to CRC device handle. </td></tr>
@@ -432,10 +435,7 @@ CRC Hardware Dependent Configuration. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Perform a CRC calculation on a block of data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_r_c.html#ga89b0be959ce83ac6ca053329b1fddb75">R_CRC_Calculate()</a></li>
-</ul>
-</dd></dl>
+<p>Perform a CRC calculation on a block of data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to CRC device handle. </td></tr>
@@ -498,10 +498,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>CRC control block. Allocate an instance specific control block to pass into the CRC API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_r_c.html#structcrc__instance__ctrl__t">crc_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>CRC control block. Allocate an instance specific control block to pass into the CRC API calls. </p>
 
 </div>
 </div>
@@ -581,7 +578,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.2 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

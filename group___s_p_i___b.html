@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.2</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -200,8 +200,8 @@ Features</h2>
 </ul>
 </li>
 <li>Clock Phase (CPHA)<ul>
-<li>CPHA=0 Data Sampled on the even edge of SCLK (Master Mode Only)</li>
-<li>CPHA=1 Data Sampled on the odd edge of SCLK</li>
+<li>CPHA=0 Data is sampled at an odd edge and changes at an even edge.</li>
+<li>CPHA=1 Data changes at an odd edge and is sampled at an even edge.</li>
 </ul>
 </li>
 <li>MSB/LSB first</li>
@@ -459,6 +459,12 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Select whether to negate the SSL level for each frame transfer. </td></tr>
+<tr>
+<td>Transmit FIFO Threshold</td><td>Value must be an integer between 0 and 15</td><td>0 </td><td>Select the transmit FIFO threshold that is the basis for the transmit buffer empty interrupt generation. </td></tr>
+<tr>
+<td>Receive FIFO Threshold</td><td>Value must be an integer between 0 and 15</td><td>0 </td><td>Select the receive FIFO threshold that is the basis for the receive buffer empty interrupt generation. </td></tr>
+<tr>
+<td>Receive Data Ready Detect Adjustment</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>Configure the timing to detect the received data ready. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-spi-b-clock-configuration"></a>
@@ -656,6 +662,24 @@ SPI Next-Access Delay Register Setting. </td></tr>
 ssl_level_keep</td>
 <td class="fielddoc">
 Select SSL signal level keep mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa8be720379afa7c6a7a18cc1e55dc62f"></a>uint8_t</td>
+<td class="fieldname">
+transmit_fifo_threshold</td>
+<td class="fielddoc">
+Transmit FIFO threshold (0~15) </td></tr>
+<tr><td class="fieldtype">
+<a id="aa60cea9faf05c48fdc752ffb7596feef"></a>uint8_t</td>
+<td class="fieldname">
+receive_fifo_threshold</td>
+<td class="fielddoc">
+Receive FIFO threshold (0~15) </td></tr>
+<tr><td class="fieldtype">
+<a id="a86e5438a3b35da2ede0b47156404c25e"></a>uint8_t</td>
+<td class="fieldname">
+receive_data_ready_detect_adjustment</td>
+<td class="fielddoc">
+Receive data ready detect timing (0~255 counts of operation clock) </td></tr>
 </table>
 
 </div>
@@ -1273,7 +1297,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___s_p_i___a_p_i.html#a01c7aacdcdf219dcfa88c2b40e7d25b1">spi_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___s_p_i___a_p_i.html#ad3409ec3b694f2d68043360f466c31ce">spi_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -1292,7 +1316,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.2 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

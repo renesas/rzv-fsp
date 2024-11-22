@@ -17,7 +17,10 @@ var group___s_p_i___b =
       [ "spck_delay", "group___s_p_i___b.html#aa76a96bdfe3843e023c076e906cdedbb", null ],
       [ "ssl_negation_delay", "group___s_p_i___b.html#ad0e864b3954e9abc6b864bb20c56b146", null ],
       [ "next_access_delay", "group___s_p_i___b.html#a91917729fb266000e5c493d9a4021c43", null ],
-      [ "ssl_level_keep", "group___s_p_i___b.html#a8ca3851c76d9a5c02dd07e24309660ff", null ]
+      [ "ssl_level_keep", "group___s_p_i___b.html#a8ca3851c76d9a5c02dd07e24309660ff", null ],
+      [ "transmit_fifo_threshold", "group___s_p_i___b.html#aa8be720379afa7c6a7a18cc1e55dc62f", null ],
+      [ "receive_fifo_threshold", "group___s_p_i___b.html#aa60cea9faf05c48fdc752ffb7596feef", null ],
+      [ "receive_data_ready_detect_adjustment", "group___s_p_i___b.html#a86e5438a3b35da2ede0b47156404c25e", null ]
     ] ],
     [ "spi_b_instance_ctrl_t", "group___s_p_i___b.html#structspi__b__instance__ctrl__t", [
       [ "open", "group___s_p_i___b.html#a63826f2e79dbe1834c3d99084558f71f", null ],

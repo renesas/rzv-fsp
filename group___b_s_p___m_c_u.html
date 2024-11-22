@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.2</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -203,8 +203,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga6a8598c7564c37b201a19003d188de7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac27f5c8e3abd9d557b79ff1bdde2f932"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gac27f5c8e3abd9d557b79ff1bdde2f932">R_BSP_ClockDividerSet</a> (fsp_priv_clock_divider_t divider, uint32_t clock_div)</td></tr>
 <tr class="separator:gac27f5c8e3abd9d557b79ff1bdde2f932"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gade0e6b9fc5ca580d5bf6c8ae2a6af8d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gade0e6b9fc5ca580d5bf6c8ae2a6af8d9">R_BSP_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *p_version)</td></tr>
-<tr class="separator:gade0e6b9fc5ca580d5bf6c8ae2a6af8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf3219448adfd1531cf69f68697ab184b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a> (uint32_t delay, <a class="el" href="group___b_s_p___m_c_u.html#gafd98e2a6f080d6a52a3ef72e3d731b2b">bsp_delay_units_t</a> units)</td></tr>
 <tr class="separator:gaf3219448adfd1531cf69f68697ab184b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaed27ea47f0c85a1af9bb515600d5e2ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite</a> (<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq, void(*p_callback)(<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq))</td></tr>
@@ -213,6 +211,20 @@ Functions</h2></td></tr>
 <tr class="separator:ga50cae0c65c54074c32d30eb4108d9a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1273625a09a1d570dea0c5189f6b5fe8"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE bsp_unique_id_t const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga1273625a09a1d570dea0c5189f6b5fe8">R_BSP_UniqueIdGet</a> ()</td></tr>
 <tr class="separator:ga1273625a09a1d570dea0c5189f6b5fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12e87c378c70206efe90191ca9b80614"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga12e87c378c70206efe90191ca9b80614">R_BSP_IrqStatusClear</a> (IRQn_Type irq)</td></tr>
+<tr class="separator:ga12e87c378c70206efe90191ca9b80614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e1770c51415f6e1b252db25cba519bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga5e1770c51415f6e1b252db25cba519bf">R_BSP_IrqClearPending</a> (IRQn_Type irq)</td></tr>
+<tr class="separator:ga5e1770c51415f6e1b252db25cba519bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga60fe8003581e76178d779a4826269761"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga60fe8003581e76178d779a4826269761">R_BSP_IrqCfg</a> (IRQn_Type const irq, uint32_t priority, void *p_context)</td></tr>
+<tr class="separator:ga60fe8003581e76178d779a4826269761"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga371b95fda14990f0cd07b9f7be415666"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga371b95fda14990f0cd07b9f7be415666">R_BSP_IrqEnableNoClear</a> (IRQn_Type const irq)</td></tr>
+<tr class="separator:ga371b95fda14990f0cd07b9f7be415666"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3044950b0d3d01b4308f7ae4dbe82ed9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga3044950b0d3d01b4308f7ae4dbe82ed9">R_BSP_IrqEnable</a> (IRQn_Type const irq)</td></tr>
+<tr class="separator:ga3044950b0d3d01b4308f7ae4dbe82ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92fe380c52ec05457d53b076f295ff13"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga92fe380c52ec05457d53b076f295ff13">R_BSP_IrqDisable</a> (IRQn_Type const irq)</td></tr>
+<tr class="separator:ga92fe380c52ec05457d53b076f295ff13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga128782df12a076633ed01cb09dbcabb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga128782df12a076633ed01cb09dbcabb1">R_BSP_IrqCfgEnable</a> (IRQn_Type const irq, uint32_t priority, void *p_context)</td></tr>
+<tr class="separator:ga128782df12a076633ed01cb09dbcabb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa072f1c546faca4ca4bc984c1406ea59"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaa072f1c546faca4ca4bc984c1406ea59">R_BSP_CacheCleanAllData</a> (void)</td></tr>
 <tr class="separator:gaa072f1c546faca4ca4bc984c1406ea59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga000584fc4ca9d51ccfd4fb99d3fc3c2d"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga000584fc4ca9d51ccfd4fb99d3fc3c2d">R_BSP_CacheInvalidateAllData</a> (void)</td></tr>
@@ -229,6 +241,16 @@ Functions</h2></td></tr>
 <tr class="separator:gabfe23c9df06f861b706812b8fae9523d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga89ffeae208b9cfb9289eff10e01d0574"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga89ffeae208b9cfb9289eff10e01d0574">R_BSP_CacheCleanInvalidateRangeData</a> (void *addr, uint32_t length)</td></tr>
 <tr class="separator:ga89ffeae208b9cfb9289eff10e01d0574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac631e8660720cc358c4a02bd5920120d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gac631e8660720cc358c4a02bd5920120d">R_BSP_IrqDetectTypeSet</a> (IRQn_Type const irq, uint8_t detect_type)</td></tr>
+<tr class="separator:gac631e8660720cc358c4a02bd5920120d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafbde0638d58cbf1c00e97a59867f5024"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gafbde0638d58cbf1c00e97a59867f5024">R_BSP_IrqPendingGet</a> (IRQn_Type irq)</td></tr>
+<tr class="separator:gafbde0638d58cbf1c00e97a59867f5024"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga79175e8769825ffa7a8379dc58aa7142"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga79175e8769825ffa7a8379dc58aa7142">R_BSP_IrqGroupSet</a> (IRQn_Type const irq, uint32_t interrupt_group)</td></tr>
+<tr class="separator:ga79175e8769825ffa7a8379dc58aa7142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7cfbd1511cf665b2dafae608c2803cdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga7cfbd1511cf665b2dafae608c2803cdc">R_BSP_IrqMaskLevelSet</a> (uint32_t mask_level)</td></tr>
+<tr class="separator:ga7cfbd1511cf665b2dafae608c2803cdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1660930ede5ff1ba1f623c4bd307f84"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gad1660930ede5ff1ba1f623c4bd307f84">R_BSP_IrqMaskLevelGet</a> (void)</td></tr>
+<tr class="separator:gad1660930ede5ff1ba1f623c4bd307f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>The BSP is responsible for getting the MPU from reset to the user's application. Before reaching the user's application, the BSP sets up the stacks, heap, clocks, interrupts, C runtime environment, and stack monitor. </p>
@@ -244,7 +266,7 @@ Functions</h2></td></tr>
 <li>
 <a href="#peripheral-interrupts">Peripheral Interrupts</a> </li>
 <li>
-<a href="#select-class-interrupts">Select Class of Interrupts</a> </li>
+<a href="#select-interrupts">Select Class of Interrupts</a> </li>
 <li>
 <a href="#error-logging">Error Logging</a> </li>
 <li>
@@ -364,18 +386,21 @@ Group Interrupts</h3>
 <h3><a class="anchor" id="peripheral-interrupts"></a>
 Peripheral Interrupts</h3>
 <p><a class="anchor" id="um_bsp_support_user_isrs"></a>RZ MPU supports 480 peripheral interrupts by NVIC or GIC, and any factor can be registered in the vector table from the <b>Interrupts</b> tab of the Configuration editor.</p>
-<h3><a class="anchor" id="select-class-interrupts"></a>
-Select Class of Interrupts</h3>
-<p>In the RZ/V2H, Interrupt No. 353 - 479 is called Select Class, and multiple interrupt sources can be assigned to it. When an interrupt that is the target of Select Class is registered on the Smart Configurator, a number is automatically assigned. Therefore, the interrupt can be used without being aware of the changing interrupt number. However, there is a limit to the number of Select Classes that can be used depending on the core used by the FSP Project.</p>
+<h3><a class="anchor" id="select-interrupts"></a>
+Select Interrupts</h3>
+<p>Some MPUs have interrupts that can be assigned to multiple interrupt sources. These types of interrupts are called "Select Interrupts". When an interrupt that is the target of Select Interrupts is registered on the Smart Configurator, a number is automatically assigned. Therefore, the interrupt can be used without being aware of the changing interrupt number. However, there is a limit to the number of Select Interrupts that can be used depending on the core used by the FSP Project.</p>
+<p>Below is a list of MPU that have Select Interrputs and the interrupt numbers to which the Select Interrupts are assigned.</p>
 <table class="doxtable">
 <tr>
-<th>Core </th><th>Number of Select Class </th><th>Interrupt No.  </th></tr>
+<th>Core </th><th>Number of Select Interrupts </th><th>Assgined Interrupt No.  </th></tr>
 <tr>
-<td>Cortex-M33 </td><td>127 </td><td>No.353 - 479 </td></tr>
+<td>RZ/V2H Cortex-M33 </td><td>127 </td><td>No.353 - 479 </td></tr>
 <tr>
-<td>Cortex-R8 core0 </td><td>85 </td><td>No.353 - 437 </td></tr>
+<td>RZ/V2H Cortex-R8 core0 </td><td>85 </td><td>No.353 - 437 </td></tr>
 <tr>
-<td>Cortex-R8 core1 </td><td>42 </td><td>No.438 - 479 </td></tr>
+<td>RZ/V2H Cortex-R8 core1 </td><td>42 </td><td>No.438 - 479 </td></tr>
+<tr>
+<td>RZ/V2N Cortex-M33 </td><td>127 </td><td>No.353 - 479 </td></tr>
 </table>
 <h3><a class="anchor" id="warm-start-callbacks"></a>
 Warm Start Callbacks</h3>
@@ -477,6 +502,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Select if the C runtime initialization in the BSP is to be used. If disabled, use the BSP_WARM_START_POST_CLOCK event to run user defined equivalent. </td></tr>
+<tr>
+<td>Early BSP Initialization </td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable this option to use BSP functions before C runtime initialization (BSP_WARM_START_RESET or BSP_WARM_START_POST_CLOCK). </td></tr>
 </table>
 </p>
 <p><b>Cortex-R core:</b></p>
@@ -523,6 +556,17 @@ Disabled</li>
 <td>Caches </td><td>- Disabled <br />
  - Enabled </td><td>Enabled </td><td>Specifies whether to enable or disable the built-in cache. </td></tr>
 </table>
+<div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* After modify */</span></div><div class="line">    <span class="comment">/* Setting CR8 bus master access attributes as secure and privileged. */</span></div><div class="line">    R_BSP_MASTER_ACCESS_CONTROL_SET(MST_ACCCNT_CR8_0,</div><div class="line">                                    BSP_MST_ACCCNT_LEVEL_PRIVILEGED_SECURE,</div><div class="line">                                    BSP_MST_ACCCNT_WRITE_DIRECTION);</div><div class="line">    R_BSP_MASTER_ACCESS_CONTROL_SET(MST_ACCCNT_CR8_0,</div><div class="line">                                    BSP_MST_ACCCNT_LEVEL_PRIVILEGED_SECURE,</div><div class="line">                                    BSP_MST_ACCCNT_READ_DIRECTION);</div><div class="line">    R_BSP_MASTER_ACCESS_CONTROL_SET(MST_ACCCNT_CR8_1,</div><div class="line">                                    BSP_MST_ACCCNT_LEVEL_PRIVILEGED_SECURE,</div><div class="line">                                    BSP_MST_ACCCNT_WRITE_DIRECTION);</div><div class="line">    R_BSP_MASTER_ACCESS_CONTROL_SET(MST_ACCCNT_CR8_1,</div><div class="line">                                    BSP_MST_ACCCNT_LEVEL_PRIVILEGED_SECURE,</div><div class="line">                                    BSP_MST_ACCCNT_READ_DIRECTION);</div><div class="line">    R_BSP_MASTER_ACCESS_CONTROL_SET(MST_ACCCNT_CR8_LLPP,</div><div class="line">                                    BSP_MST_ACCCNT_LEVEL_PRIVILEGED_SECURE,</div><div class="line">                                    BSP_MST_ACCCNT_WRITE_DIRECTION);</div><div class="line">    R_BSP_MASTER_ACCESS_CONTROL_SET(MST_ACCCNT_CR8_LLPP,</div><div class="line">                                    BSP_MST_ACCCNT_LEVEL_PRIVILEGED_SECURE,</div><div class="line">                                    BSP_MST_ACCCNT_READ_DIRECTION);</div><div class="line"></div></div><!-- fragment --><ol type="1">
+<li>Build and run the this project.</li>
+<li>Run any Cortex-R8 project.</li>
+</ol>
+<p>(Note) The following devices must signal a secure and privileged access protection signal when accessed:</p>
+<ul>
+<li>RZ/V2H<ul>
+<li>Message Handling Unit (secure channel &ndash;&gt;</li>
+</ul>
+</li>
+</ul>
 <h1><a class="anchor" id="setting-cache"></a>
 Setting of the Built-in Cache</h1>
 <p>Some cores have built-in cache. According to the BSP configuration, the cache is enabled after the clock information is registered in the table during the BSP initialization sequence. Enabling the cache will be available both the instruction cache and the data cache. For data cache, the memory space where the cache is enabled must be set as an attribute.</p>
@@ -531,11 +575,13 @@ Setting of the Built-in Cache</h1>
 <tr>
 <th>Core </th><th>Cache  </th></tr>
 <tr>
-<td>RZ/V2H Cortex-M33 </td><td>unsupprted </td></tr>
+<td>RZ/V2H Cortex-M33 </td><td>unsupported </td></tr>
 <tr>
 <td>RZ/V2H Cortex-R8 core0/core1 </td><td>supported </td></tr>
 <tr>
-<td>RZ/V2L Cortex-M33 </td><td>unsupprted </td></tr>
+<td>RZ/V2N Cortex-M33 </td><td>unsupported </td></tr>
+<tr>
+<td>RZ/V2L Cortex-M33 </td><td>unsupported </td></tr>
 </table>
 <h1><a class="anchor" id="memory_attribute"></a>
 Setting of the Memory Attribute</h1>
@@ -544,11 +590,13 @@ Setting of the Memory Attribute</h1>
 <tr>
 <th>Core </th><th>MPU  </th></tr>
 <tr>
-<td>RZ/V2H Cortex-M33 </td><td>unsupprted </td></tr>
+<td>RZ/V2H Cortex-M33 </td><td>unsupported </td></tr>
 <tr>
-<td>RZ/V2H Cortex-R8 core0/core1 </td><td>support </td></tr>
+<td>RZ/V2H Cortex-R8 core0/core1 </td><td>supported </td></tr>
 <tr>
-<td>RZ/V2L Cortex-M33 </td><td>unsupprted </td></tr>
+<td>RZ/V2N Cortex-M33 </td><td>unsupported </td></tr>
+<tr>
+<td>RZ/V2L Cortex-M33 </td><td>unsupported </td></tr>
 </table>
 <p>Configure it in the g_mpu_region_table_array[] table in the following file.</p>
 <p>src/mpu_region_table.c</p>
@@ -558,8 +606,11 @@ Setting of the Memory Attribute</h1>
 <p>On RZ/V2H Cortex-R8, region 0 to 15 are available.</p>
 <p><b>base address:</b></p>
 <p>Set the base address of the Memory Region. The address must be set to a value aligned with the size set in the size parameter.</p>
+<p>Note the following when changing the address definition of a Memory Region.</p>
+<p>The areas accessed by the program are assigned by the linker script. Therefore, if user modify the addresses of areas protected by the MPU in "src/mpu_region_table.c", user must also modify the addresses defined in linker script to match to it.</p>
+<p>The linker script included in FSP defines the symbol settings for the MPU default settings as an example of the setting descriptions. The linker script symbols that correspond to the MPU default settings are listed in <b>Default Memory Attribute for FSP</b> below. Refer to this table when changing the MPU and linker script settings to suit your environment.</p>
 <p><b>size:</b></p>
-<p>Set the macro shown below to determine the size of the Memory Region. The address and size parameters must be set to cover the address range in which the memory is installed.</p>
+<p>Set the macro shown below to determine the size of the Memory Region. The address and size parameters must be set to cover the address range in which the memory is installed. If <b>size</b> is changed, the linker script should be modified for the same reason as the <b>base address</b>.</p>
 <table class="doxtable">
 <tr>
 <th>Name </th><th>Description  </th></tr>
@@ -708,61 +759,128 @@ This macro can only be combined if the Normal memory attribute is set. Do not co
 <p><b>for Cortex-R8 core0</b></p>
 <table class="doxtable">
 <tr>
-<th>Region Number </th><th>Address </th><th>Memory Space Name </th><th>Attribute  </th></tr>
+<th>Region Number </th><th>Address </th><th>Memory Space Name </th><th>Attribute </th><th>Note  </th></tr>
 <tr>
-<td>0 </td><td>0x00000000 - 0x0001FFFF </td><td>ITCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>0 </td><td>0x00000000 - 0x0001FFFF </td><td>ITCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td></td></tr>
 <tr>
-<td>1 </td><td>0x00020000 - 0x0003FFFF </td><td>DTCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>1 </td><td>0x00020000 - 0x0003FFFF </td><td>DTCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td></td></tr>
 <tr>
-<td>2 </td><td>0x08100000 - 0x0819FFFF </td><td>RCPU SRAM (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<td>2 </td><td>0x08100000 - 0x0819FFFF </td><td>RCPU SRAM (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer Non-cacheable, Inner Cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+SRAM_CACHE_PRV_START: <b>base address</b> <br />
+SRAM_CACHE_PRV_LENGTH: <b>size</b> </td></tr>
 <tr>
-<td>3 </td><td>0x081A0000 - 0x081BFFFF </td><td>RCPU SRAM (Non-Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>3 </td><td>0x081A0000 - 0x081BFFFF </td><td>RCPU SRAM (Non-Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+SRAM_UNCACHE_PRV_START: <b>base address</b> <br />
+SRAM_UNCACHE_PRV_LENGTH: Set to the new value of <b>size</b> </td></tr>
 <tr>
-<td>4 </td><td>0x10000000 - 0x1FFFFFFF </td><td>Peripheral I/O </td><td>Device Memory, Non-Shareable, Read/Write Enable, Execute Disable, Outer/Inner Non-cacheable </td></tr>
+<td>4 </td><td>0x10000000 - 0x1FFFFFFF </td><td>Peripheral I/O </td><td>Device Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Disable, Outer/Inner Non-cacheable </td><td></td></tr>
 <tr>
-<td>5 </td><td>0x20000000 - 0x2FFFFFFF </td><td>xSPI memory </td><td>Normal Memory, Non-Shareable, Read Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<td>5 </td><td>0x20000000 - 0x2FFFFFFF </td><td>xSPI memory </td><td>Normal Memory, Non-Shareable, Read Enable, <br />
+Execute Enable, Outer Non-cacheable, Inner Cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+XSPIFLASH_PRV_START: <b>base address</b> <br />
+XSPIFLASH_PRV_LENGTH: <b>size</b> </td></tr>
 <tr>
-<td>6 </td><td>0x40800000 - 0x40FFFFFF </td><td>DDR (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<td>6 </td><td>0x40800000 - 0x40FFFFFF </td><td>DDR (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer Non-cacheable, Inner Cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+DDR_CACHE_PRV_START: <b>base address</b> <br />
+DDR_CACHE_LENGTH: <b>size</b> </td></tr>
 <tr>
-<td>7 </td><td>0x41000000 - 0x417FFFFF </td><td>DDR (Non-cache) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>7 </td><td>0x41000000 - 0x417FFFFF </td><td>DDR (Non-cache) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+DDR_UNCACHE_PRV_START: <b>base address</b> <br />
+DDR_UNCACHE_LENGTH: <b>size</b> </td></tr>
 <tr>
-<td>8 </td><td>0x42F00000 - 0x42F01FFF </td><td>OpenAMP RSCTBL + MHU SHMEM </td><td>Normal Memory, Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>8 </td><td>0x42F00000 - 0x42F01FFF </td><td>OpenAMP RSCTBL + MHU SHMEM </td><td>Normal Memory, Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+OPENAMP_RSCTBL_START, MHU_SHMEM_START: <b>base address</b> <br />
+OPENAMP_RSCTBL_LENGTH, MHU_SHMEM_LENGTH: <b>size</b> </td></tr>
 <tr>
-<td>9 </td><td>0x43000000 - 0x43FFFFFF </td><td>OpenAMP VRING </td><td>Normal Memory, Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>9 </td><td>0x43000000 - 0x43FFFFFF </td><td>OpenAMP VRING </td><td>Normal Memory, Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+OPENAMP_VRING_START: <b>base address</b> <br />
+OPENAMP_VRING_LENGTH: <b>size</b> </td></tr>
+<tr>
+<td>10 to 15 </td><td>&mdash; </td><td>&mdash; </td><td>&mdash; </td><td>Unused region. If you want to add a region, add the corresponding area symbol to the linker script. </td></tr>
 </table>
-<p>Regions 10 - 15 are unused.</p>
 <p><b>for Cortex-R8 core1</b></p>
 <table class="doxtable">
 <tr>
-<th>Region Number </th><th>Address </th><th>Memory Space Name </th><th>Attribute  </th></tr>
+<th>Region Number </th><th>Address </th><th>Memory Space Name </th><th>Attribute </th><th>Note  </th></tr>
 <tr>
-<td>0 </td><td>0x00000000 - 0x0001FFFF </td><td>ITCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>0 </td><td>0x00000000 - 0x0001FFFF </td><td>ITCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td></td></tr>
 <tr>
-<td>1 </td><td>0x00020000 - 0x0003FFFF </td><td>DTCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>1 </td><td>0x00020000 - 0x0003FFFF </td><td>DTCM </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td></td></tr>
 <tr>
-<td>2 </td><td>0x081C0000 - 0x081DFFFF </td><td>RCPU SRAM (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<td>2 </td><td>0x081C0000 - 0x081DFFFF </td><td>RCPU SRAM (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer Non-cacheable, Inner Cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+SRAM_CACHE_PRV_START: <b>base address</b> <br />
+SRAM_CACHE_PRV_LENGTH: <b>size</b> </td></tr>
 <tr>
-<td>3 </td><td>0x081E0000 - 0x081FFFFF </td><td>RCPU SRAM (Non-Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>3 </td><td>0x081E0000 - 0x081FFFFF </td><td>RCPU SRAM (Non-Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+SRAM_UNCACHE_PRV_START: <b>base address</b> <br />
+SRAM_UNCACHE_PRV_LENGTH: <b>size</b> </td></tr>
 <tr>
-<td>4 </td><td>0x10000000 - 0x1FFFFFFF </td><td>Peripheral I/O </td><td>Device Memory, Non-Shareable, Read/Write Enable, Execute Disable, Outer/Inner Non-cacheable </td></tr>
+<td>4 </td><td>0x10000000 - 0x1FFFFFFF </td><td>Peripheral I/O </td><td>Device Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Disable, Outer/Inner Non-cacheable </td><td></td></tr>
 <tr>
-<td>5 </td><td>0x20000000 - 0x2FFFFFFF </td><td>xSPI memory </td><td>Normal Memory, Non-Shareable, Read Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<td>5 </td><td>0x20000000 - 0x2FFFFFFF </td><td>xSPI memory </td><td>Normal Memory, Non-Shareable, Read Enable, <br />
+Execute Enable, Outer Non-cacheable, Inner Cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+XSPIFLASH_PRV_START: <b>base address</b> <br />
+XSPIFLASH_PRV_LENGTH: <b>size</b> </td></tr>
 <tr>
-<td>6 </td><td>0x40800000 - 0x40FFFFFF </td><td>DDR (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer Non-cacheable, Inner Cacheable </td></tr>
+<td>6 </td><td>0x41800000 - 0x41FFFFFF </td><td>DDR (Cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer Non-cacheable, Inner Cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+DDR_CACHE_PRV_START: <b>base address</b> <br />
+DDR_CACHE_LENGTH: <b>size</b> </td></tr>
 <tr>
-<td>7 </td><td>0x41000000 - 0x417FFFFF </td><td>DDR (Non-cacheable) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>7 </td><td>0x42000000 - 0x427FFFFF </td><td>DDR (Non-cache) </td><td>Normal Memory, Non-Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+DDR_UNCACHE_PRV_START: <b>base address</b> <br />
+DDR_UNCACHE_LENGTH: <b>size</b> </td></tr>
 <tr>
-<td>8 </td><td>0x42F00000 - 0x42F01FFF </td><td>OpenAMP RSCTBL + MHU SHMEM </td><td>Normal Memory, Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>8 </td><td>0x42F00000 - 0x42F01FFF </td><td>OpenAMP RSCTBL + MHU SHMEM </td><td>Normal Memory, Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+OPENAMP_RSCTBL_START, MHU_SHMEM_START: <b>base address</b> <br />
+OPENAMP_RSCTBL_LENGTH, MHU_SHMEM_LENGTH: <b>size</b> </td></tr>
 <tr>
-<td>9 </td><td>0x43000000 - 0x43FFFFFF </td><td>OpenAMP VRING </td><td>Normal Memory, Shareable, Read/Write Enable, Execute Enable, Outer/Inner Non-cacheable </td></tr>
+<td>9 </td><td>0x43000000 - 0x43FFFFFF </td><td>OpenAMP VRING </td><td>Normal Memory, Shareable, Read/Write Enable, <br />
+Execute Enable, Outer/Inner Non-cacheable </td><td>If the base address or size of this region is changed, <br />
+the values of the symbols in the linker script shown below should be modified. <br />
+OPENAMP_VRING_START: <b>base address</b> <br />
+OPENAMP_VRING_LENGTH: <b>size</b> </td></tr>
+<tr>
+<td>10 to 15 </td><td>&mdash; </td><td>&mdash; </td><td>&mdash; </td><td>Unused region. If you want to add a region, add the corresponding area symbol to the linker script. </td></tr>
 </table>
-<p>Regions 10 - 15 are unused.</p>
+<p>The linker script to be modified when changing the address of the protected area of each region of the MPU is included in the script folder.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_z_v2_h"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_z_v2_h.html">RZV2H</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_z_v2_l"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_z_v2_l.html">RZV2L</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___b_s_p___m_c_u___r_z_v2_n"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_z_v2_n.html">RZV2N</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -833,6 +951,8 @@ Macros</h2></td></tr>
 <tr class="separator:ga4b9ba26ad9063f200e6b8e3a7c33959c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae685ec20bc3579295878f1586478b54c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a></td></tr>
 <tr class="separator:gae685ec20bc3579295878f1586478b54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f428b0e243466083b74ab49b25bea8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga0f428b0e243466083b74ab49b25bea8c">FSP_LOG_PRINT</a>(X)</td></tr>
+<tr class="separator:ga0f428b0e243466083b74ab49b25bea8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8c791e904efc648fb8b69b56d7dd37ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga8c791e904efc648fb8b69b56d7dd37ba">FSP_RETURN</a>(err)</td></tr>
 <tr class="separator:ga8c791e904efc648fb8b69b56d7dd37ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga960f46c44b67ba8ad5377cfc8e4e6a75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga960f46c44b67ba8ad5377cfc8e4e6a75">FSP_ERROR_LOG</a>(err)</td></tr>
@@ -853,6 +973,8 @@ Macros</h2></td></tr>
 <tr class="separator:gadecec24d538312129b60def6152f5992"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae685ec20bc3579295878f1586478b54c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a></td></tr>
 <tr class="separator:gae685ec20bc3579295878f1586478b54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f428b0e243466083b74ab49b25bea8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga0f428b0e243466083b74ab49b25bea8c">FSP_LOG_PRINT</a>(X)</td></tr>
+<tr class="separator:ga0f428b0e243466083b74ab49b25bea8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8c791e904efc648fb8b69b56d7dd37ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga8c791e904efc648fb8b69b56d7dd37ba">FSP_RETURN</a>(err)</td></tr>
 <tr class="separator:ga8c791e904efc648fb8b69b56d7dd37ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga960f46c44b67ba8ad5377cfc8e4e6a75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga960f46c44b67ba8ad5377cfc8e4e6a75">FSP_ERROR_LOG</a>(err)</td></tr>
@@ -887,16 +1009,10 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gaa3cd3e43291e81e795d642b79b6088e6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaa3cd3e43291e81e795d642b79b6088e6">SystemCoreClock</a></td></tr>
-<tr class="separator:gaa3cd3e43291e81e795d642b79b6088e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa3cd3e43291e81e795d642b79b6088e6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaa3cd3e43291e81e795d642b79b6088e6">SystemCoreClock</a></td></tr>
-<tr class="separator:gaa3cd3e43291e81e795d642b79b6088e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa2f4340010ddb682ca12fac46f83db8"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaaa2f4340010ddb682ca12fac46f83db8">g_bsp_version</a></td></tr>
-<tr class="memdesc:gaaa2f4340010ddb682ca12fac46f83db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default initialization function.  <a href="#gaaa2f4340010ddb682ca12fac46f83db8">More...</a><br /></td></tr>
-<tr class="separator:gaaa2f4340010ddb682ca12fac46f83db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa2f4340010ddb682ca12fac46f83db8"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaaa2f4340010ddb682ca12fac46f83db8">g_bsp_version</a></td></tr>
-<tr class="memdesc:gaaa2f4340010ddb682ca12fac46f83db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default initialization function.  <a href="#gaaa2f4340010ddb682ca12fac46f83db8">More...</a><br /></td></tr>
-<tr class="separator:gaaa2f4340010ddb682ca12fac46f83db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4244c3a2d457987d4a9ab21738c8c617"><td class="memItemLeft" align="right" valign="top">uint32_t SystemCoreClock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga4244c3a2d457987d4a9ab21738c8c617">BSP_SECTION_EARLY_INIT</a></td></tr>
+<tr class="separator:ga4244c3a2d457987d4a9ab21738c8c617"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4244c3a2d457987d4a9ab21738c8c617"><td class="memItemLeft" align="right" valign="top">uint32_t SystemCoreClock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga4244c3a2d457987d4a9ab21738c8c617">BSP_SECTION_EARLY_INIT</a></td></tr>
+<tr class="separator:ga4244c3a2d457987d4a9ab21738c8c617"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ga6c36d1d91a0e4e4a8373b2075f682145"></a>
@@ -2066,6 +2182,25 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ga0f428b0e243466083b74ab49b25bea8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0f428b0e243466083b74ab49b25bea8c">&#9670;&nbsp;</a></span>FSP_LOG_PRINT <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSP_LOG_PRINT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">X</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Macro that can be defined in order to enable logging in FSP modules. </p>
+
+</div>
+</div>
 <a id="ga8c791e904efc648fb8b69b56d7dd37ba"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga8c791e904efc648fb8b69b56d7dd37ba">&#9670;&nbsp;</a></span>FSP_RETURN <span class="overload">[1/2]</span></h2>
 
@@ -2243,6 +2378,25 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Used to signify that an interrupt factor is not available. </p>
+
+</div>
+</div>
+<a id="ga0f428b0e243466083b74ab49b25bea8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0f428b0e243466083b74ab49b25bea8c">&#9670;&nbsp;</a></span>FSP_LOG_PRINT <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSP_LOG_PRINT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">X</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Macro that can be defined in order to enable logging in FSP modules. </p>
 
 </div>
 </div>
@@ -2452,6 +2606,52 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950ad8802ee74d9cafca9a1c4d5faea8e253"></a>FSP_IP_SCI&#160;</td><td class="fielddoc"><p>Serial Communications Interface. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a7e7705b2505050da600c075db4723581"></a>FSP_IP_MTU3&#160;</td><td class="fielddoc"><p>Multi-Function Timer Pulse Unit 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950afe554013bd2f3cbbd8462cea8eeee4ca"></a>FSP_IP_GTM&#160;</td><td class="fielddoc"><p>General Timer. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a83fe18962b058df65adb9ce089719ebb"></a>FSP_IP_GPT&#160;</td><td class="fielddoc"><p>General PWM Timer. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950acfc9bb8ff007a7b82cf4fd845dfce053"></a>FSP_IP_POEG&#160;</td><td class="fielddoc"><p>Port Output Enable for GPT. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a3403f62d1f8cc29a868e5da9a86a46f7"></a>FSP_IP_PORT&#160;</td><td class="fielddoc"><p>I/O Ports. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a4704af5ed32cbd6532fd28a44d0d028e"></a>FSP_IP_IM33&#160;</td><td class="fielddoc"><p>IM33 (Interrupt controller) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a837b8847e248ed296512f20813008cd5"></a>FSP_IP_SCIF&#160;</td><td class="fielddoc"><p>Serial Communications Interface with FIFO. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a17e007a04505fb7a7614067e3d5e7447"></a>FSP_IP_RIIC&#160;</td><td class="fielddoc"><p>I2C Bus Interface. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950acbce1d6d73ea0d9a18c42b2389c69888"></a>FSP_IP_RSPI&#160;</td><td class="fielddoc"><p>Renesas Serial Peripheral Interface. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950abfff39a6b8ca24d18832ad7153cc0880"></a>FSP_IP_MHU&#160;</td><td class="fielddoc"><p>Message Handling Unit. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a494addfd4ceb1fabb0bea0893b444641"></a>FSP_IP_DMAC&#160;</td><td class="fielddoc"><p>Direct Memory Access Controller. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950adf8c428fc9e6594881035cfc67a66373"></a>FSP_IP_DMAC_s&#160;</td><td class="fielddoc"><p>Direct Memory Access Controller. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a372bbc7267801454ac9a1bf3677ef60c"></a>FSP_IP_SSI&#160;</td><td class="fielddoc"><p>Serial Sound Interface. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950aacbead3e070986a6c40c32d2485d5c4e"></a>FSP_IP_CANFD&#160;</td><td class="fielddoc"><p>CANFD Interface (RS-CANFD) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950ac49bfca1e1ccf88f53586fc28bd54250"></a>FSP_IP_ADC&#160;</td><td class="fielddoc"><p>A/D Converter. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a55e1c8e5259f5bc822c320abb058142b"></a>FSP_IP_TSU&#160;</td><td class="fielddoc"><p>Thermal Sensor Unit. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a9b738d0f557574bb4d659abc2dc0fbf8"></a>FSP_IP_WDT&#160;</td><td class="fielddoc"><p>Watchdog Timer. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950ad8802ee74d9cafca9a1c4d5faea8e253"></a>FSP_IP_SCI&#160;</td><td class="fielddoc"><p>Serial Communications Interface. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a41268ed3e6b973a85d0dcabaf5d1abf2"></a>FSP_IP_CMTW&#160;</td><td class="fielddoc"><p>Compare Match Timer W. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a8e412d35ce1643636ba6bc355914c5e0"></a>FSP_IP_XSPI&#160;</td><td class="fielddoc"><p>Expanded Serial Peripheral Interface. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a66f3b5b31f294d50f964990b205cb92b"></a>FSP_IP_CRC&#160;</td><td class="fielddoc"><p>Cyclic redundancy check (CRC) operation units. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950aaff0832d2687261b54f54189c224db06"></a>FSP_IP_I3C&#160;</td><td class="fielddoc"><p>I3C Bus Interface. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950ae2e4b37d45024125cbb660f1b3a3090e"></a>FSP_IP_RTC&#160;</td><td class="fielddoc"><p>Realtime Clock. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950a308404027f3f10d27b8cb240dec71244"></a>FSP_IP_SYC&#160;</td><td class="fielddoc"><p>System counter. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ga7880302f0edd7cc4290c037809975950afe554013bd2f3cbbd8462cea8eeee4ca"></a>FSP_IP_GTM&#160;</td><td class="fielddoc"><p>General Timer. </p>
 </td></tr>
@@ -2993,38 +3193,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gade0e6b9fc5ca580d5bf6c8ae2a6af8d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gade0e6b9fc5ca580d5bf6c8ae2a6af8d9">&#9670;&nbsp;</a></span>R_BSP_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_BSP_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get the BSP version based on compile time macros.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_version</td><td>Memory address to return version information to.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Version information stored. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_version is NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="gaf3219448adfd1531cf69f68697ab184b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf3219448adfd1531cf69f68697ab184b">&#9670;&nbsp;</a></span>R_BSP_SoftwareDelay()</h2>
 
@@ -3051,13 +3219,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Delay for at least the specified duration in units and return. This function shouldn't be used to generate an accurate delay time. A running time of the function is depending on the region of memory where the function is excuted on and a frequency of the CPU clock.</p>
-<p>The funcion calls bsp_prv_software_delay_loop() which loops over the requested delay time. One loop time through bsp_prv_software_delay_loop() takes roughly 500ns. This value is based on the actual measured time in the condition that a frequency of the CPU clock is 200MHz and the code is excuted on DDR3L-1333 DRAM(133MHz). One loop running time of software_delay_loop() can be modified by redefining BSP_FEATURE_BSP_DELAY_LOOP_CYCLES.</p>
+<p>The loop time of bsp_prv_software_delay_loop() varies depending on the CPU clock frequency and the type of memory the program runs on. The loop time parameter is determined by measuring the actual execution time of bsp_prv_software_delay_loop(). The loop time parameter of software_delay_loop() can be changed by redefining the loop time parameter, BSP_FEATURE_BSP_DELAY_LOOP_CYCLES.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">delay</td><td>The number of 'units' to delay. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">units</td><td>The 'base' (bsp_delay_units_t) for the units specified. Valid values are: BSP_DELAY_UNITS_SECONDS, BSP_DELAY_UNITS_MILLISECONDS, BSP_DELAY_UNITS_MICROSECONDS.<br />
  For example:<br />
- One run through bsp_prv_software_delay_loop() takes roughly 500ns. A delay of 100 us therefore requires 100000ns/500ns -&gt; 200 loops.</td></tr>
+ The case described is where one execution of bsp_prv_software_delay_loop() takes approximately 500ns, in which case a 100us delay requires 100000ns / 500ns -&gt; 200 loops.</td></tr>
   </table>
   </dd>
 </dl>
@@ -3146,6 +3314,276 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Get unique ID is not supported in this device.</p>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the unique identifier structure </dd></dl>
+
+</div>
+</div>
+<a id="ga12e87c378c70206efe90191ca9b80614"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga12e87c378c70206efe90191ca9b80614">&#9670;&nbsp;</a></span>R_BSP_IrqStatusClear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_IrqStatusClear </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type&#160;</td>
+          <td class="paramname"><em>irq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clear the interrupt status flag for a given interrupt.</p>
+<dl class="section note"><dt>Note</dt><dd>This function does not implement processing on this device.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>Not used </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga5e1770c51415f6e1b252db25cba519bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5e1770c51415f6e1b252db25cba519bf">&#9670;&nbsp;</a></span>R_BSP_IrqClearPending()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_IrqClearPending </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type&#160;</td>
+          <td class="paramname"><em>irq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clear the interrupt status flag for a given interrupt and clear the NVIC pending interrupt.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>Interrupt for which to clear the status flag. Note that the enums listed for IRQn_Type are only those for the Cortex Processor Exceptions Numbers.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is &lt; 0.</dd></dl>
+<p>Clear the GIC pending interrupt.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>Interrupt for which to clear the Pending bit. Note that the enums listed for IRQn_Type are only those for the Cortex Processor Exceptions Numbers.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exception when the IIRQn_Type value is less than 0. </dd></dl>
+
+</div>
+</div>
+<a id="ga60fe8003581e76178d779a4826269761"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga60fe8003581e76178d779a4826269761">&#9670;&nbsp;</a></span>R_BSP_IrqCfg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_IrqCfg </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type const&#160;</td>
+          <td class="paramname"><em>irq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>priority</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the interrupt priority and context.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>The IRQ to configure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>NVIC priority of the interrupt </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>The interrupt context is a pointer to data required in the ISR.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is &lt; 0.</dd></dl>
+<p>Sets the interrupt priority and context.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>The IRQ number to configure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>GIC priority of the interrupt </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>The interrupt context is a pointer to data required in the ISR.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is less than 0. </dd></dl>
+
+</div>
+</div>
+<a id="ga371b95fda14990f0cd07b9f7be415666"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga371b95fda14990f0cd07b9f7be415666">&#9670;&nbsp;</a></span>R_BSP_IrqEnableNoClear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_IrqEnableNoClear </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type const&#160;</td>
+          <td class="paramname"><em>irq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable the IRQ in the NVIC (Without clearing the pending bit).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>The IRQ to enable. Note that the enums listed for IRQn_Type are only those for the Cortex Processor Exceptions Numbers.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is &lt; 0.</dd></dl>
+<p>Enable the IRQ in the GIC (Without clearing the pending bit).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>The IRQ number to enable. Note that the enums listed for IRQn_Type are only those for the Cortex Processor Exceptions Numbers.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is less than 0. </dd></dl>
+
+</div>
+</div>
+<a id="ga3044950b0d3d01b4308f7ae4dbe82ed9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3044950b0d3d01b4308f7ae4dbe82ed9">&#9670;&nbsp;</a></span>R_BSP_IrqEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_IrqEnable </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type const&#160;</td>
+          <td class="paramname"><em>irq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clears pending interrupts in both IM33 and NVIC, then enables the interrupt.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>Interrupt for which to clear status flag and enable in the NVIC. Note that the enums listed for IRQn_Type are only those for the Cortex Processor Exceptions Numbers.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is &lt; 0.</dd></dl>
+<p>Enable the IRQ in the GIC (With clearing the pending bit).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>The IRQ number to enable. Note that the enums listed for IRQn_Type are only those for the Cortex Processor Exceptions Numbers.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is less than 0. </dd></dl>
+
+</div>
+</div>
+<a id="ga92fe380c52ec05457d53b076f295ff13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga92fe380c52ec05457d53b076f295ff13">&#9670;&nbsp;</a></span>R_BSP_IrqDisable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_IrqDisable </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type const&#160;</td>
+          <td class="paramname"><em>irq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disables interrupts in the NVIC.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>The IRQ to disable in the NVIC. Note that the enums listed for IRQn_Type are only those for the Cortex Processor Exceptions Numbers.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is &lt; 0.</dd></dl>
+<p>Disables interrupts in the GIC.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>The IRQ number to disable in the GIC. Note that the enums listed for IRQn_Type are only those for the Cortex Processor Exceptions Numbers.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is less than 0. </dd></dl>
+
+</div>
+</div>
+<a id="ga128782df12a076633ed01cb09dbcabb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga128782df12a076633ed01cb09dbcabb1">&#9670;&nbsp;</a></span>R_BSP_IrqCfgEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_IrqCfgEnable </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type const&#160;</td>
+          <td class="paramname"><em>irq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>priority</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the interrupt priority and context, clears pending interrupts, then enables the interrupt.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>Interrupt number. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>NVIC priority of the interrupt </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>The interrupt context is a pointer to data required in the ISR.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is &lt; 0.</dd></dl>
+<p>Sets the interrupt priority and context, clears pending interrupts, then enables the interrupt.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>Interrupt number. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>GIC priority of the interrupt </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>The interrupt context is a pointer to data required in the ISR.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is less than 0. </dd></dl>
 
 </div>
 </div>
@@ -3369,15 +3807,163 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="gac631e8660720cc358c4a02bd5920120d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac631e8660720cc358c4a02bd5920120d">&#9670;&nbsp;</a></span>R_BSP_IrqDetectTypeSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_IrqDetectTypeSet </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type const&#160;</td>
+          <td class="paramname"><em>irq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>detect_type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the interrupt detect type.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>The IRQ number to configure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">detect_type</td><td>GIC detect type of the interrupt (BSP_GIC_SPI_DETECT_LEVEL : level-sensitive, BSP_GIC_SPI_DETECT_EDGE : edge-triggerd).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is less than 0. </dd></dl>
+
+</div>
+</div>
+<a id="gafbde0638d58cbf1c00e97a59867f5024"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafbde0638d58cbf1c00e97a59867f5024">&#9670;&nbsp;</a></span>R_BSP_IrqPendingGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t R_BSP_IrqPendingGet </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type&#160;</td>
+          <td class="paramname"><em>irq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the GIC pending interrupt.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>Interrupt that gets a pending bit.. Note that the enums listed for IRQn_Type are only those for the Cortex Processor Exceptions Numbers.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is less than 0.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Value indicating the status of the level interrupt. </dd></dl>
+
+</div>
+</div>
+<a id="ga79175e8769825ffa7a8379dc58aa7142"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga79175e8769825ffa7a8379dc58aa7142">&#9670;&nbsp;</a></span>R_BSP_IrqGroupSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_IrqGroupSet </td>
+          <td>(</td>
+          <td class="paramtype">IRQn_Type const&#160;</td>
+          <td class="paramname"><em>irq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>interrupt_group</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the interrupt Group.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>The IRQ number to configure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">interrupt_group</td><td>GIC interrupt group number ( 0 : FIQ, 1 : IRQ ).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is less than 0. </dd></dl>
+
+</div>
+</div>
+<a id="ga7cfbd1511cf665b2dafae608c2803cdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7cfbd1511cf665b2dafae608c2803cdc">&#9670;&nbsp;</a></span>R_BSP_IrqMaskLevelSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_IrqMaskLevelSet </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask_level</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the interrupt priority mask level.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask_level</td><td>The interrupt mask level</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is less than 0. </dd></dl>
+
+</div>
+</div>
+<a id="gad1660930ede5ff1ba1f623c4bd307f84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad1660930ede5ff1ba1f623c4bd307f84">&#9670;&nbsp;</a></span>R_BSP_IrqMaskLevelGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t R_BSP_IrqMaskLevelGet </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the interruptpriority mask level.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Do not call this function for system exceptions where the IRQn_Type value is less than 0.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Value indicating the interrupt mask level. </dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="gaa3cd3e43291e81e795d642b79b6088e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa3cd3e43291e81e795d642b79b6088e6">&#9670;&nbsp;</a></span>SystemCoreClock <span class="overload">[1/2]</span></h2>
+<a id="ga4244c3a2d457987d4a9ab21738c8c617"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4244c3a2d457987d4a9ab21738c8c617">&#9670;&nbsp;</a></span>BSP_SECTION_EARLY_INIT <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t SystemCoreClock</td>
+          <td class="memname">uint32_t SystemCoreClock BSP_SECTION_EARLY_INIT</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -3385,52 +3971,18 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gaa3cd3e43291e81e795d642b79b6088e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa3cd3e43291e81e795d642b79b6088e6">&#9670;&nbsp;</a></span>SystemCoreClock <span class="overload">[2/2]</span></h2>
+<a id="ga4244c3a2d457987d4a9ab21738c8c617"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4244c3a2d457987d4a9ab21738c8c617">&#9670;&nbsp;</a></span>BSP_SECTION_EARLY_INIT <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t SystemCoreClock</td>
+          <td class="memname">uint32_t SystemCoreClock BSP_SECTION_EARLY_INIT</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>System Clock Frequency (Core Clock) </p>
-
-</div>
-</div>
-<a id="gaaa2f4340010ddb682ca12fac46f83db8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaa2f4340010ddb682ca12fac46f83db8">&#9670;&nbsp;</a></span>g_bsp_version <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> g_bsp_version</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Default initialization function. </p>
-<p>Version data structure used by error logger macro. </p>
-
-</div>
-</div>
-<a id="gaaa2f4340010ddb682ca12fac46f83db8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaa2f4340010ddb682ca12fac46f83db8">&#9670;&nbsp;</a></span>g_bsp_version <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> g_bsp_version</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Default initialization function. </p>
-<p>Version data structure used by error logger macro. </p>
 
 </div>
 </div>
@@ -3440,7 +3992,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.2 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.2</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -159,7 +159,6 @@ $(document).ready(function(){initNavTree('group___r_e_n_e_s_a_s___e_r_r_o_r___c_
 </div>
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
@@ -169,13 +168,6 @@ $(document).ready(function(){initNavTree('group___r_e_n_e_s_a_s___e_r_r_o_r___c_
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>All FSP modules share these common error codes. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:unionfsp__version__t"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a></td></tr>
-<tr class="separator:unionfsp__version__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structfsp__version__t_8____unnamed____"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#structfsp__version__t_8____unnamed____">fsp_version_t.__unnamed__</a></td></tr>
-<tr class="separator:structfsp__version__t_8____unnamed____"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gaf0afcbc9a110ac9366a811d96ee06029"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p)</td></tr>
@@ -192,81 +184,6 @@ Enumerations</h2></td></tr>
 <tr class="memitem:gadfb1288da0fcc7ae1dc88c58601374f8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> </td></tr>
 <tr class="separator:gadfb1288da0fcc7ae1dc88c58601374f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="unionfsp__version__t" id="unionfsp__version__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#unionfsp__version__t">&#9670;&nbsp;</a></span>fsp_version_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">union fsp_version_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Common version structure </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a30a9a2b73548d20c22d0ba1f8aa42e27"></a>uint32_t</td>
-<td class="fieldname">
-version_id</td>
-<td class="fielddoc">
-<p>Version id </p>
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a7a8ca6cd8687ecf8e59a7e0f0ea1a879"></a>struct <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#structfsp__version__t_8____unnamed____">fsp_version_t</a></td>
-<td class="fieldname">
-__unnamed__</td>
-<td class="fielddoc">
-<p>Code version parameters </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a name="structfsp__version__t_8____unnamed____" id="structfsp__version__t_8____unnamed____"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structfsp__version__t_8____unnamed____">&#9670;&nbsp;</a></span>fsp_version_t.__unnamed__</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct fsp_version_t.__unnamed__</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Code version parameters </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="ad2d6666b93b9c6e95bc8e1d81fd9379e"></a>uint8_t</td>
-<td class="fieldname">
-code_version_minor</td>
-<td class="fielddoc">
-Code minor version. </td></tr>
-<tr><td class="fieldtype">
-<a id="a40292f8c4346751f08433b8e59ea657b"></a>uint8_t</td>
-<td class="fieldname">
-code_version_major</td>
-<td class="fielddoc">
-Code major version. </td></tr>
-<tr><td class="fieldtype">
-<a id="a96e96c3d29b2faf6ae8f3ecce1917bbd"></a>uint8_t</td>
-<td class="fieldname">
-api_version_minor</td>
-<td class="fielddoc">
-API minor version. </td></tr>
-<tr><td class="fieldtype">
-<a id="a361dcae2b6acd1b9a06bada602c57813"></a>uint8_t</td>
-<td class="fieldname">
-api_version_major</td>
-<td class="fielddoc">
-API major version. </td></tr>
-</table>
-
-</div>
-</div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="gaf0afcbc9a110ac9366a811d96ee06029"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf0afcbc9a110ac9366a811d96ee06029">&#9670;&nbsp;</a></span>FSP_PARAMETER_NOT_USED</h2>
@@ -480,6 +397,8 @@ API major version. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a899d80c2fd828410b2d01a7a96528f8c"></a>FSP_ERR_INVALID_CAC_REF_CLOCK&#160;</td><td class="fielddoc"><p>Measured clock rate &lt; reference clock rate. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a70e92dcad27d1057cbdd769de4f11f1f"></a>FSP_ERR_INVALID_RESULT&#160;</td><td class="fielddoc"><p>The result of one or more calculations was +/- infinity. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a41282c4e46d7f2cc7869fcfd782fab54"></a>FSP_ERR_CLOCK_GENERATION&#160;</td><td class="fielddoc"><p>Clock cannot be specified as system clock. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a0ae9f5e2b29a1355c61d1a6837fcc8a7"></a>FSP_ERR_INVALID_TIMING_SETTING&#160;</td><td class="fielddoc"><p>Invalid timing parameter. </p>
@@ -535,6 +454,10 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a9a874eddeb97d535b197a7fe3723a2f6"></a>FSP_ERR_JPEG_UNSUPPORTED_IMAGE_SIZE&#160;</td><td class="fielddoc"><p>JPEG Image size is not aligned with MCU. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aa4ed46a9d166f29b87a6f2ff89c458b7"></a>FSP_ERR_CALIBRATE_FAILED&#160;</td><td class="fielddoc"><p>Calibration failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a3dd2e286395696756d760a4770c569f1"></a>FSP_ERR_IIRFA_ECC_1BIT&#160;</td><td class="fielddoc"><p>1-bit ECC error detected </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a289d1f9548874dfc1019c9187f2c6f41"></a>FSP_ERR_IIRFA_ECC_2BIT&#160;</td><td class="fielddoc"><p>2-bit ECC error detected </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a9949d6ad0b2b4e41a620c15c2bfa393f"></a>FSP_ERR_IP_HARDWARE_NOT_PRESENT&#160;</td><td class="fielddoc"><p>Requested IP does not exist on this device. </p>
 </td></tr>
@@ -676,6 +599,26 @@ API major version. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aec3eea83b4e2e3c9ec447d4612d31e59"></a>FSP_ERR_WIFI_AP_NOT_CONNECTED&#160;</td><td class="fielddoc"><p>WiFi module is not connected to access point. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ae22695a4d6eacf8e0c4495b23c4bea96"></a>FSP_ERR_WIFI_UNKNOWN_AT_CMD&#160;</td><td class="fielddoc"><p>DA16XXX Unknown AT command Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a23557d04d9979b8a338b4242298f4ea9"></a>FSP_ERR_WIFI_INSUF_PARAM&#160;</td><td class="fielddoc"><p>DA16XXX Insufficient parameter. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a783bcbcb864b61e2c2cb21ae4dc7d966"></a>FSP_ERR_WIFI_TOO_MANY_PARAMS&#160;</td><td class="fielddoc"><p>DA16XXX Too many parameters. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a5243e845eb842e12cb7eb1497819ee7a"></a>FSP_ERR_WIFI_INV_PARAM_VAL&#160;</td><td class="fielddoc"><p>DA16XXX Wrong parameter value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ae515016e966799b665d0ef810b475a3a"></a>FSP_ERR_WIFI_NO_RESULT&#160;</td><td class="fielddoc"><p>DA16XXX No result. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a9d45f4acf615d884f56f438f2c29862f"></a>FSP_ERR_WIFI_RSP_BUF_OVFLW&#160;</td><td class="fielddoc"><p>DA16XXX Response buffer overflow. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ac980e819d37fcf839f64d783492cea13"></a>FSP_ERR_WIFI_FUNC_NOT_CONFIG&#160;</td><td class="fielddoc"><p>DA16XXX Function is not configured. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a9d78c4f75ac89707794eece78d3fa1c7"></a>FSP_ERR_WIFI_NVRAM_WR_FAIL&#160;</td><td class="fielddoc"><p>DA16XXX NVRAM write failure. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a791e170a6cd099cd9eb3b96f4760ed30"></a>FSP_ERR_WIFI_RET_MEM_WR_FAIL&#160;</td><td class="fielddoc"><p>DA16XXX Retention memory write failure. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a2fea2b4c019e3cfe1d226f68f2a557fa"></a>FSP_ERR_WIFI_UNKNOWN_ERR&#160;</td><td class="fielddoc"><p>DA16XXX unknown error. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a61cdc8708028a97a52556794d4c2e050"></a>FSP_ERR_CELLULAR_CONFIG_FAILED&#160;</td><td class="fielddoc"><p>Cellular module Configuration failed. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a4a5158a88f2ea654f62435a7b5ae72d2"></a>FSP_ERR_CELLULAR_INIT_FAILED&#160;</td><td class="fielddoc"><p>Cellular module initialization failed. </p>
@@ -750,6 +693,16 @@ API major version. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a03165ce74cc447e345998cc45810bb8f"></a>FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION&#160;</td><td class="fielddoc"><p>An invalid function call occurred. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a77eb1acbdadbf74762586e0a52008bb0"></a>FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT&#160;</td><td class="fielddoc"><p>Hardware resource is busy. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a3cadb540e1a57b14571853f70b8fce8f"></a>FSP_ERR_CRYPTO_RSIP_FATAL&#160;</td><td class="fielddoc"><p>Hardware fatal error or unexpected return. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a60c968af6956a26f96803e39d254c128"></a>FSP_ERR_CRYPTO_RSIP_FAIL&#160;</td><td class="fielddoc"><p>Internal error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a2da98c37d8c505110bf218ea9afbb015"></a>FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL&#160;</td><td class="fielddoc"><p>Input key type is illegal. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a494acebc3337cc69f3a09c377a5e19b4"></a>FSP_ERR_CRYPTO_RSIP_AUTHENTICATION&#160;</td><td class="fielddoc"><p>Authentication failed. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8acfbdf09c1ae8d64e7eb388094bf54b9b"></a>FSP_ERR_CRYPTO_COMMON_NOT_OPENED&#160;</td><td class="fielddoc"><p>Crypto Framework Common is not opened. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ac42e16e1358505398e631062a1afbd45"></a>FSP_ERR_CRYPTO_HAL_ERROR&#160;</td><td class="fielddoc"><p>Cryoto HAL module returned an error. </p>
@@ -783,7 +736,7 @@ API major version. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.2 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

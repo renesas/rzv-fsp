@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['zmod4xxx_5fconf',['zmod4xxx_conf',['../structzmod4xxx__conf.html',1,'']]],
-  ['zmod4xxx_5fconf_5fstr',['zmod4xxx_conf_str',['../structzmod4xxx__conf__str.html',1,'']]],
-  ['zmod4xxx_5fdev_5ft',['zmod4xxx_dev_t',['../structzmod4xxx__dev__t.html',1,'']]]
+  ['xmpu_5fsettings',['xMPU_SETTINGS',['../structx_m_p_u___s_e_t_t_i_n_g_s.html',1,'']]],
+  ['xspi_5fqspi_5finstance_5fctrl_5ft',['xspi_qspi_instance_ctrl_t',['../group___x_s_p_i___q_s_p_i.html#structxspi__qspi__instance__ctrl__t',1,'']]]
 ];

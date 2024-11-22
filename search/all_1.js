@@ -236,6 +236,7 @@ var searchData=
   ['adc_5fevent_5ft',['adc_event_t',['../group___a_d_c___a_p_i.html#gae2177d6e5bf43e3749cc60f835456847',1,'r_adc_api.h']]],
   ['adc_5fevent_5fwindow_5fcompare_5fa',['ADC_EVENT_WINDOW_COMPARE_A',['../group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a0194955f4f59f8d6952adc058539632b',1,'r_adc_api.h']]],
   ['adc_5fevent_5fwindow_5fcompare_5fb',['ADC_EVENT_WINDOW_COMPARE_B',['../group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847ab32572630797968579adeed03f19bcd3',1,'r_adc_api.h']]],
+  ['adc_5fevent_5fzero_5fcross_5fdetection',['ADC_EVENT_ZERO_CROSS_DETECTION',['../group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a7cfc303adbef8d07936d89275852ded3',1,'r_adc_api.h']]],
   ['adc_5fgroup_5fid_5f0',['ADC_GROUP_ID_0',['../group___a_d_c___a_p_i.html#gga625267e574e3f26d9d55918652e91176af4886d3826fb26d4bbdfaeb2195a5ddc',1,'r_adc_api.h']]],
   ['adc_5fgroup_5fid_5f1',['ADC_GROUP_ID_1',['../group___a_d_c___a_p_i.html#gga625267e574e3f26d9d55918652e91176a5affde6af0ba379220ade2c4ca8a027e',1,'r_adc_api.h']]],
   ['adc_5fgroup_5fid_5f2',['ADC_GROUP_ID_2',['../group___a_d_c___a_p_i.html#gga625267e574e3f26d9d55918652e91176a3bbc61292808df4caf5c0991e7b9f73c',1,'r_adc_api.h']]],
@@ -305,7 +306,10 @@ var searchData=
   ['alignment',['alignment',['../group___a_d_c___a_p_i.html#aa36a14783685f411c4c0a7904a3de8eb',1,'adc_cfg_t']]],
   ['assertion_5ftime',['assertion_time',['../group___s_c_i___b___u_a_r_t.html#ae2e7a853b139015cb777e556e9add242',1,'sci_b_uart_rs485_setting_t']]],
   ['assigned_5faddress_5fphase_5fenable',['assigned_address_phase_enable',['../group___i3_c___b.html#a130da5bdcc977cc2ac80d2958ee0ed2c',1,'i3c_b_clock_stalling_t']]],
-  ['autocalibrate',['autoCalibrate',['../group___s_p_i___f_l_a_s_h___a_p_i.html#ad04434e2c049da61d3389355d5961f31',1,'spi_flash_api_t']]],
+  ['autocalibrate',['autoCalibrate',['../group___s_p_i___f_l_a_s_h___a_p_i.html#ac78c55ffe2b7d99681612ce796a384c5',1,'spi_flash_api_t']]],
   ['average_5fcount',['average_count',['../group___t_s_u___b.html#a525f475e04de0b02bf01105495f9f474',1,'tsu_b_extended_cfg_t']]],
-  ['analog',['Analog',['../group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s.html',1,'']]]
+  ['analog',['Analog',['../group___r_e_n_e_s_a_s___a_n_a_l_o_g___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
+  ['analog',['Analog',['../group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s.html',1,'']]],
+  ['audio',['Audio',['../group___r_e_n_e_s_a_s___a_u_d_i_o___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
+  ['audio',['Audio',['../group___r_e_n_e_s_a_s___a_u_d_i_o___m_o_d_u_l_e_s.html',1,'']]]
 ];

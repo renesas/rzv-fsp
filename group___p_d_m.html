@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.2</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('group___p_d_m.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">PDM Interface (r_pdm)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
+<div class="title">PDM Interface (r_pdm)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_u_d_i_o___m_o_d_u_l_e_s.html">Audio</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -221,8 +221,8 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If code for DMAC transfer support is included in the build. </td></tr>
 </table>
- <h2>Configurations for Connectivity &gt; PDM Driver on r_pdm</h2>
-This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; PDM Driver on r_pdm.<br />
+ <h2>Configurations for Audio &gt; PDM Driver on r_pdm</h2>
+This module can be added to the Stacks tab via New Stack &gt; Audio &gt; PDM Driver on r_pdm.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -480,7 +480,8 @@ Disabled</li>
 </p>
 <h2><a class="anchor" id="r-pdm-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The PDM peripheral runs on PDM_0_CCLK. PDM_0_CCLK frequency is 48 MHz and can not be configured on the <b>Clocks</b> tab of the RZ Configuration editor.</p>
+<p>This module has no required clock configurations.</p>
+<dl class="section note"><dt>Note</dt><dd>PDM unit generates, and outputs the sampling clock named PDM_CLKn. The frequency of this clock can be configured by FSP configurator.</dd></dl>
 <h2><a class="anchor" id="r-pdm-pin-configuration"></a>
 Pin Configuration</h2>
 <p>The PDM uses the following pins:</p><ul>
@@ -528,7 +529,7 @@ Usage Notes</h1>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the PDM in an application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define BUFFER_SIZE    0x1000</span></div><div class="line">uint32_t buffer[BUFFER_SIZE] <a class="code" href="group___b_s_p___m_c_u.html#ga2804a023941a956288c32ad08b2cf59e">__attribute__</a>((aligned(16)));</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> pdm_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the module. */</span></div><div class="line">    err = <a class="code" href="group___p_d_m.html#ga348be7b997dd1200eb549ff3e7f946a0">R_PDM_Open</a>(&amp;g_pdm_ctrl, &amp;g_pdm_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_m.html#ga745fa70668486ae2a7d16bd72eb93a54">R_PDM_Start</a>(&amp;g_pdm_ctrl, buffer, <span class="keyword">sizeof</span>(buffer), BUFFER_SIZE / 2);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="preprocessor">#define BUFFER_SIZE    0x1000</span></div><div class="line">uint32_t buffer[BUFFER_SIZE] <a class="code" href="group___b_s_p___m_c_u.html#ga2804a023941a956288c32ad08b2cf59e">__attribute__</a>((aligned(16)));</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> pdm_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the module. */</span></div><div class="line">    err = <a class="code" href="group___p_d_m.html#ga348be7b997dd1200eb549ff3e7f946a0">R_PDM_Open</a>(&amp;g_pdm_ctrl, &amp;g_pdm_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_m.html#ga745fa70668486ae2a7d16bd72eb93a54">R_PDM_Start</a>(&amp;g_pdm_ctrl, buffer, <span class="keyword">sizeof</span>(buffer), BUFFER_SIZE / 2);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* wait */</span></div><div class="line"></div><div class="line">    <a class="code" href="group___p_d_m___a_p_i.html#structpdm__status__t">pdm_status_t</a> status;</div><div class="line">    err = <a class="code" href="group___p_d_m.html#gaf5696a4b5a4e9f33f89baefe9a7e1f94">R_PDM_StatusGet</a>(&amp;g_pdm_ctrl, &amp;status);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_m.html#ga35f2abc47410d9906e8ae5bac12d7a29">R_PDM_Stop</a>(&amp;g_pdm_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_m.html#ga62fc9390544cabfb4800f38125f748ab">R_PDM_Read</a>(&amp;g_pdm_ctrl, buffer, <span class="keyword">sizeof</span>(buffer));</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_m.html#ga0f07fb3bab80af13bd260b7f7f54062e">R_PDM_Close</a>(&amp;g_pdm_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structpdm__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#structpdm__instance__ctrl__t">pdm_instance_ctrl_t</a></td></tr>
@@ -1253,7 +1254,7 @@ Overvoltage detection upper limit (20-bit signed fixed point data) </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.2 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

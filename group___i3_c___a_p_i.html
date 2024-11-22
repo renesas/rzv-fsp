@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.2</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,17 +163,14 @@ $(document).ready(function(){initNavTree('group___i3_c___a_p_i.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">I3C Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+<div class="title">I3C Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___i_n_t_e_r_f_a_c_e_s.html">Connectivity</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Interface for I3C. </p>
 <h1><a class="anchor" id="I3C_API_SUMMARY"></a>
 Summary</h1>
-<p>The I3C interface provides APIs and definitions for I3C communication.</p>
-<h1><a class="anchor" id="I3C_API_INSTANCES"></a>
-Known Implementations</h1>
-<p><a class="el" href="group___i3_c___b.html">I3C (r_i3c_b)</a> </p>
+<p>The I3C interface provides APIs and definitions for I3C communication. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -388,7 +385,7 @@ PID, BCR, and DCR registers for the device (Slave mode only). </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Descriptor for completing CCC transfers. </p>
+<div class="textblock"><p>Descriptor for completing CCC/HDR transfers. </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -396,7 +393,7 @@ PID, BCR, and DCR registers for the device (Slave mode only). </td></tr>
 <td class="fieldname">
 command_code</td>
 <td class="fielddoc">
-Common Command Code for the transfer. </td></tr>
+Common Command Code / HDR Command Code for the transfer. </td></tr>
 <tr><td class="fieldtype">
 <a id="a71fb8d5e49ee1c39fdc190b5c5fd7e1c"></a>uint8_t *</td>
 <td class="fieldname">
@@ -515,6 +512,13 @@ User defined context. </td></tr>
 <tr class="separator:a8065fa3e9d1d82e9ebaa60e1731d7ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a177e6729548170be6b6ddbe444fc6716"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___i3_c___a_p_i.html#ga890e3f0ba27c4a963dc5901bfbed439c">i3c_device_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#a177e6729548170be6b6ddbe444fc6716">device_type</a></td></tr>
 <tr class="separator:a177e6729548170be6b6ddbe444fc6716"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa28340495f808dc6c0ccdadb8c718f9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#aa28340495f808dc6c0ccdadb8c718f9c">p_transfer_tx</a></td></tr>
+<tr class="memdesc:aa28340495f808dc6c0ccdadb8c718f9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer instance for I3C transmit. Set to NULL if unused.  <a href="#aa28340495f808dc6c0ccdadb8c718f9c">More...</a><br /></td></tr>
+<tr class="separator:aa28340495f808dc6c0ccdadb8c718f9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb77d3aecf0fadc4b69dfa21f369ae43"><td class="memItemLeft" align="right" valign="top"><a id="acb77d3aecf0fadc4b69dfa21f369ae43"></a>
+<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#acb77d3aecf0fadc4b69dfa21f369ae43">p_transfer_rx</a></td></tr>
+<tr class="memdesc:acb77d3aecf0fadc4b69dfa21f369ae43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer instance for I3C receive. Set to NULL if unused. <br /></td></tr>
+<tr class="separator:acb77d3aecf0fadc4b69dfa21f369ae43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a476eb1c4e5a0defaa54d3b4a11ce099a"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#a476eb1c4e5a0defaa54d3b4a11ce099a">p_callback</a> )(<a class="el" href="group___i3_c___a_p_i.html#structi3c__callback__args__t">i3c_callback_args_t</a> const *const p_args)</td></tr>
 <tr class="separator:a476eb1c4e5a0defaa54d3b4a11ce099a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a5c800bff7722549723dea066fe19eb"><td class="memItemLeft" align="right" valign="top"><a id="a8a5c800bff7722549723dea066fe19eb"></a>
@@ -552,6 +556,23 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>The type of device. </p>
+
+</div>
+</div>
+<a id="aa28340495f808dc6c0ccdadb8c718f9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa28340495f808dc6c0ccdadb8c718f9c">&#9670;&nbsp;</a></span>p_transfer_tx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const* i3c_cfg_t::p_transfer_tx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transfer instance for I3C transmit. Set to NULL if unused. </p>
+<p>Transfer API support. </p>
 
 </div>
 </div>
@@ -616,8 +637,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:ae57d3fa9fa4a966a5c8cac38b0ea0660"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39518a413d0c9056e41d4da97ce3884e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#a39518a413d0c9056e41d4da97ce3884e">slaveStatusSet</a> )(<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i3_c___a_p_i.html#structi3c__device__status__t">i3c_device_status_t</a> device_status)</td></tr>
 <tr class="separator:a39518a413d0c9056e41d4da97ce3884e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a840484cae7a68cf6161ec707c33c0a5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#a840484cae7a68cf6161ec707c33c0a5c">commandSend</a> )(<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i3_c___a_p_i.html#structi3c__command__descriptor__t">i3c_command_descriptor_t</a> *p_command_descriptor)</td></tr>
-<tr class="separator:a840484cae7a68cf6161ec707c33c0a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a060147dc36cd71a01b58c30fddc11bf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#a060147dc36cd71a01b58c30fddc11bf3">commandSend</a> )(<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i3_c___a_p_i.html#structi3c__command__descriptor__t">i3c_command_descriptor_t</a> const *const p_command_descriptor)</td></tr>
+<tr class="separator:a060147dc36cd71a01b58c30fddc11bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b27ccf4720531545b0c2e118032539b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#a0b27ccf4720531545b0c2e118032539b">write</a> )(<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, uint8_t const *const p_data, uint32_t length, bool restart)</td></tr>
 <tr class="separator:a0b27ccf4720531545b0c2e118032539b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad013ffb59c95539c84fe217b90d897ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#ad013ffb59c95539c84fe217b90d897ad">read</a> )(<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, uint8_t *const p_data, uint32_t length, bool restart)</td></tr>
@@ -641,10 +662,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial configuration. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#gaa9ce3fda0950ce2aaa0cd8cf51fb5f95">R_I3C_B_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Initial configuration.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. Must be declared by user. Elements set here. </td></tr>
@@ -667,10 +685,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Enable the I3C device.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#gae1dcb91a0152da9a6676ee27d305dceb">R_I3C_B_Enable()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -692,10 +706,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Set the configuration of this device.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#ga07b0af405a9ca84c45aab74bd1c696c2">R_I3C_B_DeviceCfgSet()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -719,10 +729,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Set the configuration for the device at the given index in the device table. The configuration will be used by transfers when it is selected by <a class="el" href="group___i3_c___a_p_i.html#a1e24e768130b9ea12f10743ff3143fa7">deviceSelect</a>.</p>
 <p>Note: This function is not used in slave mode.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#ga9517cc752212a1423f0153c4330943b4">R_I3C_B_MasterDeviceTableSet()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -747,10 +753,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>In master mode, select the device for the next transfer.</p>
 <p>Note: This function is not used in slave mode.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#ga2a3f7414a893b9c2b9135523c8f6d950">R_I3C_B_DeviceSelect()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -775,10 +777,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Start Dynamic Address Assignment by sending either the ENTDAA or SETDASA command See <a class="el" href="group___i3_c___a_p_i.html#ga6ebef50cdf52650f03e1b449325779fc">i3c_address_assignment_mode_t</a> for more information.</p>
 <p>Note: This function is not used in slave mode.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#ga014e6425d49e19f05d24fd345a785589">R_I3C_B_DynamicAddressAssignmentStart()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -804,10 +802,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Set the status returned to the master in response to a GETSTATUS command.</p>
 <p>Note: This function is not used in master mode.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#ga4178234c4311d227a6fb8844e1e3a49e">R_I3C_B_SlaveStatusSet()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -818,23 +812,19 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a840484cae7a68cf6161ec707c33c0a5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a840484cae7a68cf6161ec707c33c0a5c">&#9670;&nbsp;</a></span>commandSend</h2>
+<a id="a060147dc36cd71a01b58c30fddc11bf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a060147dc36cd71a01b58c30fddc11bf3">&#9670;&nbsp;</a></span>commandSend</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  i3c_api_t::commandSend) (<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i3_c___a_p_i.html#structi3c__command__descriptor__t">i3c_command_descriptor_t</a> *p_command_descriptor)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  i3c_api_t::commandSend) (<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i3_c___a_p_i.html#structi3c__command__descriptor__t">i3c_command_descriptor_t</a> const *const p_command_descriptor)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Send a broadcast or directed command to slave devices on the bus.</p>
+<p>Send a read/write/broadcast CCC or HDR command.</p>
 <p>Note: This function is not used in slave mode.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#gae6b65e6c1def97b4a105ac8aaa66d96c">R_I3C_B_CommandSend()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -857,10 +847,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>In master mode: Start a write transfer. When the transfer is completed send a stop condition or a repeated-start. In slave mode: Set the write buffer and configure the number of bytes that will be transferred before the the transfer is ended by the slave via the 'T' bit or by the master issueing a stop condition.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#gadf661fd87ee8c33efd8801d59997d4a1">R_I3C_B_Write()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -885,10 +871,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>In master mode: Start a read transfer. When the transfer is completed, send a stop condition or a repeated-start. In slave mode: Set the read buffer for storing data read during the transfer. When the buffer is full, the application will receive a callback requesting a new read buffer. If no buffer is provided by the application, the driver will discard any remaining bytes read during the transfer.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#ga69047e20f165f6e44fea97f3fec69399">R_I3C_B_Read()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -914,10 +896,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Initiate an IBI write operation.</p>
 <p>Note: This function is not used in master mode.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#ga0b4af888ebc4c210feea2a149fd4cfc1">R_I3C_B_IbiWrite()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -942,10 +920,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Set the read buffer for storing received IBI data (This function is not used in slave mode).</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#gad786c546168aabcc04099f73a540af29">R_I3C_B_IbiRead()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -968,10 +942,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Allows driver to be reconfigured and may reduce power consumption. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i3_c___b.html#gadd84cf1baec319b18540a857545ab51b">R_I3C_B_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Allows driver to be reconfigured and may reduce power consumption.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i3_c___a_p_i.html#a963e13cc6b3cf1903a01ed87901eb6a9">i3c_api_t::open</a> call for this instance. </td></tr>
@@ -1032,10 +1003,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>I3C control block. Allocate an instance specific control block to pass into the I3C API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>i3c_instance_ctrl_t </li>
-</ul>
-</dd></dl>
+<p>I3C control block. Allocate an instance specific control block to pass into the I3C API calls. </p>
 
 </div>
 </div>
@@ -1077,6 +1045,10 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a497ea998fd00601fece9bc4f537c5069"></a>I3C_CCC_BROADCAST_ENTTM&#160;</td><td class="fielddoc"><p>Enter Test Mode. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a75bf1168a7e4d338f0a2f196ca82259d"></a>I3C_CCC_BROADCAST_SETBUSCON&#160;</td><td class="fielddoc"><p>Set BUS Context. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a107651f3a480349d3a19f16deddf055c"></a>I3C_CCC_BROADCAST_ENDXFER&#160;</td><td class="fielddoc"><p>Data Transfer Ending Procedure Control. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a08c0920a5a317949946c27ecd501ec7d"></a>I3C_CCC_BROADCAST_ENTHDR0&#160;</td><td class="fielddoc"><p>Enter HDR Mode 0. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a56334065601b234cb7a51495a87dc79f"></a>I3C_CCC_BROADCAST_ENTHDR1&#160;</td><td class="fielddoc"><p>Enter HDR Mode 1. </p>
@@ -1097,6 +1069,14 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52af3d7fa76699eb260edb16b1365a83a80"></a>I3C_CCC_BROADCAST_SETAASA&#160;</td><td class="fielddoc"><p>Set All Addresses to Static Address. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a15fd25a517c3541d0e3d6c7e29793780"></a>I3C_CCC_BROADCAST_RSTACT&#160;</td><td class="fielddoc"><p>Slave Reset Action. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a7beb4fffe9b7003d019e640b1fb07731"></a>I3C_CCC_BROADCAST_DEFGRPA&#160;</td><td class="fielddoc"><p>Define List of Group Address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a37842d71e362145be74f8f72741958f7"></a>I3C_CCC_BROADCAST_RSTGRPA&#160;</td><td class="fielddoc"><p>Reset Group Address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52ae3a9e3041c5e9531c3eeaeaf082caa5b"></a>I3C_CCC_BROADCAST_MLANE&#160;</td><td class="fielddoc"><p>Multi-Lane Data Transfer Control. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52af979c7917ae589e3a9a2617f161f5a04"></a>I3C_CCC_DIRECT_ENEC&#160;</td><td class="fielddoc"><p>Enable Slave initiated events. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a66d0ccdd8df6e8ee6335d86b56b3fb2c"></a>I3C_CCC_DIRECT_DISEC&#160;</td><td class="fielddoc"><p>Disable Slave initiated events. </p>
@@ -1109,7 +1089,7 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a6f12cb17e3064ffd538da94b08c21b95"></a>I3C_CCC_DIRECT_ENTAS3&#160;</td><td class="fielddoc"><p>Enter Activity State 3. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a8db31c2c1ca8424755d3d59ce623fb08"></a>I3C_CCC_DIRECT_RSTDAA&#160;</td><td class="fielddoc"><p>Reset Dynamic Address Assignment. </p>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a8db31c2c1ca8424755d3d59ce623fb08"></a>I3C_CCC_DIRECT_RSTDAA&#160;</td><td class="fielddoc"><p>Reset Dynamic Address Assignment (DEPRECATED v1.0). </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a196c567a68ade8d03a9863b6fa472eca"></a>I3C_CCC_DIRECT_SETDASA&#160;</td><td class="fielddoc"><p>Set Dynamic Address from Static Address. </p>
 </td></tr>
@@ -1133,11 +1113,29 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a696a95c054c95406323e9cefa14b1b93"></a>I3C_CCC_DIRECT_GETACCMST&#160;</td><td class="fielddoc"><p>Get Accept Mastership. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52afe4763188af461e73020f68d5cc7b0c0"></a>I3C_CCC_DIRECT_ENDXFER&#160;</td><td class="fielddoc"><p>Data Transfer Ending Procedure Control. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a15f78a377b8def0c5a60dc346873512b"></a>I3C_CCC_DIRECT_SETBRGTGT&#160;</td><td class="fielddoc"><p>Set Bridge Targets. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a29237e5c8191b16f48c66cf5a484b812"></a>I3C_CCC_DIRECT_GETMXDS&#160;</td><td class="fielddoc"><p>Get Max Data Speed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a2b1dcace938e6cd3fa3a7d50fadb878f"></a>I3C_CCC_DIRECT_GETHDRCAP&#160;</td><td class="fielddoc"><p>Get HDR Capability. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a1b08f3d3bcdbb1337b6b3242da6db696"></a>I3C_CCC_DIRECT_SETROUTE&#160;</td><td class="fielddoc"><p>Set Route. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52aaeab2893c810f0115ca7ac3bafa37d1f"></a>I3C_CCC_DIRECT_D2DXFER&#160;</td><td class="fielddoc"><p>Device to Device(s) Tunneling Control. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52aa92f265992e1acc07c57946f1c8d10d2"></a>I3C_CCC_DIRECT_SETXTIME&#160;</td><td class="fielddoc"><p>Set Exchange Timing Information. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a66ec92cc7e4fd378938a6d623bd44b6b"></a>I3C_CCC_DIRECT_GETXTIME&#160;</td><td class="fielddoc"><p>Get Exchange Timing Information. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52ad4c3c777027f15d123f4dd239b51963d"></a>I3C_CCC_DIRECT_RSTACT&#160;</td><td class="fielddoc"><p>Reset Slave Action. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a75968f99702ac9451b3e691a550c6fd0"></a>I3C_CCC_DIRECT_SETGRPA&#160;</td><td class="fielddoc"><p>Set Group Address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a64ff09087cc3312ee7cb08e706a2c636"></a>I3C_CCC_DIRECT_RSTGRPA&#160;</td><td class="fielddoc"><p>Reset Group Address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52ac23ff202ff034378777a8f4973e0e386"></a>I3C_CCC_DIRECT_MLANE&#160;</td><td class="fielddoc"><p>Multi-Lane Data Transfer Control. </p>
 </td></tr>
 </table>
 
@@ -1180,6 +1178,8 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><td class="fieldname"><a id="ggaaeacda02a21254776fcbc47ab1ff265ca68834ad7d19b19947bafc01ce50a8e3f"></a>I3C_EVENT_TIMEOUT_DETECTED&#160;</td><td class="fielddoc"><p>SCL is stuck at the logic high or logic low level during a transfer. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaaeacda02a21254776fcbc47ab1ff265ca2f461eca70d64741f14d4b92445608d3"></a>I3C_EVENT_INTERNAL_ERROR&#160;</td><td class="fielddoc"><p>An internal error occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaeacda02a21254776fcbc47ab1ff265cac9e04050c1bc59eaa14ec9d40e0593c9"></a>I3C_EVENT_SDA_WRITE_COMPLETE&#160;</td><td class="fielddoc"><p>An SDA (Short Data Argument) write transfer has completed. </p>
 </td></tr>
 </table>
 
@@ -1275,7 +1275,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.2 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

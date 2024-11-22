@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.2</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -379,13 +379,7 @@ Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable the digital noise filter on RXDn pin. The digital noise filter block in SCI consists of two-stage flipflop circuits. </td></tr>
 <tr>
-<td>Extra &gt; Receive FIFO Trigger Level</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-One</li>
-<li>
-Max</li>
-</ul>
-</td><td>Max </td><td>Unused if DMAC is used for reception. Set to One to get a callback immediately when each byte is received. Set to Max to get a callback when FIFO is full or after 31 bit times with no data (fewer interrupts). </td></tr>
+<td>Extra &gt; Receive FIFO Trigger Level</td><td>Refer to the RZV Configuration tool for available options.</td><td>Max </td><td>Unused if DMAC is used for reception. Set to One to get a callback immediately when each byte is received. Set to Max to get a callback when FIFO is full or after 31 bit times with no data (fewer interrupts). </td></tr>
 <tr>
 <td>Extra &gt; Half Data Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -414,6 +408,8 @@ Clock Configuration</h2>
 <th>MCU Group</th><th>Peripheral Clock </th></tr>
 <tr>
 <td>RZV2H</td><td>P5CLK</td></tr>
+<tr>
+<td>RZV2N</td><td>P5CLK</td></tr>
 </table>
 </p>
 <p>The clock source for the baud-rate clock generator can be selected from the internal clock, the external clock times 8 or the external clock times 16. The external clock is supplied to the SCK pin.<a class="anchor" id="um_sci_b_uart_clock_configuration"></a> </p>
@@ -708,6 +704,64 @@ Half Data Function settings. </td></tr>
 <p>Receive FIFO trigger configuration. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84aa8f1e72bd48f194a0cd82112024850e1"></a>SCI_B_UART_RX_FIFO_TRIGGER_1&#160;</td><td class="fielddoc"><p>Callback after each byte is received without buffering. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a208c850e8682c076896882fbe8ebae38"></a>SCI_B_UART_RX_FIFO_TRIGGER_2&#160;</td><td class="fielddoc"><p>Callback when FIFO having 2 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a2b0f6342fd3b6be8ee7a250298f6d2d8"></a>SCI_B_UART_RX_FIFO_TRIGGER_3&#160;</td><td class="fielddoc"><p>Callback when FIFO having 3 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84acfab3e0285e525c2b51ed53f126c42f7"></a>SCI_B_UART_RX_FIFO_TRIGGER_4&#160;</td><td class="fielddoc"><p>Callback when FIFO having 4 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84ad1ec00ffbd6c7e7422ead7f4057c7b66"></a>SCI_B_UART_RX_FIFO_TRIGGER_5&#160;</td><td class="fielddoc"><p>Callback when FIFO having 5 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a90ee163c0cfcd423853d80894bcfc4c3"></a>SCI_B_UART_RX_FIFO_TRIGGER_6&#160;</td><td class="fielddoc"><p>Callback when FIFO having 6 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a9defc4cab0dd3e752ff1524ef3f6e47b"></a>SCI_B_UART_RX_FIFO_TRIGGER_7&#160;</td><td class="fielddoc"><p>Callback when FIFO having 7 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a2cbc368fe201771bb92b4c68009ed29b"></a>SCI_B_UART_RX_FIFO_TRIGGER_8&#160;</td><td class="fielddoc"><p>Callback when FIFO having 8 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a37cda8ea9aca8480a058939547b0a690"></a>SCI_B_UART_RX_FIFO_TRIGGER_9&#160;</td><td class="fielddoc"><p>Callback when FIFO having 9 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84ab80542cbbca6eaa617df0c2033a249fa"></a>SCI_B_UART_RX_FIFO_TRIGGER_10&#160;</td><td class="fielddoc"><p>Callback when FIFO having 10 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a2f1cdc915ca7b60804801c24640d465c"></a>SCI_B_UART_RX_FIFO_TRIGGER_11&#160;</td><td class="fielddoc"><p>Callback when FIFO having 11 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a02eea8277e5ce2e8f6071ca2fc1b5e35"></a>SCI_B_UART_RX_FIFO_TRIGGER_12&#160;</td><td class="fielddoc"><p>Callback when FIFO having 12 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84abb8ae955a060b8ba93afb72931a40e28"></a>SCI_B_UART_RX_FIFO_TRIGGER_13&#160;</td><td class="fielddoc"><p>Callback when FIFO having 13 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a1f0e104aa08cb093eb3be4b178cd1f68"></a>SCI_B_UART_RX_FIFO_TRIGGER_14&#160;</td><td class="fielddoc"><p>Callback when FIFO having 14 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84aaa3ab1c745fb9d82877d456f70a21aa6"></a>SCI_B_UART_RX_FIFO_TRIGGER_15&#160;</td><td class="fielddoc"><p>Callback when FIFO having 15 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a184252b835a0adadcb43da0af7613122"></a>SCI_B_UART_RX_FIFO_TRIGGER_16&#160;</td><td class="fielddoc"><p>Callback when FIFO having 16 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84aa2367aa91da1905c3479f14796fc69a9"></a>SCI_B_UART_RX_FIFO_TRIGGER_17&#160;</td><td class="fielddoc"><p>Callback when FIFO having 17 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84aca0c026f63557e1f4715e02f4eec10f5"></a>SCI_B_UART_RX_FIFO_TRIGGER_18&#160;</td><td class="fielddoc"><p>Callback when FIFO having 18 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84aebd654daa41d04b8267a3058147e8ee9"></a>SCI_B_UART_RX_FIFO_TRIGGER_19&#160;</td><td class="fielddoc"><p>Callback when FIFO having 19 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a91152c37f3a9068508364233e6bee48f"></a>SCI_B_UART_RX_FIFO_TRIGGER_20&#160;</td><td class="fielddoc"><p>Callback when FIFO having 20 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a3c8a5b38be02265121a30295919cc40c"></a>SCI_B_UART_RX_FIFO_TRIGGER_21&#160;</td><td class="fielddoc"><p>Callback when FIFO having 21 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84ab859debb2ef9c546206e4027bbf5f037"></a>SCI_B_UART_RX_FIFO_TRIGGER_22&#160;</td><td class="fielddoc"><p>Callback when FIFO having 22 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a9a917c42281f04317b7868a5c527c3ed"></a>SCI_B_UART_RX_FIFO_TRIGGER_23&#160;</td><td class="fielddoc"><p>Callback when FIFO having 23 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84af59e98e6aacbf5eed2bf6e6135a8c49c"></a>SCI_B_UART_RX_FIFO_TRIGGER_24&#160;</td><td class="fielddoc"><p>Callback when FIFO having 24 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84afb9395ea8966c5bcaf98f629829738db"></a>SCI_B_UART_RX_FIFO_TRIGGER_25&#160;</td><td class="fielddoc"><p>Callback when FIFO having 25 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84aa4cec60b4941b9165b55365878b1a020"></a>SCI_B_UART_RX_FIFO_TRIGGER_26&#160;</td><td class="fielddoc"><p>Callback when FIFO having 26 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a80483f65073155a03ca7f1d64eafafdf"></a>SCI_B_UART_RX_FIFO_TRIGGER_27&#160;</td><td class="fielddoc"><p>Callback when FIFO having 27 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a8f1a1171f67fde1f7390a3511f39a0d9"></a>SCI_B_UART_RX_FIFO_TRIGGER_28&#160;</td><td class="fielddoc"><p>Callback when FIFO having 28 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a5cc480ad1a5680bf6a8b357c69cb30ba"></a>SCI_B_UART_RX_FIFO_TRIGGER_29&#160;</td><td class="fielddoc"><p>Callback when FIFO having 29 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a14752c896b84630f85444deda350a6fa"></a>SCI_B_UART_RX_FIFO_TRIGGER_30&#160;</td><td class="fielddoc"><p>Callback when FIFO having 30 bytes. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a73839ba4bf30c0e127ba11f0ba4130a2"></a>SCI_B_UART_RX_FIFO_TRIGGER_MAX&#160;</td><td class="fielddoc"><p>Callback when FIFO is full or after 31 bit times with no data (fewer interrupts) </p>
 </td></tr>
@@ -1205,7 +1259,7 @@ Half Data Function settings. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a51b74df27fb26e85700d9524cdfc7c01">uart_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#acfd849190deedb8f9c35bed54dccc111">uart_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -1266,7 +1320,7 @@ Half Data Function settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.2 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

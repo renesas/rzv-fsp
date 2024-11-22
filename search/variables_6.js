@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['g_5fbsp_5fversion',['g_bsp_version',['../group___b_s_p___m_c_u.html#gaaa2f4340010ddb682ca12fac46f83db8',1,'g_bsp_version():&#160;bsp_common.c'],['../group___b_s_p___m_c_u.html#gaaa2f4340010ddb682ca12fac46f83db8',1,'g_bsp_version():&#160;bsp_common.c'],['../group___b_s_p___m_c_u.html#gaaa2f4340010ddb682ca12fac46f83db8',1,'g_bsp_version():&#160;bsp_common.c']]],
   ['general_5fcall_5fenable',['general_call_enable',['../group___i2_c___s_l_a_v_e___a_p_i.html#a7b1c0bee47fa93f32b4466b72c30f68c',1,'i2c_slave_cfg_t']]],
   ['global_5fconfig',['global_config',['../group___c_a_n_f_d.html#afd7545e297144152431f5b1f3628fff7',1,'canfd_global_cfg_t']]],
   ['global_5ferr_5fipl',['global_err_ipl',['../group___c_a_n_f_d.html#a6ce35aac50e44ac4353bfd20e12639a4',1,'canfd_global_cfg_t']]],

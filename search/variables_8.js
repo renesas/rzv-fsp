@@ -2,8 +2,8 @@ var searchData=
 [
   ['i2c_5faddr',['i2c_addr',['../structzmod4xxx__dev__t.html#ab83d777892012d7264b67101851e8443',1,'zmod4xxx_dev_t']]],
   ['iaq',['iaq',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abd2e11efbf4f5c3ae54f469394235ae8',1,'rm_zmod4xxx_iaq_1st_data_t::iaq()'],['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6de91ae7e87c6ad5197ceff295b7fdf3',1,'rm_zmod4xxx_iaq_2nd_data_t::iaq()']]],
-  ['iaq1stgendatacalculate',['iaq1stGenDataCalculate',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6e96d0abcbc4a4479d92d6e8e8d410de',1,'rm_zmod4xxx_api_t']]],
-  ['iaq2ndgendatacalculate',['iaq2ndGenDataCalculate',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af1ff5841c01173a03ff6ccb7bd731ddc',1,'rm_zmod4xxx_api_t']]],
+  ['iaq1stgendatacalculate',['iaq1stGenDataCalculate',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a84760f27fa7ca93259cf43597772c781',1,'rm_zmod4xxx_api_t']]],
+  ['iaq2ndgendatacalculate',['iaq2ndGenDataCalculate',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a88ffe068c172b8719782357b16cbe937',1,'rm_zmod4xxx_api_t']]],
   ['ibi_5faccept',['ibi_accept',['../group___i3_c___a_p_i.html#a75de96de8cb5a6dbe2e142f1113a5a8b',1,'i3c_device_table_cfg_t']]],
   ['ibi_5faddress',['ibi_address',['../group___i3_c___a_p_i.html#add62a38afe9e63edc664fa8cd7d736e3',1,'i3c_callback_args_t']]],
   ['ibi_5fbuffer_5fdescriptor',['ibi_buffer_descriptor',['../group___i3_c___b.html#ade06559c82b773fb3382aa64c0cbff15',1,'i3c_b_instance_ctrl_t']]],

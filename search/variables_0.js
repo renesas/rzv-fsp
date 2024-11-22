@@ -35,6 +35,6 @@ var searchData=
   ['alignment',['alignment',['../group___a_d_c___a_p_i.html#aa36a14783685f411c4c0a7904a3de8eb',1,'adc_cfg_t']]],
   ['assertion_5ftime',['assertion_time',['../group___s_c_i___b___u_a_r_t.html#ae2e7a853b139015cb777e556e9add242',1,'sci_b_uart_rs485_setting_t']]],
   ['assigned_5faddress_5fphase_5fenable',['assigned_address_phase_enable',['../group___i3_c___b.html#a130da5bdcc977cc2ac80d2958ee0ed2c',1,'i3c_b_clock_stalling_t']]],
-  ['autocalibrate',['autoCalibrate',['../group___s_p_i___f_l_a_s_h___a_p_i.html#ad04434e2c049da61d3389355d5961f31',1,'spi_flash_api_t']]],
+  ['autocalibrate',['autoCalibrate',['../group___s_p_i___f_l_a_s_h___a_p_i.html#ac78c55ffe2b7d99681612ce796a384c5',1,'spi_flash_api_t']]],
   ['average_5fcount',['average_count',['../group___t_s_u___b.html#a525f475e04de0b02bf01105495f9f474',1,'tsu_b_extended_cfg_t']]]
 ];

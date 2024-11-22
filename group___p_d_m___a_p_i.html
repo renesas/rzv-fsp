@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.2</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,17 +163,14 @@ $(document).ready(function(){initNavTree('group___p_d_m___a_p_i.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">PDM Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+<div class="title">PDM Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_u_d_i_o___i_n_t_e_r_f_a_c_e_s.html">Audio</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Interface for PDM audio communication. </p>
 <h1><a class="anchor" id="PDM_API_SUMMARY"></a>
 Summary</h1>
-<p>The pulse-density modulation(PDM) interface provides APIs and definitions for PDM audio communication.</p>
-<h1><a class="anchor" id="PDM_API_INSTANCES"></a>
-Known Implementations</h1>
-<p><a class="el" href="group___p_d_m.html">PDM Interface (r_pdm)</a> </p>
+<p>The pulse-density modulation(PDM) interface provides APIs and definitions for PDM audio communication. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -432,10 +429,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial configuration. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_d_m.html#ga348be7b997dd1200eb549ff3e7f946a0">R_PDM_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Initial configuration.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Peripheral clocks and any required output pins should be configured prior to calling this function. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>To reconfigure after calling this function, call <a class="el" href="group___p_d_m___a_p_i.html#a37bb473e04c42ef4dc01e03f6c52ce75">pdm_api_t::close</a> first. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -460,10 +454,6 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
       </table>
 </div><div class="memdoc">
 <p>Start communication.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_d_m.html#ga745fa70668486ae2a7d16bd72eb93a54">R_PDM_Start()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
@@ -488,10 +478,6 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
       </table>
 </div><div class="memdoc">
 <p>Stop communication. Communication is stopped when callback is called with PDM_EVENT_IDLE.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_d_m.html#ga35f2abc47410d9906e8ae5bac12d7a29">R_PDM_Stop()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
@@ -512,10 +498,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read remaining PDM data. This function can be called during PDM_STATE_STOPPED. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_d_m.html#ga62fc9390544cabfb4800f38125f748ab">R_PDM_Read()</a></li>
-</ul>
-</dd></dl>
+<p>Read remaining PDM data. This function can be called during PDM_STATE_STOPPED.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
@@ -538,10 +521,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get current status and store it in provided pointer p_status. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_d_m.html#gaf5696a4b5a4e9f33f89baefe9a7e1f94">R_PDM_StatusGet()</a></li>
-</ul>
-</dd></dl>
+<p>Get current status and store it in provided pointer p_status.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
@@ -563,10 +543,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Allows driver to be reconfigured and may reduce power consumption. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_d_m.html#ga0f07fb3bab80af13bd260b7f7f54062e">R_PDM_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Allows driver to be reconfigured and may reduce power consumption.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
@@ -587,10 +564,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_d_m.html#gaecf26c2d11db2e9700beb41164b8a1fb">R_PDM_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the PDM control block. </td></tr>
@@ -654,10 +628,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>PDM control block. Allocate an instance specific control block to pass into the PDM API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_d_m.html#structpdm__instance__ctrl__t">pdm_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>PDM control block. Allocate an instance specific control block to pass into the PDM API calls. </p>
 
 </div>
 </div>
@@ -795,7 +766,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.2 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

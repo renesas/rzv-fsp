@@ -19,7 +19,21 @@ var group___r_t_c___a_p_i =
       [ "mon_match", "group___r_t_c___a_p_i.html#a1037fb218fb45e450dd41965a9ca1df7", null ],
       [ "year_match", "group___r_t_c___a_p_i.html#ab20077ad52e2ef1a05a206d3cf216662", null ],
       [ "dayofweek_match", "group___r_t_c___a_p_i.html#a7c550dd3aaa641771433b71675a41acf", null ],
+      [ "sunday_match", "group___r_t_c___a_p_i.html#aa1d927bd50d7f665be747bf1912aecfe", null ],
+      [ "monday_match", "group___r_t_c___a_p_i.html#ac5ff3e26fb3ba6d8375dda019c5093ac", null ],
+      [ "tuesday_match", "group___r_t_c___a_p_i.html#a511d189c62f1f640821f2188ae8325a8", null ],
+      [ "wednesday_match", "group___r_t_c___a_p_i.html#a45c6bc225e92af21904eefe07614b611", null ],
+      [ "thursday_match", "group___r_t_c___a_p_i.html#ad6238f9bf14eb782ccec68df474bb928", null ],
+      [ "friday_match", "group___r_t_c___a_p_i.html#a7e1342d308cf82a786bf2f00ef7a61ad", null ],
+      [ "saturday_match", "group___r_t_c___a_p_i.html#aace35f4f57398a1f590cc39ee8504328", null ],
       [ "channel", "group___r_t_c___a_p_i.html#ae9bd30168ad8a2932e542beaed85b2e1", null ]
+    ] ],
+    [ "rtc_time_capture_t", "group___r_t_c___a_p_i.html#structrtc__time__capture__t", [
+      [ "time", "group___r_t_c___a_p_i.html#ad7915eec1adda98a5740960381911c50", null ],
+      [ "channel", "group___r_t_c___a_p_i.html#afe687352b349ef422a1bea06357df121", null ],
+      [ "source", "group___r_t_c___a_p_i.html#ad79be9fceab2cd8a122e5d2254fc4c90", null ],
+      [ "noise_filter", "group___r_t_c___a_p_i.html#aab9203daea2e24a16626b2b40c98d3fa", null ],
+      [ "mode", "group___r_t_c___a_p_i.html#a3f87f96a5361cf95695fb1815d73b42b", null ]
     ] ],
     [ "rtc_info_t", "group___r_t_c___a_p_i.html#structrtc__info__t", [
       [ "clock_source", "group___r_t_c___a_p_i.html#aba0edee87eb628db01fb1fa070a0c144", null ],
@@ -27,7 +41,7 @@ var group___r_t_c___a_p_i =
     ] ],
     [ "rtc_cfg_t", "group___r_t_c___a_p_i.html#structrtc__cfg__t", [
       [ "clock_source", "group___r_t_c___a_p_i.html#a4d6b36efa20644739ef4a2697a745660", null ],
-      [ "freq_compare_value_loco", "group___r_t_c___a_p_i.html#a0a64ff37fefef5f044209c6f85564b70", null ],
+      [ "freq_compare_value", "group___r_t_c___a_p_i.html#a85af136f6f557deb9c89e210c302a0a9", null ],
       [ "p_err_cfg", "group___r_t_c___a_p_i.html#ae9c6c82e443f75c0ad7ec40b178a3972", null ],
       [ "alarm_ipl", "group___r_t_c___a_p_i.html#a6a99d08314611e1fe129bef873c56ac2", null ],
       [ "alarm_irq", "group___r_t_c___a_p_i.html#aabad6d91d22b402ad2cbee664bd5c502", null ],
@@ -50,7 +64,9 @@ var group___r_t_c___a_p_i =
       [ "periodicIrqRateSet", "group___r_t_c___a_p_i.html#a5a13e1acf6e07bfd87dc81bf65272951", null ],
       [ "errorAdjustmentSet", "group___r_t_c___a_p_i.html#ae1635364719444ad65541ce00953983e", null ],
       [ "callbackSet", "group___r_t_c___a_p_i.html#a63a958dd039662f8d13d38a64da9b61e", null ],
-      [ "infoGet", "group___r_t_c___a_p_i.html#a7a6c940847c6f730a5c5df3355dca1eb", null ]
+      [ "infoGet", "group___r_t_c___a_p_i.html#a7a6c940847c6f730a5c5df3355dca1eb", null ],
+      [ "timeCaptureSet", "group___r_t_c___a_p_i.html#ad94675c314c58dc82d170e37fe88c176", null ],
+      [ "timeCaptureGet", "group___r_t_c___a_p_i.html#a8d7348b2c176659c6453b75f2d4d66b9", null ]
     ] ],
     [ "rtc_instance_t", "group___r_t_c___a_p_i.html#structrtc__instance__t", [
       [ "p_ctrl", "group___r_t_c___a_p_i.html#acc669b027e055903ca6effb673182925", null ],
@@ -67,7 +83,8 @@ var group___r_t_c___a_p_i =
     [ "rtc_alarm_channel_t", "group___r_t_c___a_p_i.html#ga023e9e2043784cf17e3d3bf056ce14f1", null ],
     [ "rtc_clock_source_t", "group___r_t_c___a_p_i.html#gad8eef26a825fa4a0c5a417f8be08ccc6", [
       [ "RTC_CLOCK_SOURCE_SUBCLK", "group___r_t_c___a_p_i.html#ggad8eef26a825fa4a0c5a417f8be08ccc6a7b64e5bbc3adc81add25128016631364", null ],
-      [ "RTC_CLOCK_SOURCE_LOCO", "group___r_t_c___a_p_i.html#ggad8eef26a825fa4a0c5a417f8be08ccc6abd7cdef56193166a8a680504e1f3f5fa", null ]
+      [ "RTC_CLOCK_SOURCE_LOCO", "group___r_t_c___a_p_i.html#ggad8eef26a825fa4a0c5a417f8be08ccc6abd7cdef56193166a8a680504e1f3f5fa", null ],
+      [ "RTC_CLOCK_SOURCE_MAINCLK", "group___r_t_c___a_p_i.html#ggad8eef26a825fa4a0c5a417f8be08ccc6abc748ba58158bd17eb835558a4a73066", null ]
     ] ],
     [ "rtc_status_t", "group___r_t_c___a_p_i.html#gab1079685ed8a9d30f32062b3bfedd041", [
       [ "RTC_STATUS_STOPPED", "group___r_t_c___a_p_i.html#ggab1079685ed8a9d30f32062b3bfedd041a1f6935d0b857ca464bac48d0532b9b48", null ],
@@ -85,7 +102,8 @@ var group___r_t_c___a_p_i =
     [ "rtc_error_adjustment_period_t", "group___r_t_c___a_p_i.html#gaa9758f6f29579df6e9f5c64ff486c097", [
       [ "RTC_ERROR_ADJUSTMENT_PERIOD_1_MINUTE", "group___r_t_c___a_p_i.html#ggaa9758f6f29579df6e9f5c64ff486c097a4c96e106ab367f0a811813e6077c3a8c", null ],
       [ "RTC_ERROR_ADJUSTMENT_PERIOD_10_SECOND", "group___r_t_c___a_p_i.html#ggaa9758f6f29579df6e9f5c64ff486c097abb5d066f25aa8878ef57848e7a8a28aa", null ],
-      [ "RTC_ERROR_ADJUSTMENT_PERIOD_NONE", "group___r_t_c___a_p_i.html#ggaa9758f6f29579df6e9f5c64ff486c097afe53e47d736acd5bd710bc610d1fd8bc", null ]
+      [ "RTC_ERROR_ADJUSTMENT_PERIOD_NONE", "group___r_t_c___a_p_i.html#ggaa9758f6f29579df6e9f5c64ff486c097afe53e47d736acd5bd710bc610d1fd8bc", null ],
+      [ "RTC_ERROR_ADJUSTMENT_PERIOD_20_SECOND", "group___r_t_c___a_p_i.html#ggaa9758f6f29579df6e9f5c64ff486c097aa25e82c25bba38523c95895d68fba586", null ]
     ] ],
     [ "rtc_periodic_irq_select_t", "group___r_t_c___a_p_i.html#gacbf0a3d09430a65ca1b3179819183f01", [
       [ "RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_256_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a2f22d5de616b4249e26741a2d1af200d", null ],
@@ -97,6 +115,29 @@ var group___r_t_c___a_p_i =
       [ "RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_4_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a2d83137f7be0a550f9e8533090186f17", null ],
       [ "RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_2_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a5d684a2ff7ceabe98acb755095705f4e", null ],
       [ "RTC_PERIODIC_IRQ_SELECT_1_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a35f83abe856065e723ec538a5e708a6d", null ],
-      [ "RTC_PERIODIC_IRQ_SELECT_2_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01ac05b73777b54b84cc0ed8c6ee4013f33", null ]
+      [ "RTC_PERIODIC_IRQ_SELECT_2_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01ac05b73777b54b84cc0ed8c6ee4013f33", null ],
+      [ "RTC_PERIODIC_IRQ_SELECT_1_MINUTE", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01ac34dc974fe29c14a5629fe164e6f0cd3", null ],
+      [ "RTC_PERIODIC_IRQ_SELECT_1_HOUR", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a9b69082088629007baba227606dabf7a", null ],
+      [ "RTC_PERIODIC_IRQ_SELECT_1_DAY", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a858efb3d6980d080ebdbd6d2d978f447", null ],
+      [ "RTC_PERIODIC_IRQ_SELECT_1_MONTH", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01ada0ec080ff6e58e5bb1601cf6e5d198f", null ]
+    ] ],
+    [ "rtc_time_capture_source_t", "group___r_t_c___a_p_i.html#ga60a231559f89a160d0849ae222518eca", [
+      [ "RTC_TIME_CAPTURE_SOURCE_DISABLED", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaadab60261dd01089e692cf2773b2d600d", null ],
+      [ "RTC_TIME_CAPTURE_SOURCE_PIN_RISING", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaafea97857443fe80f89e2b32533005cd5", null ],
+      [ "RTC_TIME_CAPTURE_SOURCE_PIN_FALLING", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaa74b616ab24c70b286d37f1f01030823a", null ],
+      [ "RTC_TIME_CAPTURE_SOURCE_PIN_BOTH", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaa3644f3972808104dc47b065116f3792e", null ],
+      [ "RTC_TIME_CAPTURE_SOURCE_SOFTWARE", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaab80f4151122f5c5305921cd45ab0a779", null ],
+      [ "RTC_TIME_CAPTURE_SOURCE_ELC_EVENT", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaaafff8e150784ffc05af8976ed5a226cc", null ]
+    ] ],
+    [ "rtc_time_capture_mode_t", "group___r_t_c___a_p_i.html#ga1055e04d46ad556c31bfb4a62daf3cfd", [
+      [ "RTC_TIME_CAPTURE_MODE_CONTINUOUS", "group___r_t_c___a_p_i.html#gga1055e04d46ad556c31bfb4a62daf3cfda74931ef77430d1ad3b84bc7d5d51f6ea", null ],
+      [ "RTC_TIME_CAPTURE_MODE_ONE_SHOT", "group___r_t_c___a_p_i.html#gga1055e04d46ad556c31bfb4a62daf3cfdad87199ee6c06279d6c78869cef6ca14c", null ]
+    ] ],
+    [ "rtc_time_capture_noise_filter_t", "group___r_t_c___a_p_i.html#gaeaa54438f4298dee64468529c104b6a7", [
+      [ "RTC_TIME_CAPTURE_NOISE_FILTER_OFF", "group___r_t_c___a_p_i.html#ggaeaa54438f4298dee64468529c104b6a7a14d8d0855f067c6c2b41884bfa5db7a6", null ],
+      [ "RTC_TIME_CAPTURE_NOISE_FILTER_ON", "group___r_t_c___a_p_i.html#ggaeaa54438f4298dee64468529c104b6a7aaa2ceda3891f75b5a1a7ff8b1e175bc7", null ],
+      [ "RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_32", "group___r_t_c___a_p_i.html#ggaeaa54438f4298dee64468529c104b6a7a7d817792d824cd55fb87845ae8fca1c7", null ],
+      [ "RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_4096", "group___r_t_c___a_p_i.html#ggaeaa54438f4298dee64468529c104b6a7a1fb7318f5b0241583fb635d2e5bb7351", null ],
+      [ "RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_8192", "group___r_t_c___a_p_i.html#ggaeaa54438f4298dee64468529c104b6a7aadad6658307f55e6340493e93c7d48df", null ]
     ] ]
 ];

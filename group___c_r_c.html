@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.2</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -229,27 +229,9 @@ This module can be added to the Stacks tab via New Stack &gt; Monitoring &gt; CR
 <tr>
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_crc0 </td><td>Module name. </td></tr>
 <tr>
-<td>CRC Polynomial</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-CRC-8</li>
-<li>
-CRC-16</li>
-<li>
-CRC-CCITT</li>
-<li>
-CRC-32</li>
-<li>
-CRC-32C</li>
-</ul>
-</td><td>CRC-32C </td><td>Select the CRC polynomial. </td></tr>
+<td>CRC Polynomial</td><td>MCU Specific Options</td><td></td><td>Select the CRC polynomial. </td></tr>
 <tr>
-<td>Bit Order</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-LSB</li>
-<li>
-MSB</li>
-</ul>
-</td><td>MSB </td><td>Select the CRC bit order. </td></tr>
+<td>Bit Order</td><td>MCU Specific Options</td><td></td><td>Select the CRC bit order. </td></tr>
 <tr>
 <td>Snoop Address</td><td>MCU Specific Options</td><td></td><td>Select the communication module register address CRC snoop </td></tr>
 </table>
@@ -279,7 +261,7 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the CRC module in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> crc_example ()</div><div class="line">{</div><div class="line">    uint32_t length;</div><div class="line">    uint32_t uint8_calculated_value;</div><div class="line"></div><div class="line">    length = <span class="keyword">sizeof</span>(g_data_8bit) / <span class="keyword">sizeof</span>(g_data_8bit[0]);</div><div class="line"></div><div class="line">    <a class="code" href="group___c_r_c___a_p_i.html#structcrc__input__t">crc_input_t</a> example_input =</div><div class="line">    {</div><div class="line">        .p_input_buffer = g_data_8bit,</div><div class="line">        .num_bytes      = length,</div><div class="line">        .crc_seed       = 0,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open CRC module with 8 bit polynomial */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#gae4cc2bba5d6aeaadd9f4d43948fca5ac">R_CRC_Open</a>(&amp;crc_ctrl, &amp;g_crc_test_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* 8-bit CRC calculation */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#ga89b0be959ce83ac6ca053329b1fddb75">R_CRC_Calculate</a>(&amp;crc_ctrl, &amp;example_input, &amp;uint8_calculated_value);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Snoop Example</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> crc_example ()</div><div class="line">{</div><div class="line">    uint32_t length;</div><div class="line">    uint32_t uint8_calculated_value;</div><div class="line"></div><div class="line">    length = <span class="keyword">sizeof</span>(g_data_8bit) / <span class="keyword">sizeof</span>(g_data_8bit[0]);</div><div class="line"></div><div class="line">    <a class="code" href="group___c_r_c___a_p_i.html#structcrc__input__t">crc_input_t</a> example_input =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___c_r_c___a_p_i.html#a0b250255a080533eb07854cbfd9ca73b">p_input_buffer</a> = g_data_8bit,</div><div class="line">        .num_bytes      = length,</div><div class="line">        .crc_seed       = 0,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open CRC module with 8 bit polynomial */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#gae4cc2bba5d6aeaadd9f4d43948fca5ac">R_CRC_Open</a>(&amp;crc_ctrl, &amp;g_crc_test_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* 8-bit CRC calculation */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#ga89b0be959ce83ac6ca053329b1fddb75">R_CRC_Calculate</a>(&amp;crc_ctrl, &amp;example_input, &amp;uint8_calculated_value);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Snoop Example</h2>
 <p>This example demonstrates CRC snoop operation.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> crc_snoop_example ()</div><div class="line">{</div><div class="line">    <span class="comment">/* Open CRC module with 8 bit polynomial */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#gae4cc2bba5d6aeaadd9f4d43948fca5ac">R_CRC_Open</a>(&amp;crc_ctrl, &amp;g_crc_test_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Open SCI Driver */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Configure Snoop address and enable snoop mode */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#ga606b389497fa4cba30b0d8f9a658331f">R_CRC_SnoopEnable</a>(&amp;crc_ctrl, 0);</div><div class="line"></div><div class="line">    <span class="comment">/* Perfrom SCI read/Write operation depending on the SCI snoop address configure */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Read CRC value */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#ga5bb7766a9c3217d2da7b77ea203b8c74">R_CRC_CalculatedValueGet</a>(&amp;crc_ctrl, &amp;g_crc_buff);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -354,6 +336,7 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Configuration was successful. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl or p_cfg is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module already open </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Hardware not support this feature. </td></tr>
   </table>
   </dd>
 </dl>
@@ -426,7 +409,7 @@ Data Structures</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Calculation successful. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Either p_ctrl, inputBuffer, or calculatedValue is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>length value is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>length value is NULL, or not 4-byte aligned when 32-bit CRC polynomial function is configured. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The driver is not opened. </td></tr>
   </table>
   </dd>
@@ -548,7 +531,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.2 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
