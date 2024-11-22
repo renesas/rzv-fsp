@@ -4,12 +4,6 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/**********************************************************************************************************************
- * File Name    : bsp_guard.c
- * Version      : 1.00
- * Description  : bsp_guard source code
- *********************************************************************************************************************/
-
 #include "bsp_guard.h"
 
 /* Only the secure project has nonsecure callable functions. */

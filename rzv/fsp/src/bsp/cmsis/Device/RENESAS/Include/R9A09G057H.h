@@ -41,7 +41,7 @@ extern "C" {
 /* ==========================  Configuration of the ARM Cortex-M33 Processor and Core Peripherals  =========================== */
   #define __CM33_REV                0x0004U /*!< CM33 Core Revision                                                        */
   #define __NVIC_PRIO_BITS          7       /*!< Number of Bits used for Priority Levels                                   */
-  #define __Vendor_SysTickConfig    0       /*!< Set to 1 if different SysTick Config is used                          */
+  #define __Vendor_SysTickConfig    0       /*!< Set to 1 if different SysTick Config is used                              */
   #define __VTOR_PRESENT            1       /*!< Set to 1 if CPU supports Vector Table Offset Register                     */
   #define __MPU_PRESENT             1       /*!< MPU present                                                               */
   #define __FPU_PRESENT             1       /*!< FPU present                                                               */
@@ -51,7 +51,11 @@ extern "C" {
  #elif defined(BSP_SUPPORT_CORE_CR8)
 
 /* ==========================  Configuration of the ARM Cortex-R8 Processor and Core Peripherals  =========================== */
+  #define __NVIC_PRIO_BITS          4       /*!< Number of Bits used for Priority Levels                                   */
+  #define __Vendor_SysTickConfig    1       /*!< Set to 1 if different SysTick Config is used                              */
+  #define __MPU_PRESENT             1       /*!< MPU present                                                               */
   #define __FPU_PRESENT             1       /*!< FPU present                                                               */
+  #define __FPU_DP                  0       /*!< Double Precision FPU                                                      */
  #endif
 
 /** @} */ /* End of group Configuration_of_CMSIS */
@@ -64,7 +68,7 @@ extern "C" {
   #include "cr/core_cr.h"              /*!< Core setting for Cortex-R                                                 */
  #endif
  #include "system.h"                   /*!< R9A09G057H System                                                         */
- 
+
  #ifndef __IM                          /*!< Fallback for older CMSIS versions                                         */
   #define __IM     __I
  #endif

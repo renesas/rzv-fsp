@@ -282,7 +282,7 @@ typedef enum e_dmac_b_external_output_pin
 
 /* If this macro is intended for use only within r_dmac_b.c, it is advisable to redefine it as a file-scoped static
  * function inside r_dmac_b.c, instead of placing it in a header file. */
-#define R_BSP_DMAC_ACTIVATION_SOURCE_DISABLE(unit, channel)                                                         \
+#define R_BSP_DMAC_ACTIVATION_SOURCE_DISABLE(dmac_reg, unit, channel)                                               \
     do                                                                                                              \
     {                                                                                                               \
         static volatile uint32_t * const DMARSk_TABLE[2][8] = {                                                     \
@@ -295,6 +295,16 @@ typedef enum e_dmac_b_external_output_pin
         uint32_t bit_position = (channel % 2) * 16U;                                                                \
         uint32_t clear_mask   = ACTIVATION_SOURCE_CLEAR_Msk << bit_position;                                        \
         *p_target_register   &= ~clear_mask;                                                                        \
+                                                                                                                    \
+        /* Clear the DMA Transfer Request Detection and DMA acknowledge output settings. */                         \
+        p_target_register = &dmac_reg->GRP[channel / 8].CH[channel % 8].CHCFG;                                      \
+        uint32_t reg_value         = *p_target_register;                                                            \
+        uint32_t ack_clear_mask    = R_DMAC_B0_GRP_CH_CHCFG_AM_Msk;                                                 \
+        uint32_t detect_clear_mask = R_DMAC_B0_GRP_CH_CHCFG_LOEN_Msk | R_DMAC_B0_GRP_CH_CHCFG_HIEN_Msk |            \
+                                     R_DMAC_B0_GRP_CH_CHCFG_LVL_Msk;                                                \
+        reg_value &= ~(ack_clear_mask | detect_clear_mask);                                                         \
+        reg_value |= DMAC_B_ACK_MODE_MASK_DACK_OUTPUT;                                                              \
+        *p_target_register = reg_value;                                                                             \
     } while (0)
 
 /** @} (end addtogroup BSP_MPU_RZV2L) */

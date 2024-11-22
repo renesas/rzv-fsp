@@ -10,10 +10,6 @@
 #include "r_i3c_b.h"
 #include "r_i3c_b_cfg.h"
 
-/* The address of the MCU Version Register on RA2E2 MCUs. Different error recovery procedures are used depending on the
- * version of the MCU (This is only used on RA2E2 devices). */
-#define I3C_A2E2_VERSION    (*((uint8_t const *) 0x01001C20U))
-
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -265,13 +261,15 @@ fsp_err_t R_I3C_B_Open (i3c_ctrl_t * const p_api_ctrl, i3c_cfg_t const * const p
 #endif
 
     /*
-     * Reset the I3C Peripheral so that it is in a known state during initialization (See Figure 25.102 I3C Communication Flow
-     * in the RA2E2 manual R01UH0919EJ0100).
+     * Reset the I3C Peripheral so that it is in a known state during initialization (See Figure 'I3C Communication Flow'
+     * in the user's manual).
      */
     p_ctrl->p_reg->BCTL_b.BUSE = 0;
     p_ctrl->p_reg->RSTCTL      = 1U;
 
-    /* The field will be cleared automatically upon reset completion (See section 25.2.5 in the RA2E2 manual R01UH0919EJ0100). */
+    /* The field will be cleared automatically upon reset completion (See section 'Reset Control Register'
+     * in the user's manual).
+     */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->RSTCTL, 0U);
 
     /* Set I3C mode. */
@@ -301,8 +299,7 @@ fsp_err_t R_I3C_B_Enable (i3c_ctrl_t * const p_api_ctrl)
     i3c_b_extended_cfg_t const * p_extend = (i3c_b_extended_cfg_t const *) p_ctrl->p_cfg->p_extend;
 
     /*
-     * Write all remaining configuration settings (See Figure 25.102 I3C Communication Flow in the RA2E2
-     * manual R01UH0919EJ0100).
+     * Write all remaining configuration settings (See Figure 'I3C Communication Flow' in the user's manual).
      *
      * Configure the Normal IBI Data Segment Size used for receiving IBI data.
      */
@@ -520,8 +517,8 @@ fsp_err_t R_I3C_B_DeviceCfgSet (i3c_ctrl_t * const p_api_ctrl, i3c_device_cfg_t 
     if (I3C_DEVICE_TYPE_MAIN_MASTER == p_ctrl->p_cfg->device_type)
     {
         /*
-         * Configure the master dynamic address and set it to valid (See Figure 25.102 I3C Communication Flow
-         * in the RA2E2 manual R01UH0919EJ0100).
+         * Configure the master dynamic address and set it to valid (See Figure 'I3C Communication Flow'
+         * in the user's manual).
          */
         uint32_t msdvad = (uint32_t) p_device_cfg->dynamic_address << R_I3C_B_MSDVAD_MDYAD_Pos;
         msdvad               |= R_I3C_B_MSDVAD_MDYADV_Msk;
@@ -537,7 +534,7 @@ fsp_err_t R_I3C_B_DeviceCfgSet (i3c_ctrl_t * const p_api_ctrl, i3c_device_cfg_t 
 
         /*
          * Configure slave device address table, Device Characteristics, Bus Characteristics, and
-         * Provisional ID (See Figure 25.102 I3C Communication Flow in the RA2E2 manual R01UH0919EJ0100).
+         * Provisional ID (See Figure 'I3C Communication Flow' in the user's manual).
          *
          * Configure the device static address. */
         uint32_t sdatbas0 = (uint32_t) p_device_cfg->static_address & R_I3C_B_SDATBAS0_SDSTAD_Msk;
@@ -801,7 +798,7 @@ fsp_err_t R_I3C_B_DynamicAddressAssignmentStart (i3c_ctrl_t * const            p
     /*
      * Write to the descriptor to the command queue.
      * Note that the command descriptor is two words. The least significant word must be written first followed by
-     * the most significant word (See Section 25.3.1.1 in the RA2E2 manual R01UH0919EJ0100).
+     * the most significant word (See Section "Command Descriptor" in the user's manual).
      */
     p_ctrl->p_reg->NCMDQP = command_descriptor;
     p_ctrl->p_reg->NCMDQP = 0U;
@@ -833,7 +830,8 @@ fsp_err_t R_I3C_B_DynamicAddressAssignmentStart (i3c_ctrl_t * const            p
  * @retval FSP_ERR_UNSUPPORTED            Master support must be enabled to call this function. Slave support must be
  *                                        enabled when sending the GETACCMST command.
  **********************************************************************************************************************/
-fsp_err_t R_I3C_B_CommandSend (i3c_ctrl_t * const p_api_ctrl, i3c_command_descriptor_t * p_command_descriptor)
+fsp_err_t R_I3C_B_CommandSend (i3c_ctrl_t * const                     p_api_ctrl,
+                               i3c_command_descriptor_t const * const p_command_descriptor)
 {
 #if I3C_B_CFG_MASTER_SUPPORT
     i3c_b_instance_ctrl_t * p_ctrl = (i3c_b_instance_ctrl_t *) p_api_ctrl;
@@ -901,7 +899,7 @@ fsp_err_t R_I3C_B_CommandSend (i3c_ctrl_t * const p_api_ctrl, i3c_command_descri
     /* Calculate the command descriptor. */
     uint32_t cmd1 = 0;
     cmd1 |= (p_ctrl->device_index << I3C_B_CMD_DESC_DEV_INDEX_Pos) & I3C_B_CMD_DESC_DEV_INDEX_Msk;
-    cmd1 |= (0 << I3C_B_CMD_DESC_XFER_MODE_Pos) & I3C_B_CMD_DESC_XFER_MODE_Msk;
+    cmd1 |= ((uint32_t) p_ctrl->device_bitrate_mode << I3C_B_CMD_DESC_XFER_MODE_Pos) & I3C_B_CMD_DESC_XFER_MODE_Msk;
     cmd1 |= (uint32_t) (p_command_descriptor->rnw << I3C_B_CMD_DESC_XFER_RNW_Pos);
     cmd1 |= I3C_B_CMD_DESC_ROC_Msk;
     cmd1 |= (uint32_t) (!p_command_descriptor->restart << I3C_B_CMD_DESC_TOC_Pos) & I3C_B_CMD_DESC_TOC_Msk;
@@ -913,7 +911,7 @@ fsp_err_t R_I3C_B_CommandSend (i3c_ctrl_t * const p_api_ctrl, i3c_command_descri
     if ((4 >= p_command_descriptor->length) && !p_command_descriptor->rnw)
     {
         /* If the transfer length is less than or equal to 4 bytes, then use "Immediate Data Transfer".
-         * See section "25.3.1.1.2 Immediate Transfer Command" in the RA2E2 manual R01UH0919EJ0100. */
+         * See Section "Immediate Transfer Command" in the user's manual. */
         cmd1 |= I3C_B_CMD_DESC_CND_ATTR_IMMED_DATA_XFER;
         cmd1 |= (p_command_descriptor->length << I3C_B_CMD_DESC_IMMED_DATA_XFER_BYTE_CNT_Pos);
         cmd2  = i3c_b_next_data_word_calculate(&p_ctrl->write_buffer_descriptor);
@@ -928,7 +926,7 @@ fsp_err_t R_I3C_B_CommandSend (i3c_ctrl_t * const p_api_ctrl, i3c_command_descri
     /*
      * Write the descriptor to the command queue.
      * Note that the command descriptor is two words. The least significant word must be written first followed by
-     * the most significant word (See Section 25.3.1.1 in the RA2E2 manual R01UH0919EJ0100).
+     * the most significant word (See Section "Command Descriptor" in the user's manual).
      */
     p_ctrl->p_reg->NCMDQP = cmd1;
     p_ctrl->p_reg->NCMDQP = cmd2;
@@ -1027,7 +1025,7 @@ fsp_err_t R_I3C_B_Write (i3c_ctrl_t * const p_api_ctrl, uint8_t const * const p_
              */
             p_ctrl->p_reg->RSTCTL = R_I3C_B_RSTCTL_TDBRST_Msk;
 
-            /* The field will be cleared automatically upon reset completion (See section 25.2.5 in the RA2E2 manual R01UH0919EJ0100). */
+            /* The field will be cleared automatically upon reset completion (See Section "Reset Control Register" in the user's manual). */
             FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->RSTCTL, 0U);
         }
 
@@ -1058,7 +1056,7 @@ fsp_err_t R_I3C_B_Write (i3c_ctrl_t * const p_api_ctrl, uint8_t const * const p_
         /*
          * Write the descriptor to the command queue.
          * Note that the command descriptor is two words. The least significant word must be written first followed by
-         * the most significant word (See Section 25.3.1.1 in the RA2E2 manual R01UH0919EJ0100).
+         * the most significant word (See Section "Command Descriptor" in the user's manual).
          */
         uint32_t cmd1 = i3c_b_xfer_command_calculate(p_ctrl->device_index, false, p_ctrl->device_bitrate_mode, restart);
 
@@ -1066,7 +1064,7 @@ fsp_err_t R_I3C_B_Write (i3c_ctrl_t * const p_api_ctrl, uint8_t const * const p_
         if (length <= 4)
         {
             /* If the transfer length is less than or equal to 4 bytes, then use "Immediate Data Transfer".
-             * See section "25.3.1.1.2 Immediate Transfer Command" in the RA2E2 manual R01UH0919EJ0100. */
+             * See Section "Immediate Transfer Command" in the user's manual. */
             cmd1 |= I3C_B_CMD_DESC_CND_ATTR_IMMED_DATA_XFER;
             cmd1 |= (length << I3C_B_CMD_DESC_IMMED_DATA_XFER_BYTE_CNT_Pos);
             cmd2  = p_ctrl->next_word;
@@ -1152,7 +1150,7 @@ fsp_err_t R_I3C_B_Read (i3c_ctrl_t * const p_api_ctrl, uint8_t * const p_data, u
         /*
          * Write the descriptor to the command queue.
          * Note that the command descriptor is two words. The least significant word must be written first followed by
-         * the most significant word (See Section 25.3.1.1 in the RA2E2 manual R01UH0919EJ0100).
+         * the most significant word (See Section "Command Descriptor" in the user's manual).
          */
         p_ctrl->p_reg->NCMDQP = i3c_b_xfer_command_calculate(p_ctrl->device_index,
                                                              true,
@@ -1258,7 +1256,7 @@ fsp_err_t R_I3C_B_IbiWrite (i3c_ctrl_t * const    p_api_ctrl,
     /*
      * Write the descriptor to the command queue.
      * Note that the command descriptor is two words. The least significant word must be written first followed by
-     * the most significant word (See Section 25.3.1.1 in the RA2E2 manual R01UH0919EJ0100).
+     * the most significant word (See Section "Command Descriptor" in the user's manual).
      */
     p_ctrl->p_reg->NCMDQP = command_descriptor;
     p_ctrl->p_reg->NCMDQP = (length << I3C_B_CMD_DESC_XFER_LENGTH_Pos) & I3C_B_CMD_DESC_XFER_LENGTH_Msk;
@@ -1372,7 +1370,7 @@ fsp_err_t R_I3C_B_Close (i3c_ctrl_t * const p_api_ctrl)
     p_ctrl->p_reg->BCTL_b.BUSE = 0;
     p_ctrl->p_reg->RSTCTL      = 1U;
 
-    /* The field will be cleared automatically upon reset completion (See section 25.2.5 in the RA2E2 manual R01UH0919EJ0100). */
+    /* The field will be cleared automatically upon reset completion (See Section "Reset Control Register" in the user's manual). */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->RSTCTL, 0U);
 
     /* Set the I3C Module Stop bit. */
@@ -1579,9 +1577,8 @@ static inline uint32_t i3c_b_read_bytes_remaining_calculate (i3c_b_instance_ctrl
  *
  * @param[in]  p_ctrl                Pointer to an instance's control structure.
  **********************************************************************************************************************/
-static inline void i3c_b_fifo_write (i3c_b_instance_ctrl_t * p_ctrl)
+BSP_FORCE_INLINE static inline void i3c_b_fifo_write (i3c_b_instance_ctrl_t * p_ctrl)
 {
-    bool transfer_complete = false;
     do
     {
         /* Write data to the transmit FIFO. */
@@ -1593,16 +1590,14 @@ static inline void i3c_b_fifo_write (i3c_b_instance_ctrl_t * p_ctrl)
             p_ctrl->p_reg->NTIE_b.TDBEIE0 = 0;
             i3c_b_extended_cfg_t * p_extend = (i3c_b_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
             R_BSP_IrqClearPending(p_extend->tx_irq);
-            transfer_complete = true;
-        }
-        else
-        {
-            /* Calculate the next word of data to write to the FIFO. */
-            p_ctrl->next_word = i3c_b_next_data_word_calculate(&p_ctrl->write_buffer_descriptor);
+            break;
         }
 
+        /* Calculate the next word of data to write to the FIFO. */
+        p_ctrl->next_word = i3c_b_next_data_word_calculate(&p_ctrl->write_buffer_descriptor);
+
         /* Continue writing data until the transmit FIFO is full. */
-    } while ((p_ctrl->p_reg->NDBSTLV0 & UINT8_MAX) && !transfer_complete);
+    } while ((p_ctrl->p_reg->NDBSTLV0 & UINT8_MAX));
 
     /* Clear the Transmit Buffer Empty status flag. */
     p_ctrl->p_reg->NTST_b.TDBEF0 = 0;
@@ -1613,7 +1608,8 @@ static inline void i3c_b_fifo_write (i3c_b_instance_ctrl_t * p_ctrl)
  *
  * @param[in]  p_buffer_descriptor   Pointer to a write buffer descriptor.
  **********************************************************************************************************************/
-static inline uint32_t i3c_b_next_data_word_calculate (i3c_b_write_buffer_descriptor_t * p_buffer_descriptor)
+BSP_FORCE_INLINE static inline uint32_t i3c_b_next_data_word_calculate (
+    i3c_b_write_buffer_descriptor_t * p_buffer_descriptor)
 {
     uint32_t data_word = 0;
 
@@ -1734,16 +1730,11 @@ void i3c_b_resp_isr (void)
 
  #if I3C_B_ERROR_RECOVERY_VERSION_1 == I3C_B_CFG_ERROR_RECOVERY_SUPPORT || \
             I3C_B_ERROR_RECOVERY_VERSION_BOTH == I3C_B_CFG_ERROR_RECOVERY_SUPPORT
-  #if I3C_B_ERROR_RECOVERY_VERSION_BOTH == I3C_B_CFG_ERROR_RECOVERY_SUPPORT
-            if (1U == I3C_A2E2_VERSION)
-  #endif
+
+            /* If the transfer length is less than expected, the driver must perform error recovery */
+            if (data_length != p_ctrl->read_buffer_descriptor.buffer_size)
             {
-                /* If the transfer length is less than expected, the driver must perform error recovery defined in
-                 * Figure 25.96 in the RA2E2 manual R01UH0919EJ0100. */
-                if (data_length != p_ctrl->read_buffer_descriptor.buffer_size)
-                {
-                    error_recovery_case_2 = true;
-                }
+                error_recovery_case_2 = true;
             }
  #endif
 
@@ -1820,7 +1811,10 @@ void i3c_b_resp_isr (void)
         p_ctrl->p_reg->BCTL_b.ABT = 0;
     }
 
-    /* If a transfer error occurs, follow the error recovery operation defined in Figure 25.96 and 25.97 in the RA2E2 manual R01UH0919EJ0100. */
+    /* If a transfer error occurs, follow the error recovery operation defined in Figure
+     * "Example of Error Recovery Operation Flowchart for I3C Master" and
+     * "Example of Error Recovery Operation Flowchart for I3C Slave" in the user's manual.
+     */
     if ((0 != (ntst & R_I3C_B_NTST_TEF_Msk)) || error_recovery_case_2)
     {
 #if I3C_B_CFG_SLAVE_SUPPORT
@@ -2009,7 +2003,8 @@ void i3c_b_rcv_isr (void)
             {
                 /*
                  * Perform dummy read.
-                 * See 25.3.2.1 (2) I3C Slave Operation (b) Dynamic Address Assignment Procedure in the RA2E2 manual R01UH0919EJ0100.
+                 * See Section "Operation Mode" (2) Slave Mode Operation (b-1) Dynamic Address Assignment Procedure
+                 * in the user's manual.
                  */
                 p_ctrl->p_reg->NTDTBP0;
             }
@@ -2081,7 +2076,9 @@ void i3c_b_rcv_isr (void)
 
     uint32_t ntst = p_ctrl->p_reg->NTST;
 
-    /* If an error occurred during the transfer, perform the error recovery operation defined in Figure 25.97 in the RA2E2 manual R01UH0919EJ0100. */
+    /* If an error occurred during the transfer, perform the error recovery operation defined in
+     * Figure "Example of Error Recovery Operation Flowchart for I3C Slave" in the user's manual.
+     */
     if ((0 != (ntst & (R_I3C_B_NTST_TEF_Msk | R_I3C_B_NTST_TABTF_Msk))) && (0U == p_ctrl->p_reg->NRSQSTLV_b.RSQLV))
     {
         if (I3C_B_INTERNAL_STATE_SLAVE_IDLE == p_ctrl->internal_state)
@@ -2340,157 +2337,144 @@ void i3c_b_abort_isr (void)
 #if I3C_B_CFG_MASTER_SUPPORT
 
 /*******************************************************************************************************************//**
- * Perform error recovery according to Figure 25.96 in the RA2E2 manual R01UH0919EJ0100
+ * Perform error recovery according to Figure "Example of Error Recovery Operation Flowchart for I3C Master"
+ * in the user's manual
  **********************************************************************************************************************/
 void i3c_b_master_error_recovery (i3c_b_instance_ctrl_t * p_ctrl, bool error_recovery_case_2)
 {
  #if I3C_B_ERROR_RECOVERY_VERSION_1 == I3C_B_CFG_ERROR_RECOVERY_SUPPORT || \
     I3C_B_ERROR_RECOVERY_VERSION_BOTH == I3C_B_CFG_ERROR_RECOVERY_SUPPORT
-  #if I3C_B_ERROR_RECOVERY_VERSION_BOTH == I3C_B_CFG_ERROR_RECOVERY_SUPPORT
 
-    /* For A2E2 version that has not been modified by ECO, the following error recovery procedure must be performed.
-     * See Figure 25.96 in the RA2E2 manual R01UH0919EJ0100. */
-    if (1U == I3C_A2E2_VERSION)
-  #endif
+    /* Flush the Command, Rx and Tx Buffers. */
+    p_ctrl->p_reg->RSTCTL = I3C_B_RSTCTRL_FIFO_FLUSH_Msk;
+
+    /* The field will be cleared automatically upon reset completion. */
+    FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->RSTCTL & I3C_B_RSTCTRL_FIFO_FLUSH_Msk), 0U);
+
+    /* Wait for the bus available condition. */
+    while (1)
     {
-        /* Flush the Command, Rx and Tx Buffers. */
-        p_ctrl->p_reg->RSTCTL = I3C_B_RSTCTRL_FIFO_FLUSH_Msk;
-
-        /* The field will be cleared automatically upon reset completion (See section 25.2.5 in the RA2E2 manual R01UH0919EJ0100). */
-        FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->RSTCTL & I3C_B_RSTCTRL_FIFO_FLUSH_Msk), 0U);
-
-        /* Wait for the bus available condition. */
-        while (1)
-        {
-            /* If SDA is pulled low, then a slave device started an IBI during error recovery. */
-            if (0U == p_ctrl->p_reg->PRSTDBG_b.SDILV)
-            {
-                break;
-            }
-
-            /* Check the bus available condition. */
-            if (1 == p_ctrl->p_reg->BCST_b.BAVLF)
-            {
-                break;
-            }
-        }
-
-        if (error_recovery_case_2)
-        {
-            /* Disable the IBI Status Buffer Full IRQ. */
-            p_ctrl->p_reg->NTIE_b.IBIQEFIE = 0;
-
-            /* When recovering from a read operation where the transfer length is less than expected, perform internal
-             * software reset. */
-            p_ctrl->p_reg->RSTCTL = R_I3C_B_RSTCTL_INTLRST_Msk;
-            p_ctrl->p_reg->RSTCTL = 0;
-
-            /* Restore the current master setting. */
-            p_ctrl->p_reg->PRSST = (uint32_t) (R_I3C_B_PRSST_CRMS_Msk | R_I3C_B_PRSST_PRSSTWP_Msk);
-
-            /* After an internal reset, the CRMS bit is cleared which causes the IBI Queue Empty/Full Flag to be set indicating the queue is empty.
-             * Since the driver is in master mode, this status should be discarded and the flag should be cleared. */
-            p_ctrl->p_reg->NTST_b.IBIQEFF = 0;
-
-            /* Enable the IBI Status Buffer Full IRQ. */
-            p_ctrl->p_reg->NTIE_b.IBIQEFIE = 1;
-        }
-        else
-        {
-            /* Resume I3C operation. */
-            p_ctrl->p_reg->BCTL_b.RSM = 1;
-        }
-
-        /* If a slave device started an IBI during error recovery, then it must be NACK'd or SDA will be held low indefinitely. */
+        /* If SDA is pulled low, then a slave device started an IBI during error recovery. */
         if (0U == p_ctrl->p_reg->PRSTDBG_b.SDILV)
         {
-            /* Calculate the frequency of PCLKD. */
-            uint32_t clock_frequency = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_P4CLK);
+            break;
+        }
 
-            i3c_b_extended_cfg_t * p_extend = (i3c_b_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+        /* Check the bus available condition. */
+        if (1 == p_ctrl->p_reg->BCST_b.BAVLF)
+        {
+            break;
+        }
+    }
 
-            /* Get the low and high period in PCLKD ticks. */
-            uint32_t pclkd_low_period = (p_extend->bitrate_settings.stdbr & R_I3C_B_STDBR_SBRLO_Msk) >>
-                                        R_I3C_B_STDBR_SBRLO_Pos;
-            uint32_t pclkd_high_period = (p_extend->bitrate_settings.stdbr & R_I3C_B_STDBR_SBRHO_Msk) >>
-                                         R_I3C_B_STDBR_SBRHO_Pos;
+    if (error_recovery_case_2)
+    {
+        /* Disable the IBI Status Buffer Full IRQ. */
+        p_ctrl->p_reg->NTIE_b.IBIQEFIE = 0;
 
-            /* Calculate the high and low period for SCL. */
-            uint32_t high_frequency = clock_frequency / pclkd_high_period;
-            uint32_t low_frequency  = clock_frequency / pclkd_low_period;
-            uint32_t high_delay_us  = (1000000U + high_frequency - 1) / high_frequency; // NOLINT(readability-magic-numbers)
-            uint32_t low_delay_us   = (1000000U + low_frequency - 1) / low_frequency;   // NOLINT(readability-magic-numbers)
+        /* When recovering from a read operation where the transfer length is less than expected, perform internal
+         * software reset. */
+        p_ctrl->p_reg->RSTCTL = R_I3C_B_RSTCTL_INTLRST_Msk;
+        p_ctrl->p_reg->RSTCTL = 0;
 
-            /* Check if BITCNT is working correctly. */
-            bool bcnt_zero = true;
-            for (uint32_t i = 0; i < 4; i++)
+        /* Restore the current master setting. */
+        p_ctrl->p_reg->PRSST = (uint32_t) (R_I3C_B_PRSST_CRMS_Msk | R_I3C_B_PRSST_PRSSTWP_Msk);
+
+        /* After an internal reset, the CRMS bit is cleared which causes the IBI Queue Empty/Full Flag to be set indicating the queue is empty.
+         * Since the driver is in master mode, this status should be discarded and the flag should be cleared. */
+        p_ctrl->p_reg->NTST_b.IBIQEFF = 0;
+
+        /* Enable the IBI Status Buffer Full IRQ. */
+        p_ctrl->p_reg->NTIE_b.IBIQEFIE = 1;
+    }
+    else
+    {
+        /* Resume I3C operation. */
+        p_ctrl->p_reg->BCTL_b.RSM = 1;
+    }
+
+    /* If a slave device started an IBI during error recovery, then it must be NACK'd or SDA will be held low indefinitely. */
+    if (0U == p_ctrl->p_reg->PRSTDBG_b.SDILV)
+    {
+        /* Calculate the frequency of PCLKD. */
+        uint32_t clock_frequency = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_P4CLK);
+
+        i3c_b_extended_cfg_t * p_extend = (i3c_b_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+        /* Get the low and high period in PCLKD ticks. */
+        uint32_t pclkd_low_period = (p_extend->bitrate_settings.stdbr & R_I3C_B_STDBR_SBRLO_Msk) >>
+                                    R_I3C_B_STDBR_SBRLO_Pos;
+        uint32_t pclkd_high_period = (p_extend->bitrate_settings.stdbr & R_I3C_B_STDBR_SBRHO_Msk) >>
+                                     R_I3C_B_STDBR_SBRHO_Pos;
+
+        /* Calculate the high and low period for SCL. */
+        uint32_t high_frequency = clock_frequency / pclkd_high_period;
+        uint32_t low_frequency  = clock_frequency / pclkd_low_period;
+        uint32_t high_delay_us  = (1000000U + high_frequency - 1) / high_frequency; // NOLINT(readability-magic-numbers)
+        uint32_t low_delay_us   = (1000000U + low_frequency - 1) / low_frequency;   // NOLINT(readability-magic-numbers)
+
+        /* Check if BITCNT is working correctly. */
+        bool bcnt_zero = true;
+        for (uint32_t i = 0; i < 4; i++)
+        {
+            R_BSP_SoftwareDelay(high_delay_us + low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+            if (0 != p_ctrl->p_reg->BITCNT_b.BCNT)
             {
-                R_BSP_SoftwareDelay(high_delay_us + low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
-                if (0 != p_ctrl->p_reg->BITCNT_b.BCNT)
-                {
-                    bcnt_zero = false;
-                }
+                bcnt_zero = false;
             }
+        }
 
-            /* If BITCNT is not incrementing, then the master is not aware of the IBI. */
-            if (bcnt_zero)
+        /* If BITCNT is not incrementing, then the master is not aware of the IBI. */
+        if (bcnt_zero)
+        {
+            /* Write SCL low in order to complete the start condition. */
+            p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SDOC_Msk | R_I3C_B_OUTCTL_SOCWP_Msk;
+
+            R_BSP_SoftwareDelay(low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+
+            /* Complete 9 SCL clock cycles while holding SDA high in order to NACK the IBI. */
+            for (uint32_t i = 0; i < 9; i++)
             {
-                /* Write SCL low in order to complete the start condition. */
-                p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SDOC_Msk | R_I3C_B_OUTCTL_SOCWP_Msk;
-
-                R_BSP_SoftwareDelay(low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
-
-                /* Complete 9 SCL clock cycles while holding SDA high in order to NACK the IBI. */
-                for (uint32_t i = 0; i < 9; i++)
-                {
-                    /* Write SCL high. */
-                    p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SDOC_Msk | R_I3C_B_OUTCTL_SCOC_Msk |
-                                            R_I3C_B_OUTCTL_SOCWP_Msk;
-
-                    R_BSP_SoftwareDelay(high_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
-
-                    /* Write SCL low. */
-                    p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SDOC_Msk | R_I3C_B_OUTCTL_SOCWP_Msk;
-
-                    R_BSP_SoftwareDelay(low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
-                }
-
-                /* Write SCL and SDA low. */
-                p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SOCWP_Msk;
-
-                R_BSP_SoftwareDelay(low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
-
                 /* Write SCL high. */
-                p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SCOC_Msk | R_I3C_B_OUTCTL_SOCWP_Msk;
+                p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SDOC_Msk | R_I3C_B_OUTCTL_SCOC_Msk |
+                                        R_I3C_B_OUTCTL_SOCWP_Msk;
 
                 R_BSP_SoftwareDelay(high_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
 
-                /* Write SDA anb SCL high to complete the stop condition. */
-                p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SDOC_Msk | R_I3C_B_OUTCTL_SCOC_Msk | R_I3C_B_OUTCTL_SOCWP_Msk;
+                /* Write SCL low. */
+                p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SDOC_Msk | R_I3C_B_OUTCTL_SOCWP_Msk;
+
+                R_BSP_SoftwareDelay(low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
             }
+
+            /* Write SCL and SDA low. */
+            p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SOCWP_Msk;
+
+            R_BSP_SoftwareDelay(low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+
+            /* Write SCL high. */
+            p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SCOC_Msk | R_I3C_B_OUTCTL_SOCWP_Msk;
+
+            R_BSP_SoftwareDelay(high_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+
+            /* Write SDA anb SCL high to complete the stop condition. */
+            p_ctrl->p_reg->OUTCTL = R_I3C_B_OUTCTL_SDOC_Msk | R_I3C_B_OUTCTL_SCOC_Msk | R_I3C_B_OUTCTL_SOCWP_Msk;
         }
     }
  #endif
 
  #if I3C_B_ERROR_RECOVERY_VERSION_2 == I3C_B_CFG_ERROR_RECOVERY_SUPPORT || \
     I3C_B_ERROR_RECOVERY_VERSION_BOTH == I3C_B_CFG_ERROR_RECOVERY_SUPPORT
-  #if I3C_B_ERROR_RECOVERY_VERSION_BOTH == I3C_B_CFG_ERROR_RECOVERY_SUPPORT
+    FSP_PARAMETER_NOT_USED(error_recovery_case_2);
 
-    /* For A2E2 version that has been modified by ECO, simplified error recovery procedure can be performed. */
-    if (2U == I3C_A2E2_VERSION)
-  #endif
-    {
-        FSP_PARAMETER_NOT_USED(error_recovery_case_2);
+    /* Flush the Command, Rx and Tx Buffers. */
+    p_ctrl->p_reg->RSTCTL = I3C_B_RSTCTRL_FIFO_FLUSH_Msk;
 
-        /* Flush the Command, Rx and Tx Buffers. */
-        p_ctrl->p_reg->RSTCTL = I3C_B_RSTCTRL_FIFO_FLUSH_Msk;
+    /* The field will be cleared automatically upon reset completion (See Section "Reset Control Register" in the user's manual). */
+    FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->RSTCTL & I3C_B_RSTCTRL_FIFO_FLUSH_Msk), 0U);
 
-        /* The field will be cleared automatically upon reset completion (See section 25.2.5 in the RA2E2 manual R01UH0919EJ0100). */
-        FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->RSTCTL & I3C_B_RSTCTRL_FIFO_FLUSH_Msk), 0U);
-
-        /* Resume I3C operation. */
-        p_ctrl->p_reg->BCTL_b.RSM = 1;
-    }
+    /* Resume I3C operation. */
+    p_ctrl->p_reg->BCTL_b.RSM = 1;
  #endif
 }
 
@@ -2499,7 +2483,8 @@ void i3c_b_master_error_recovery (i3c_b_instance_ctrl_t * p_ctrl, bool error_rec
 #if I3C_B_CFG_SLAVE_SUPPORT
 
 /*******************************************************************************************************************//**
- * Perform error recovery according to Figure 25.97 in the RA2E2 manual R01UH0919EJ0100
+ * Perform error recovery according to Figure "Example of Error Recovery Operation Flowchart for I3C Slave"
+ * in the user's manual
  **********************************************************************************************************************/
 void i3c_b_slave_error_recovery (i3c_b_instance_ctrl_t * p_ctrl, i3c_b_slave_error_recovery_type_t recovery_type)
 {
@@ -2532,70 +2517,57 @@ void i3c_b_slave_error_recovery (i3c_b_instance_ctrl_t * p_ctrl, i3c_b_slave_err
         }
     }
 
-    /* The field will be cleared automatically upon reset completion (See section 25.2.5 in the RA2E2 manual R01UH0919EJ0100). */
+    /* The field will be cleared automatically upon reset completion (See Section "Reset Control Register" in the user's manual). */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->RSTCTL, 0U);
 
  #if I3C_B_ERROR_RECOVERY_VERSION_1 == I3C_B_CFG_ERROR_RECOVERY_SUPPORT || \
     I3C_B_ERROR_RECOVERY_VERSION_BOTH == I3C_B_CFG_ERROR_RECOVERY_SUPPORT
-  #if I3C_B_ERROR_RECOVERY_VERSION_BOTH == I3C_B_CFG_ERROR_RECOVERY_SUPPORT
 
-    /* For A2E2 version that has not been modified by ECO, the following error recovery procedure must be performed.
-     * See Figure 25.97 in the RA2E2 manual R01UH0919EJ0100. */
-    if (1U == I3C_A2E2_VERSION)
-  #endif
+    /* Wait for Bus Available Condition. */
+    FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BCST & R_I3C_B_BCST_BAVLF_Msk), R_I3C_B_BCST_BAVLF_Msk);
+
+    /* Wait for start condition to be cleared. */
+    FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BST & R_I3C_B_BST_STCNDDF_Msk), 0);
+
+    /* Read the current value of SDDYAD. */
+    uint32_t sdatbas0 = p_ctrl->p_reg->SDATBAS0;
+
+    /* Perform internal software reset. */
+    p_ctrl->p_reg->RSTCTL = R_I3C_B_RSTCTL_INTLRST_Msk;
+    p_ctrl->p_reg->RSTCTL = 0;
+
+    /* Calculate the frequency of PCLKD. */
+    uint32_t clock_frequency = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_P4CLK);
+
+    /* Wait for the expected amount of time for the Bus Available Condition. */
+    uint32_t expected_bus_available_time =
+        (1000000U * p_ctrl->p_reg->BAVLCDT + clock_frequency - 1) / clock_frequency; // NOLINT(readability-magic-numbers)
+
+    R_BSP_SoftwareDelay(expected_bus_available_time, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* If the Bus is already available then error recovery is complete. */
+    if (0 == (p_ctrl->p_reg->BCST & R_I3C_B_BCST_BAVLF_Msk))
     {
-        /* Wait for Bus Available Condition (See Figure 25.97 in the RA2E2 manual R01UH0919EJ0100). */
-        FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BCST & R_I3C_B_BCST_BAVLF_Msk), R_I3C_B_BCST_BAVLF_Msk);
-
-        /* Wait for start condition to be cleared (See Figure 25.97 in the RA2E2 manual R01UH0919EJ0100).. */
-        FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BST & R_I3C_B_BST_STCNDDF_Msk), 0);
-
-        /* Read the current value of SDDYAD. */
-        uint32_t sdatbas0 = p_ctrl->p_reg->SDATBAS0;
-
-        /* Perform internal software reset. */
-        p_ctrl->p_reg->RSTCTL = R_I3C_B_RSTCTL_INTLRST_Msk;
-        p_ctrl->p_reg->RSTCTL = 0;
-
-        /* Calculate the frequency of PCLKD. */
-        uint32_t clock_frequency = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_P4CLK);
-
-        /* Wait for the expected amount of time for the Bus Available Condition. */
-        uint32_t expected_bus_available_time =
-            (1000000U * p_ctrl->p_reg->BAVLCDT + clock_frequency - 1) / clock_frequency; // NOLINT(readability-magic-numbers)
-
-        R_BSP_SoftwareDelay(expected_bus_available_time, BSP_DELAY_UNITS_MICROSECONDS);
-
-        /* If the Bus is already available then error recovery is complete. */
-        if (0 == (p_ctrl->p_reg->BCST & R_I3C_B_BCST_BAVLF_Msk))
+        while (0 == (p_ctrl->p_reg->BST & R_I3C_B_BST_STCNDDF_Msk))
         {
-            while (0 == (p_ctrl->p_reg->BST & R_I3C_B_BST_STCNDDF_Msk))
-            {
-                /* Perform internal software reset. */
-                p_ctrl->p_reg->RSTCTL = R_I3C_B_RSTCTL_INTLRST_Msk;
+            /* Perform internal software reset. */
+            p_ctrl->p_reg->RSTCTL = R_I3C_B_RSTCTL_INTLRST_Msk;
 
-                /* Wait for Bus Available Condition (See Figure 25.97 in the RA2E2 manual R01UH0919EJ0100).. */
-                FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BCST & R_I3C_B_BCST_BAVLF_Msk), R_I3C_B_BCST_BAVLF_Msk);
+            /* Wait for Bus Available Condition. */
+            FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BCST & R_I3C_B_BCST_BAVLF_Msk), R_I3C_B_BCST_BAVLF_Msk);
 
-                p_ctrl->p_reg->RSTCTL = 0;
-            }
+            p_ctrl->p_reg->RSTCTL = 0;
         }
-
-        /* Write back value of SDDYAD. */
-        p_ctrl->p_reg->SDATBAS0 = sdatbas0;
     }
+
+    /* Write back value of SDDYAD. */
+    p_ctrl->p_reg->SDATBAS0 = sdatbas0;
  #endif
  #if I3C_B_ERROR_RECOVERY_VERSION_2 == I3C_B_CFG_ERROR_RECOVERY_SUPPORT || \
     I3C_B_ERROR_RECOVERY_VERSION_BOTH == I3C_B_CFG_ERROR_RECOVERY_SUPPORT
-  #if I3C_B_ERROR_RECOVERY_VERSION_BOTH == I3C_B_CFG_ERROR_RECOVERY_SUPPORT
 
-    /* For A2E2 version that has been modified by ECO, simplified error recovery procedure can be performed. */
-    if (2U == I3C_A2E2_VERSION)
-  #endif
-    {
-        /* Resume I3C operation. */
-        p_ctrl->p_reg->BCTL_b.RSM = 1;
-    }
+    /* Resume I3C operation. */
+    p_ctrl->p_reg->BCTL_b.RSM = 1;
  #endif
 }
 

@@ -34,7 +34,7 @@ uint32_t g_wait_data_other_core BSP_PLACE_IN_SECTION(".wait_data_other_core");
 extern mpu_region_table_cfg_t g_mpu_region_table_array[];
 
 /** System Clock Frequency (Core Clock) */
-uint32_t SystemCoreClock = 0U;
+uint32_t SystemCoreClock BSP_SECTION_EARLY_INIT;
 
 #if defined(__ICCARM__)
 
@@ -63,6 +63,11 @@ void R_BSP_WarmStart(bsp_warm_start_event_t event);
 #elif defined(__GNUC__) || defined(__ARMCC_VERSION)
 
 void R_BSP_WarmStart(bsp_warm_start_event_t event) __attribute__((weak));
+
+#endif
+
+#if BSP_CFG_EARLY_INIT
+static void bsp_init_uninitialized_vars(void);
 
 #endif
 
@@ -118,6 +123,12 @@ void SystemInit (void)
             ;
         }
     }
+
+#if BSP_CFG_EARLY_INIT
+
+    /* Initialize uninitialized BSP variables early for use in R_BSP_WarmStart. */
+    bsp_init_uninitialized_vars();
+#endif
 
     R_BSP_WarmStart(BSP_WARM_START_RESET);
 
@@ -387,6 +398,19 @@ void SystemInit (void)
     bsp_static_constructor_init();
 #endif
 
+#if !BSP_CFG_PFS_PROTECT
+    FSP_CRITICAL_SECTION_DEFINE;
+    FSP_CRITICAL_SECTION_ENTER;
+ #if BSP_FEATURE_BSP_SUPPORT_PFCWE_PROTECT
+    R_GPIO->PWPR = 0;                                                               ///< Clear BOWI bit - writing to PFCWE bit enabled
+    R_GPIO->PWPR = 1U << BSP_FEATURE_IOPORT_PWPR_PFCWE_OFFSET;                      ///< Set PFCWE bit - writing to PFC register enabled
+ #else
+    R_GPIO->PWPR = (uint32_t) ((BSP_FEATURE_IOPORT_PFC_PWPR_REGWE_A_MASK & R_GPIO->PWPR) | \
+                               (1U << BSP_FEATURE_IOPORT_PFC_PWPR_REGWE_A_OFFSET)); ///< Set REGWE_A bit - writing to PFC and PMC registers enabled
+ #endif
+    FSP_CRITICAL_SECTION_EXIT;
+#endif
+
     R_BSP_WarmStart(BSP_WARM_START_POST_C);
 
     /* Jump to bsp_irq_cfg */
@@ -426,6 +450,24 @@ void R_BSP_WarmStart (bsp_warm_start_event_t event)
         /* Do nothing */
     }
 }
+
+#if BSP_CFG_EARLY_INIT
+
+/*******************************************************************************************************************//**
+ * Initialize BSP variables not handled by C runtime startup.
+ **********************************************************************************************************************/
+static void bsp_init_uninitialized_vars (void)
+{
+    g_protect_pfswe_counter = 0;
+
+ #if BSP_CFG_EARLY_INIT
+
+    /* Set SystemCoreClock */
+    SystemCoreClock = BSP_FEATURE_BSP_SYSTEM_CORE_CLOCK;
+ #endif
+}
+
+#endif
 
 /*******************************************************************************************************************//**
  * Initialize static constructors.

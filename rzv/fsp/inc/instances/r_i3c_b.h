@@ -263,7 +263,8 @@ fsp_err_t R_I3C_B_DynamicAddressAssignmentStart(i3c_ctrl_t * const            p_
                                                 i3c_address_assignment_mode_t address_assignment_mode,
                                                 uint32_t                      starting_device_index,
                                                 uint32_t                      device_count);
-fsp_err_t R_I3C_B_CommandSend(i3c_ctrl_t * const p_api_ctrl, i3c_command_descriptor_t * p_command_descriptor);
+fsp_err_t R_I3C_B_CommandSend(i3c_ctrl_t * const                     p_api_ctrl,
+                              i3c_command_descriptor_t const * const p_command_descriptor);
 fsp_err_t R_I3C_B_Write(i3c_ctrl_t * const p_api_ctrl, uint8_t const * const p_data, uint32_t length, bool restart);
 fsp_err_t R_I3C_B_Read(i3c_ctrl_t * const p_api_ctrl, uint8_t * const p_data, uint32_t length, bool restart);
 fsp_err_t R_I3C_B_IbiWrite(i3c_ctrl_t * const    p_api_ctrl,

@@ -8,6 +8,9 @@
  * Includes
  *********************************************************************************************************************/
 #include "r_riic_slave.h"
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+ #include "r_dmac_b.h"
+#endif
 
 /**********************************************************************************************************************
  * Macro definitions
@@ -127,6 +130,15 @@ static void r_iic_slave_call_callback(iic_slave_instance_ctrl_t * p_ctrl,
 /* Functions that manipulate hardware */
 static void iic_open_hw_slave(iic_slave_instance_ctrl_t * const p_ctrl);
 
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+void             riic_slave_rx_dmac_b_callback(iic_slave_instance_ctrl_t * p_ctrl);
+void             riic_slave_tx_dmac_b_callback(iic_slave_instance_ctrl_t * p_ctrl);
+static fsp_err_t iic_slave_transfer_open(i2c_slave_cfg_t const * const p_cfg);
+static fsp_err_t iic_slave_transfer_configure(transfer_instance_t const * p_transfer,
+                                              iic_slave_transfer_dir_t    direction);
+
+#endif
+
 /* Interrupt handlers */
 static void iic_rxi_slave(iic_slave_instance_ctrl_t * p_ctrl);
 static void iic_txi_slave(iic_slave_instance_ctrl_t * p_ctrl);
@@ -208,13 +220,14 @@ i2c_slave_api_t const g_i2c_slave_on_iic =
  *                                            3. Callback parameter is NULL.
  *                                            4. Set the rate to fast mode plus on a channel which does not support it.
  *                                            5. Invalid IRQ number assigned
+ *                                            6. Transfer instance in p_cfg is NULL when DMAC support enabled.
  *********************************************************************************************************************/
 fsp_err_t R_RIIC_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_t const * const p_cfg)
 {
     iic_slave_instance_ctrl_t * p_ctrl   = (iic_slave_instance_ctrl_t *) p_api_ctrl;
     riic_slave_extended_cfg_t * p_extend = (riic_slave_extended_cfg_t *) p_cfg->p_extend;
 
-#if RIIC_SLAVE_CFG_PARAM_CHECKING_ENABLE
+#if (RIIC_SLAVE_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_ctrl != NULL);
     FSP_ASSERT(p_cfg != NULL);
     FSP_ASSERT(p_cfg->p_extend != NULL);
@@ -231,6 +244,10 @@ fsp_err_t R_RIIC_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_
 
     FSP_ERROR_RETURN(IIC_SLAVE_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
     FSP_ERROR_RETURN(p_cfg->eri_ipl <= p_cfg->ipl, FSP_ERR_INVALID_ARGUMENT);
+#endif
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+    fsp_err_t err = FSP_SUCCESS;
 #endif
 
     /* Save register base address. */
@@ -250,6 +267,18 @@ fsp_err_t R_RIIC_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_
     /* Open the hardware in slave mode. Performs RIIC initialization as described in hardware manual (see Section
      * 'Initial Settings' of the user's manual). */
     iic_open_hw_slave(p_ctrl);
+
+#if RIIC_SLAVE_CFG_DMAC_ENABLE
+
+    /* Open the IIC transfer interface if available */
+    err = iic_slave_transfer_open(p_cfg);
+    if (FSP_SUCCESS != err)
+    {
+        R_BSP_MODULE_STOP(FSP_IP_RIIC, p_cfg->channel);
+
+        return err;
+    }
+#endif
 
     R_BSP_IrqCfgEnable(p_extend->tmoi_irq, p_ctrl->p_cfg->eri_ipl, p_ctrl);
     R_BSP_IrqCfgEnable(p_extend->ali_irq, p_ctrl->p_cfg->eri_ipl, p_ctrl);
@@ -271,6 +300,11 @@ fsp_err_t R_RIIC_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_
     p_ctrl->do_dummy_read     = false;
     p_ctrl->notify_request    = false;
     p_ctrl->transaction_count = 0U;
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+    p_ctrl->activation_on_rxi = false;
+    p_ctrl->activation_on_txi = false;
+#endif
 
     return FSP_SUCCESS;
 }
@@ -349,7 +383,7 @@ fsp_err_t R_RIIC_SLAVE_CallbackSet (i2c_slave_ctrl_t * const          p_api_ctrl
     bool callback_is_secure =
         (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
 
- #if IIC_SLAVE_CFG_PARAM_CHECKING_ENABLE
+ #if (RIIC_SLAVE_CFG_PARAM_CHECKING_ENABLE)
 
     /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
     i2c_slave_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
@@ -382,7 +416,7 @@ fsp_err_t R_RIIC_SLAVE_Close (i2c_slave_ctrl_t * const p_api_ctrl)
 {
     iic_slave_instance_ctrl_t * p_ctrl = (iic_slave_instance_ctrl_t *) p_api_ctrl;
 
-#if RIIC_SLAVE_CFG_PARAM_CHECKING_ENABLE
+#if (RIIC_SLAVE_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_ctrl != NULL);
 
     /* Check if the device is even open, return an error if not */
@@ -396,6 +430,20 @@ fsp_err_t R_RIIC_SLAVE_Close (i2c_slave_ctrl_t * const p_api_ctrl)
 
     /* Clear all interrupt bits */
     p_ctrl->p_reg->ICIER = 0U;
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+
+    /* Close the handles for the transfer interfaces */
+    if (NULL != p_ctrl->p_cfg->p_transfer_rx)
+    {
+        p_ctrl->p_cfg->p_transfer_rx->p_api->close(p_ctrl->p_cfg->p_transfer_rx->p_ctrl);
+    }
+
+    if (NULL != p_ctrl->p_cfg->p_transfer_tx)
+    {
+        p_ctrl->p_cfg->p_transfer_tx->p_api->close(p_ctrl->p_cfg->p_transfer_tx->p_ctrl);
+    }
+#endif
 
     /* Disable all interrupts. */
     R_BSP_IrqDisable(p_extend->tmoi_irq);
@@ -442,7 +490,7 @@ static fsp_err_t iic_slave_read_write (i2c_slave_ctrl_t * const p_api_ctrl,
 {
     iic_slave_instance_ctrl_t * p_ctrl = (iic_slave_instance_ctrl_t *) p_api_ctrl;
 
-#if RIIC_SLAVE_CFG_PARAM_CHECKING_ENABLE
+#if (RIIC_SLAVE_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_ctrl != NULL);
     FSP_ASSERT(p_buffer != NULL);
 
@@ -464,12 +512,20 @@ static fsp_err_t iic_slave_read_write (i2c_slave_ctrl_t * const p_api_ctrl,
     /* Initialize fields used during transfer */
     p_ctrl->loaded = 0U;
 
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+
+    /* Reset activation for DMAC */
+    p_ctrl->activation_on_txi = false;
+    p_ctrl->activation_on_rxi = false;
+#endif
+
     /* Indicate that restart and stop condition detection yet to be enabled */
     p_ctrl->start_interrupt_enabled = false;
 
     /* Set the response as ACK */
     p_ctrl->p_reg->ICMR3_b.ACKWP = 1;  /* Write Enable */
     p_ctrl->p_reg->ICMR3_b.ACKBT = 0;  /* Write */
+    p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
 
     /* Timeouts are enabled by the driver code at the end of an RIIC Slave callback.
      * Do not enable them here to prevent time restricting the application code.
@@ -497,6 +553,23 @@ static void iic_slave_notify (iic_slave_instance_ctrl_t * const p_ctrl, i2c_slav
 
     /* Disable timeout function */
     p_ctrl->p_reg->ICFER_b.TMOE = 0;
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+
+    /* Stop any DMAC assisted transfer for tx */
+    const transfer_instance_t * p_transfer_tx = p_ctrl->p_cfg->p_transfer_tx;
+    if ((NULL != p_transfer_tx) && (IIC_SLAVE_TRANSFER_DIR_MASTER_READ_SLAVE_WRITE == p_ctrl->direction))
+    {
+        p_transfer_tx->p_api->disable(p_transfer_tx->p_ctrl);
+    }
+
+    /* Stop any DMAC assisted transfer for rx */
+    const transfer_instance_t * p_transfer_rx = p_ctrl->p_cfg->p_transfer_rx;
+    if ((NULL != p_transfer_rx) && (IIC_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ == p_ctrl->direction))
+    {
+        p_transfer_rx->p_api->disable(p_transfer_rx->p_ctrl);
+    }
+#endif
 
     /* Check if the transaction ended with a stop (or restart) */
     if (p_ctrl->transaction_completed)
@@ -836,12 +909,12 @@ static void iic_rxi_slave (iic_slave_instance_ctrl_t * p_ctrl)
 
         /* The below code enables/services 0 byte writes from Master.*/
 
-        /* Since address match detected, enable STOP detection in case of Master Read Slave Write Operation;
-         * and enable STOP and START (RESTART) detection in case of Master Write Slave Read Operation.
-         * This is done so that RESTART handling is not missed if the user callback takes long and the Master
-         * issues the restart on the bus.
+        /* For 7-bit address: slave addr | R/W + data
+         * For 10-bit addresss:
+         * read:  slave high addr | W + slave low addr + data + stop
+         * write: slave high addr | W + slave low addr + restart + slave high addr | R + data + stop
          */
-        if (address_and_intent & 1U)
+        if ((p_ctrl->p_cfg->addr_mode == I2C_SLAVE_ADDR_MODE_7BIT) && (address_and_intent & 1U))
         {
             p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(ICSR2_STOP_BIT);
         }
@@ -877,7 +950,7 @@ static void iic_rxi_slave (iic_slave_instance_ctrl_t * p_ctrl)
             iic_slave_initiate_transaction(p_ctrl, receive_callback_event);
         }
 
-#if IIC_SLAVE_CFG_PARAM_CHECKING_ENABLE
+#if (RIIC_SLAVE_CFG_PARAM_CHECKING_ENABLE)
 
         /* Proceed reading data */
         if (IIC_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ != p_ctrl->direction)
@@ -910,12 +983,23 @@ static void iic_rxi_slave (iic_slave_instance_ctrl_t * p_ctrl)
                 p_ctrl->p_reg->ICMR3_b.ACKBT = 1;
                 p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
             }
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+
+            /* If this is the interrupt that got fired after DMAC transfer,
+             * ignore it as the DMAC has already taken care of the data transfer */
+            else if (true == p_ctrl->activation_on_rxi)
+            {
+                p_ctrl->activation_on_rxi = false;
+            }
+#endif
+
             /* If master is requesting still more data than configured to be read, notify
              * with a read more event in callback */
             else if (p_ctrl->total == p_ctrl->loaded)
             {
                 iic_slave_callback_request(p_ctrl, I2C_SLAVE_EVENT_RX_MORE_REQUEST);
-#if IIC_SLAVE_CFG_PARAM_CHECKING_ENABLE
+#if (RIIC_SLAVE_CFG_PARAM_CHECKING_ENABLE)
                 if (IIC_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ != p_ctrl->direction)
                 {
                     /* If the user application incorrectly handles Master Write, send a NACK to exit the transaction. */
@@ -956,6 +1040,29 @@ static void iic_rxi_slave (iic_slave_instance_ctrl_t * p_ctrl)
 
                         /* Keep track of the the actual number of transactions */
                         p_ctrl->transaction_count++;
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+
+                        /* Enable DMAC if possible */
+                        if ((NULL != p_ctrl->p_cfg->p_transfer_rx) && (p_ctrl->total > 1U) &&
+                            (false == p_ctrl->activation_on_rxi))
+                        {
+ #if (BSP_FEATURE_IIC_REGISTER_SIZE_BY_BIT == 8)
+                            uint8_t volatile const * p_iic_slave_rx_buffer = &(p_ctrl->p_reg->ICDRR);
+ #else
+                            uint8_t volatile const * p_iic_slave_rx_buffer = &(p_ctrl->p_reg->ICDRR_byte.LL);
+ #endif
+                            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->p_src  = (uint8_t *) (p_iic_slave_rx_buffer);
+                            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->p_dest = (void *) (p_ctrl->p_buff + 1U);
+                            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->length = p_ctrl->total - 1U;
+
+                            p_ctrl->p_cfg->p_transfer_rx->p_api->reconfigure(p_ctrl->p_cfg->p_transfer_rx->p_ctrl,
+                                                                             p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info);
+                            p_ctrl->activation_on_rxi  = true;
+                            p_ctrl->transaction_count += p_ctrl->total - 1U;
+                            p_ctrl->loaded             = p_ctrl->total;
+                        }
+#endif
                     }
                 }
             }
@@ -970,6 +1077,29 @@ static void iic_rxi_slave (iic_slave_instance_ctrl_t * p_ctrl)
 
                 /* Keep track of the the actual number of transactions */
                 p_ctrl->transaction_count++;
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+
+                /* Enable DMAC to operate from 2nd data byte */
+                if ((NULL != p_ctrl->p_cfg->p_transfer_rx) && (p_ctrl->total > 1U) &&
+                    (false == p_ctrl->activation_on_rxi))
+                {
+ #if (BSP_FEATURE_IIC_REGISTER_SIZE_BY_BIT == 8)
+                    uint8_t volatile const * p_iic_slave_rx_buffer = &(p_ctrl->p_reg->ICDRR);
+ #else
+                    uint8_t volatile const * p_iic_slave_rx_buffer = &(p_ctrl->p_reg->ICDRR_byte.LL);
+ #endif
+                    p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->p_src  = (uint8_t *) (p_iic_slave_rx_buffer);
+                    p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->p_dest = (void *) (p_ctrl->p_buff + 1U);
+                    p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->length = p_ctrl->total - 1U;
+
+                    p_ctrl->p_cfg->p_transfer_rx->p_api->reconfigure(p_ctrl->p_cfg->p_transfer_rx->p_ctrl,
+                                                                     p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info);
+                    p_ctrl->activation_on_rxi  = true;
+                    p_ctrl->transaction_count += p_ctrl->total - 1U;
+                    p_ctrl->loaded             = p_ctrl->total;
+                }
+#endif
             }
         }
     }
@@ -1020,6 +1150,27 @@ static void iic_txi_slave (iic_slave_instance_ctrl_t * p_ctrl)
 
             /* Keep track of the the actual number of transactions */
             p_ctrl->transaction_count++;
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+            if ((NULL != p_ctrl->p_cfg->p_transfer_tx) && (p_ctrl->total > 2U) &&
+                (false == p_ctrl->activation_on_txi) && (p_ctrl->loaded == 2U))
+            {
+ #if (BSP_FEATURE_IIC_REGISTER_SIZE_BY_BIT == 8)
+                uint8_t volatile const * p_iic_slave_tx_buffer = &(p_ctrl->p_reg->ICDRT);
+ #else
+                uint8_t volatile const * p_iic_slave_tx_buffer = &(p_ctrl->p_reg->ICDRT_byte.LL);
+ #endif
+                p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->p_src  = (void *) (p_ctrl->p_buff + 2U);
+                p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->p_dest = (uint8_t *) (p_iic_slave_tx_buffer);
+                p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->length = p_ctrl->total - 2U;
+
+                p_ctrl->p_cfg->p_transfer_tx->p_api->reconfigure(p_ctrl->p_cfg->p_transfer_tx->p_ctrl,
+                                                                 p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info);
+                p_ctrl->transaction_count += p_ctrl->total - 2U;
+                p_ctrl->loaded             = p_ctrl->total;
+                p_ctrl->activation_on_txi  = true;
+            }
+#endif
         }
     }
 }
@@ -1091,6 +1242,15 @@ static void iic_naki_slave (iic_slave_instance_ctrl_t * p_ctrl)
          * when a timeout occurs. Not clearing the flag will cause error interrupt to get triggered again.
          */
         p_ctrl->p_reg->ICIER &= (uint8_t) ~(uint8_t) IIC_NAK_EN_BIT;
+#if RIIC_SLAVE_CFG_DMAC_ENABLE
+
+        /* Stop any DMAC assisted transfer for tx */
+        const transfer_instance_t * p_transfer_tx = p_ctrl->p_cfg->p_transfer_tx;
+        if (NULL != p_transfer_tx)
+        {
+            p_transfer_tx->p_api->disable(p_transfer_tx->p_ctrl);
+        }
+#endif
     }
 }
 
@@ -1115,6 +1275,24 @@ static void iic_spi_slave (iic_slave_instance_ctrl_t * p_ctrl)
         if (IIC_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ == p_ctrl->direction)
         {
             i2c_event = I2C_SLAVE_EVENT_RX_COMPLETE;
+
+            /*
+             * This is to fix the issue that after sending NACK, slave application won't be able to get any events until call read API again.
+             * It is preferred to clear NACK bit in the driver to allow more granular ACK control from the slave side.
+             */
+            p_ctrl->p_reg->ICMR3_b.ACKWP = 1; /* Write Enable */
+            p_ctrl->p_reg->ICMR3_b.ACKBT = 0; /* Write */
+            p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+            if ((NULL != p_ctrl->p_cfg->p_transfer_rx) && (true == p_ctrl->activation_on_rxi))
+            {
+                transfer_properties_t transaction_property;
+                p_ctrl->p_cfg->p_transfer_rx->p_api->infoGet(p_ctrl->p_cfg->p_transfer_rx->p_ctrl,
+                                                             &transaction_property);
+                p_ctrl->transaction_count -= transaction_property.transfer_length_remaining;
+            }
+#endif
         }
         else
         {
@@ -1126,6 +1304,23 @@ static void iic_spi_slave (iic_slave_instance_ctrl_t * p_ctrl)
             {
                 p_ctrl->transaction_count -= 1U;
             }
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+            if ((NULL != p_ctrl->p_cfg->p_transfer_tx) && (true == p_ctrl->activation_on_txi))
+            {
+                transfer_properties_t transaction_property;
+                p_ctrl->p_cfg->p_transfer_tx->p_api->infoGet(p_ctrl->p_cfg->p_transfer_tx->p_ctrl,
+                                                             &transaction_property);
+
+                /* Decrement the transaction count when slave configured to write more data than master requested.
+                 * Addresses the exception raised from double buffer hardware implementation */
+                if (transaction_property.transfer_length_remaining > 0)
+                {
+                    p_ctrl->transaction_count -= 1U;
+                    p_ctrl->transaction_count -= transaction_property.transfer_length_remaining;
+                }
+            }
+#endif
         }
 
         /* Notify the user */
@@ -1209,6 +1404,72 @@ static void iic_tmoi_slave (iic_slave_instance_ctrl_t * p_ctrl)
         iic_slave_notify(p_ctrl, I2C_SLAVE_EVENT_ABORTED);
     }
 }
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+
+/*******************************************************************************************************************//**
+ * Enable the transfer driver to configure for IIC.
+ *
+ * @param[in]   p_cfg     Pointer to IIC specific configuration structure
+ *
+ * @retval      FSP_SUCCESS                Transfer interface initialized successfully.
+ * @retval      FSP_ERR_ASSERTION          Pointer to transfer instance for I2C receive in p_cfg is NULL.
+ **********************************************************************************************************************/
+static fsp_err_t iic_slave_transfer_open (i2c_slave_cfg_t const * const p_cfg)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    if (NULL != p_cfg->p_transfer_rx)
+    {
+        err = iic_slave_transfer_configure(p_cfg->p_transfer_rx, IIC_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
+
+    if (NULL != p_cfg->p_transfer_tx)
+    {
+        err = iic_slave_transfer_configure(p_cfg->p_transfer_tx, IIC_SLAVE_TRANSFER_DIR_MASTER_READ_SLAVE_WRITE);
+        if (FSP_SUCCESS != err)
+        {
+            if (NULL != p_cfg->p_transfer_rx)
+            {
+                p_cfg->p_transfer_rx->p_api->close(p_cfg->p_transfer_rx->p_ctrl);
+            }
+
+            return err;
+        }
+    }
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Configures IIC related transfer drivers (if enabled)
+ * @param[in]     p_transfer                 Pointer to IIC specific control structure
+ * @param[in]     direction                  Pointer to IIC specific configuration structure
+ *
+ * @retval        FSP_SUCCESS                Transfer interface is configured with valid parameters.
+ * @retval        FSP_ERR_ASSERTION          Pointer to transfer instance for I2C receive in p_cfg is NULL.
+ **********************************************************************************************************************/
+static fsp_err_t iic_slave_transfer_configure (transfer_instance_t const * p_transfer,
+                                               iic_slave_transfer_dir_t    direction)
+{
+    fsp_err_t err;
+    FSP_PARAMETER_NOT_USED(direction);
+
+    /* Set default transfer info and open receive transfer module, if enabled. */
+ #if (RIIC_SLAVE_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(NULL != p_transfer->p_api);
+    FSP_ASSERT(NULL != p_transfer->p_cfg);
+    FSP_ASSERT(NULL != p_transfer->p_cfg->p_info);
+ #endif
+
+    err = p_transfer->p_api->open(p_transfer->p_ctrl, p_transfer->p_cfg);
+    FSP_ERROR_RETURN((FSP_SUCCESS == err), err);
+
+    return FSP_SUCCESS;
+}
+
+#endif
 
 /**********************************************************************************************************************
  * Interrupt Vectors
@@ -1387,3 +1648,35 @@ void riic_slave_tmoi_isr (void)
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE
 }
+
+#if (RIIC_SLAVE_CFG_DMAC_ENABLE)
+
+/*******************************************************************************************************************//**
+ * End processing of IIC transmission operation after the end of dmac transfer.
+ *
+ * This function implements that IIC transmission interrupt is disabled and transmission end interrupt is enabled.
+ *
+ **********************************************************************************************************************/
+void riic_slave_tx_dmac_b_callback (iic_slave_instance_ctrl_t * p_ctrl)
+{
+    iic_txi_slave(p_ctrl);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
+}
+
+/*******************************************************************************************************************//**
+ * End processing of IIC receive operation after the end of dmac transfer.
+ *
+ * This function implements that the remaining 3 bytes of data are read and a stop condition is issued.
+ *
+ **********************************************************************************************************************/
+void riic_slave_rx_dmac_b_callback (iic_slave_instance_ctrl_t * p_ctrl)
+{
+    iic_rxi_slave(p_ctrl);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
+}
+
+#endif

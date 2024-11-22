@@ -10,12 +10,13 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 
 ### Current Release
 
-[FSP v2.0.2](https://github.com/renesas/rzv-fsp/releases/tag/v2.0.2)
+[FSP v3.0.0](https://github.com/renesas/rzv-fsp/releases/tag/v3.0.0)
 
 ### Supported RZ/V MPU Kits
 
 - [RZ/V2L Evaluation Board Kit](https://www.renesas.com/us/en/products/microcontrollers-microprocessors/rz-mpus/rzv2l-evaluation-board-kit-rzv2l-evaluation-board-kit)
 - [RZ/V2H Quad-core Vision AI MPU Evaluation Kit](https://www.renesas.com/us/en/products/microcontrollers-microprocessors/rz-mpus/rzv2h-evk-rzv2h-quad-core-vision-ai-mpu-evaluation-kit)
+- RZ/V2N Evaluation Board Kit
 
 ### Supported Software Packaged with FSP
 
@@ -41,7 +42,7 @@ If you have already installed a previous FSP release that included e² studio th
 
 #### For new users that are using FSP with e² studio
 
-1.      Download the FSP with e² studio Installer from the Assets section of the [current release](https://github.com/renesas/rzv-fsp/releases/tag/v2.0.2).
+1.      Download the FSP with e² studio Installer from the Assets section of the [current release](https://github.com/renesas/rzv-fsp/releases/tag/v3.0.0).
 2.      Run the installer. This will install the e² studio tool, FSP packs, GCC toolchain and other tools required to use this software. No additional installations are required.
 
 <!--
@@ -66,6 +67,8 @@ FSP Webpage: www.renesas.com/rzv/fsp
 RZ/V2L Product Information : www.renesas.com/rzv2l
 
 RZ/V2H Product Information : www.renesas.com/rzv2h
+
+RZ/V2N Product Information :
 
 e² studio : www.renesas.com/e2studio
 

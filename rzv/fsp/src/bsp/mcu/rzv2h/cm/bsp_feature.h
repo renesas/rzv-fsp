@@ -35,7 +35,7 @@
 #define BSP_FEATURE_ADC_E_UNIT_0_CHANNELS                     (0xFF)
 #define BSP_FEATURE_ADC_E_VALID_UNIT_MASK                     (1U)
 #define BSP_FEATURE_ADC_E_STABILIZATION_DELAY_US              (20U)
-#define BSP_FEATURE_ADC_E_UNIT_0_EVENT_OUTPUT_NUM             (16U)
+#define BSP_FEATURE_ADC_E_MAX_UNIT                            (1U)
 
 /* BSP Capabilities Definitions */
 #define BSP_FEATURE_BSP_ACCESS_CONTROL_SET_SUPPORT            (1U)
@@ -72,6 +72,7 @@
 #define BSP_FEATURE_CANFD_TXMB_CHANNEL_OFFSET                 (64U)
 #define BSP_FEATURE_CANFD_RXMB_MAX                            (96U)
 #define BSP_FEATURE_CANFD_ERROR_GLOBAL_CH0_ECC_REG_POS        (26U)
+#define BSP_FEATURE_CANFD_NUM_COMMON_FIFOS                    (18U)
 
 /* CPG-Related Definitions */
 #define BSP_FEATURE_CPG_HAS_ICLK                              (1U)
@@ -119,27 +120,12 @@
 /* CRC-Related Definitions */
 #define BSP_FEATURE_CRC_HAS_SNOOP                             (1U)
 #define BSP_FEATURE_CRC_SNOOP_ADDRESS_TYPE_TDR                (0x4U)
+#define BSP_FEATURE_CRC_HAS_CRCCR0_LMS                        (1)
+#define BSP_FEATURE_CRC_POLYNOMIAL_MASK                       (0x3EU)
 
 /* DMAC-Related Definitions */
 #define BSP_FEATURE_DMAC_MAX_CHANNEL                          (16U)
 #define BSP_FEATURE_DMAC_MAX_UNIT                             (5U)
-
-/* ELC-Related Definitions */
-#define BSP_FEATURE_ELC_ELC_SSEL_NUM                          (15)
-#define BSP_FEATURE_ELC_EVENT_MASK_NUM                        (4U)
-#define BSP_FEATURE_ELC_EVENT_SELECT0_MASK                    (R_INTC_EVTSEL0_EC_SEL0_Msk)
-#define BSP_FEATURE_ELC_EVENT_SELECT1_MASK                    (R_INTC_EVTSEL0_EC_SEL1_Msk)
-#define BSP_FEATURE_ELC_EVENT_SELECT2_MASK                    (R_INTC_EVTSEL0_EC_SEL2_Msk)
-#define BSP_FEATURE_ELC_EVENT_SELECT0_POSITION                (R_INTC_EVTSEL0_EC_SEL0_Pos)
-#define BSP_FEATURE_ELC_EVENT_SELECT1_POSITION                (R_INTC_EVTSEL0_EC_SEL1_Pos)
-#define BSP_FEATURE_ELC_EVENT_SELECT2_POSITION                (R_INTC_EVTSEL0_EC_SEL2_Pos)
-#define BSP_FEATURE_ELC_EVENT_SELECT_REG                      (&R_INTC->EVTSEL0)
-#define BSP_FEATURE_ELC_PERIPHERAL_0_MASK                     (0xFFFFFFFFU) // ELC event source no.0 to 31 available on this MPU
-#define BSP_FEATURE_ELC_PERIPHERAL_1_MASK                     (0x000007FFU) // ELC event source no.32 to 63 available on this MPU.
-#define BSP_FEATURE_ELC_PERIPHERAL_2_MASK                     (0x00000000U) // ELC event source no.64 to 95 available on this MPU.
-#define BSP_FEATURE_ELC_PERIPHERAL_3_MASK                     (0x00000000U) // ELC event source no.96 to 127 available on this MPU.
-#define BSP_FEATURE_ELC_SOFTWARE_EVENT_MASK                   (R_INTC_SWEVT_SWE0_Msk)
-#define BSP_FEATURE_ELC_SOFTWARE_EVENT_REG                    (&R_INTC->SWEVT)
 
 /* GPT-Related Definitions */
 #define BSP_FEATURE_GPT_VALID_CHANNEL_MASK                    (0xFFFFU)
@@ -151,6 +137,8 @@
 #define BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK                (0U)
 #define BSP_FEATURE_GPT_32BIT_CHANNEL_MASK                    (0xFFFFU)
 #define BSP_FEATURE_GPT_CLOCK_SOURCE                          (FSP_PRIV_CLOCK_P4CLK)
+#define BSP_FEATURE_GPT_STATUS_REGISTER                       GTST
+#define BSP_FEATURE_GPT_OUTPUT_DISABLE_REQUEST_STATUS_MASK    (R_GPT0_GTST_OABLF_Msk | R_GPT0_GTST_OABHF_Msk)
 
 /* GTM-Related Definitions */
 #define BSP_FEATURE_GTM_MAX_CHANNEL                           (8U)
@@ -179,10 +167,8 @@
 
 /* INTC-Related Definitions */
 #define BSP_FEATURE_INTC_IRQ_VALID_CHANNEL_MASK               (0xFFFFU)
-#define BSP_FEATURE_INTC_IRQ_HAS_ISCTR_ISCLR                  (1U)
 #define BSP_FEATURE_INTC_TINT_VALID_CHANNEL_MASK              (0xFFFFFFFFU)
-#define BSP_FEATURE_INTC_TINT_HAS_TSCTR_TSCLR                 (1U)
-#define BSP_FEATURE_INTC_NMI_HAS_NSCTR_NSCLR                  (1U)
+#define BSP_FEATURE_INTC_BASE_ADDR                            (R_INTC)
 #define BSP_FEATURE_INTC_SEL_REG                              (&R_INTC->INTM33SEL0)
 
 /* IOPORT-Related Definitions */
@@ -220,11 +206,9 @@
 
 /* MHU-Related Definitions */
 #define BSP_FEATURE_MHU_B_NS_VALID_CHANNEL_MASK               (0x000820820820U)
-#define BSP_FEATURE_MHU_B_NS_RSP_VALID_CHANNEL_MASK           (0x000820820820U)
 #define BSP_FEATURE_MHU_B_NS_SWINT_GET_VALID_CHANNEL_MASK     (0x00210924U)
 #define BSP_FEATURE_MHU_B_NS_SWINT_SET_VALID_CHANNEL_MASK     (0x0FC00000U)
 #define BSP_FEATURE_MHU_B_S_VALID_CHANNEL_MASK                (0x000820820820U)
-#define BSP_FEATURE_MHU_B_S_RSP_VALID_CHANNEL_MASK            (0x000820820820U)
 #define BSP_FEATURE_MHU_B_TX_COMPLETE_DELAY()    (vTaskDelay(0))
 
 /* PDM-Related Definitions */
@@ -261,15 +245,13 @@
 #define BSP_FEATURE_TZ_HAS_TRUSTZONE                          (1U)
 
 /* TSU_B-Related Definitions */
-#define BSP_FEATURE_TSU_B_UNIT_0_LOW_TEMPERATURE_REGISTER     (&R_SYSC->SYS_LSI_OTPTSU0TRMVAL0)
-#define BSP_FEATURE_TSU_B_UNIT_0_HIGH_TEMPERATURE_REGISTER    (&R_SYSC->SYS_LSI_OTPTSU0TRMVAL1)
-#define BSP_FEATURE_TSU_B_UNIT_1_LOW_TEMPERATURE_REGISTER     (&R_SYSC->SYS_LSI_OTPTSU1TRMVAL0)
-#define BSP_FEATURE_TSU_B_UNIT_1_HIGH_TEMPERATURE_REGISTER    (&R_SYSC->SYS_LSI_OTPTSU1TRMVAL1)
 #define BSP_FEATURE_TSU_B_LOW_TEMPERATURE                     (-41.0F)
 #define BSP_FEATURE_TSU_B_HIGH_TEMPERATURE                    (126.0F)
-#define BSP_FEATURE_TSU_B_CALIBRAION_DATA_MASK                (0xFFFU)
 #define BSP_FEATURE_TSU_B_CALIBRAION_DATA_CHECK_ENABLE        (1)
 #define BSP_FEATURE_TSU_B_CALIBRAION_DATA_INVALID             (0U)
+#define BSP_FEATURE_TSU_B_ELC_TRIGGER_SUPPORTED               (1)
+#define BSP_FEATURE_TSU_B_CONTINUOUS_MODE_SUPPORTED           (0)
+#define BSP_FEATURE_TSU_B_MAX_UNIT                            (2)
 
 /* XSPI-Related Definitions */
 #define BSP_FEATURE_XSPI_CHANNELS                             (0x01U)

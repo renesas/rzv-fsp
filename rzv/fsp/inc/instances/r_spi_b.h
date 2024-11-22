@@ -131,6 +131,9 @@ typedef struct st_spi_b_extended_cfg
     spi_b_delay_count_t            ssl_negation_delay;                    ///< SPI Slave Select Negation Delay Register Setting
     spi_b_delay_count_t            next_access_delay;                     ///< SPI Next-Access Delay Register Setting
     spi_b_ssl_level_keep_t         ssl_level_keep;                        ///< Select SSL signal level keep mode
+    uint8_t                        transmit_fifo_threshold;               ///< Transmit FIFO threshold (0~15)
+    uint8_t                        receive_fifo_threshold;                ///< Receive FIFO threshold  (0~15)
+    uint8_t                        receive_data_ready_detect_adjustment;  ///< Receive data ready detect timing (0~255 counts of operation clock)
 } spi_b_extended_cfg_t;
 
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref spi_api_t::open is called. */

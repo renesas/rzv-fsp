@@ -24,10 +24,10 @@ FSP_HEADER
 /* Leading zeroes removed to avoid coding standards violation. */
 
 /** Maximum number of clock counts in 32 bit timer. */
-#define GTM_MAX_CLOCK_COUNTS      (UINT32_MAX)
+#define GTM_MAX_CLOCK_COUNTS    (UINT32_MAX)
 
 /** Maximum period value allowed for GTM. */
-#define GTM_MAX_PERIOD            ((uint64_t) UINT32_MAX + 1ULL)
+#define GTM_MAX_PERIOD          ((uint64_t) UINT32_MAX + 1ULL)
 
 /*******************************************************************************************************************//**
  * @addtogroup GTM
@@ -97,6 +97,9 @@ fsp_err_t R_GTM_CallbackSet(timer_ctrl_t * const          p_api_ctrl,
                             void (                      * p_callback)(timer_callback_args_t * p_arg),
                             void const * const            p_context,
                             timer_callback_args_t * const p_callback_memory);
+fsp_err_t R_GTM_CompareMatchSet(timer_ctrl_t * const        p_ctrl,
+                                uint32_t const              compare_match_value,
+                                timer_compare_match_t const match_channel);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup GTM)

@@ -81,10 +81,10 @@ typedef enum e_gpt_source
     /** Action performed on GTETRGC falling edge. **/
     GPT_SOURCE_GTETRGC_FALLING = (1U << 5),
 
-    /** Action performed on GTETRGB rising edge. **/
+    /** Action performed on GTETRGD rising edge. **/
     GPT_SOURCE_GTETRGD_RISING = (1U << 6),
 
-    /** Action performed on GTETRGB falling edge. **/
+    /** Action performed on GTETRGD falling edge. **/
     GPT_SOURCE_GTETRGD_FALLING = (1U << 7),
 
     /** Action performed when GTIOCA input rises while GTIOCB is low. **/
@@ -279,13 +279,6 @@ typedef enum e_gpt_interrupt_skip_adc
     GPT_INTERRUPT_SKIP_ADC_A_AND_B = 5U, ///< Skip ADC A and B events
 } gpt_interrupt_skip_adc_t;
 
-/** Buffering mode */
-typedef enum e_gpt_buffer_mode
-{
-    GPT_BUFFER_MODE_SINGLE = 1,        ///< Single-buffer mode
-    GPT_BUFFER_MODE_DOUBLE = 2         ///< Double-buffer mode
-} gpt_buffer_mode_t;
-
 /** Delay setting for the PWM Delay Generation Circuit (PDG). */
 typedef enum e_gpt_pwm_output_delay_setting
 {
@@ -395,6 +388,10 @@ typedef struct st_gpt_extended_cfg
     IRQn_Type capture_a_irq;                      ///< Capture A interrupt
     IRQn_Type capture_b_irq;                      ///< Capture B interrupt
     IRQn_Type dead_time_irq;                      ///< Dead time error interrupt
+
+    uint32_t compare_match_value[2];              ///< Storing compare match value for channels
+    uint8_t  compare_match_status;                ///< Storing the compare match register status
+
     gpt_extended_pwm_cfg_t const * p_pwm_cfg;     ///< Advanced PWM features, optional
     gpt_gtior_setting_t            gtior_setting; ///< Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins.
 } gpt_extended_cfg_t;
@@ -437,7 +434,10 @@ fsp_err_t R_GPT_CallbackSet(timer_ctrl_t * const          p_api_ctrl,
                             void const * const            p_context,
                             timer_callback_args_t * const p_callback_memory);
 fsp_err_t R_GPT_Close(timer_ctrl_t * const p_ctrl);
-fsp_err_t R_GPT_PwmOutputDelayInitialize();
+fsp_err_t R_GPT_PwmOutputDelayInitialize(void);
+fsp_err_t R_GPT_CompareMatchSet(timer_ctrl_t * const        p_ctrl,
+                                uint32_t const              compare_match_value,
+                                timer_compare_match_t const match_channel);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup GPT)

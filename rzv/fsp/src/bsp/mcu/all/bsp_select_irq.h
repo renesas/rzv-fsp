@@ -4,12 +4,6 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/**********************************************************************************************************************
- * File Name    : bsp_select_irq.h
- * Version      : 1.00
- * Description  : bsp_select_irq header
- *********************************************************************************************************************/
-
 #ifndef BSP_SELECT_IRQ_H
 #define BSP_SELECT_IRQ_H
 

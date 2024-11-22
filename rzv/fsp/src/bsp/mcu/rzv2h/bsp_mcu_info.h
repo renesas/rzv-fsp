@@ -26,6 +26,7 @@
 #include "bsp_mhu_b.h"
 #include "bsp_crc_snoop.h"
 #include "bsp_wdt.h"
+#include "bsp_tsu_b.h"
 #if defined(BSP_SUPPORT_CORE_CM33)
  #include "cm/bsp_feature.h"
  #include "cm/bsp_irq_id.h"

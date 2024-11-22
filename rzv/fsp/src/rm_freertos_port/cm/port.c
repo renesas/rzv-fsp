@@ -345,11 +345,6 @@ void SysTick_Handler(timer_callback_args_t * p_args) PRIVILEGED_FUNCTION;
 portDONT_DISCARD void vPortSVCHandler_C(uint32_t * pulCallerStackAddress) PRIVILEGED_FUNCTION;
 
 /**
- * @brief Idle Hook
- */
-void vApplicationIdleHook(void);
-
-/**
  * @brief IRQ Wake Up
  */
 IRQn_Type vPortGetWakeUpIrq(void);

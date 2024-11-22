@@ -28,14 +28,6 @@
 
 #define ADC_E_PRV_ADCSR_ADST_TRGE_MASK     (R_ADC_E_ADCSR_ADST_Msk | R_ADC_E_ADCSR_TRGE_Msk)
 #define ADC_E_PRV_ADCSR_CLEAR_ADST_TRGE    (~ADC_E_PRV_ADCSR_ADST_TRGE_MASK)
-#define ADC_E_PRV_EVTSEL_BIT_PER_REG       (3U)
-#define ADC_E_PRV_DISABLE_ELC_FUNCTION     (0x3FF)
-#define ADC_E_PRV_EVTSEL_BIT_LENGTH        (10U)
-
-static uint32_t volatile const gs_adc_event_output_num[] =
-{
-    [0] = (uint32_t) BSP_FEATURE_ADC_E_UNIT_0_EVENT_OUTPUT_NUM,
-};
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -62,14 +54,14 @@ static fsp_err_t r_adc_e_scan_cfg_check(adc_e_instance_ctrl_t * const     p_inst
 
 static void r_adc_e_scan_cfg(adc_e_instance_ctrl_t * const     p_instance_ctrl,
                              adc_e_channel_cfg_t const * const p_channel_cfg);
-void           adc_e_scan_end_b_isr(void);
-void           adc_e_scan_end_c_isr(void);
-void           adc_e_scan_end_isr(void);
-void           adc_e_window_compare_isr(void);
-static void    r_adc_e_irq_enable(IRQn_Type irq, uint8_t ipl, void * p_context);
-static void    r_adc_e_irq_disable(IRQn_Type irq);
-static int32_t r_adc_e_lowest_channel_get(uint32_t adc_mask);
-static void    r_adc_e_scan_end_common_isr(adc_event_t event);
+void            adc_e_scan_end_b_isr(void);
+void            adc_e_scan_end_c_isr(void);
+void            adc_e_scan_end_isr(void);
+void            adc_e_window_compare_isr(void);
+static void     r_adc_e_irq_enable(IRQn_Type irq, uint8_t ipl, void * p_context);
+static void     r_adc_e_irq_disable(IRQn_Type irq);
+static uint32_t r_adc_e_lowest_channel_get(uint32_t adc_mask);
+static void     r_adc_e_scan_end_common_isr(adc_event_t event);
 
 #if ADC_E_CFG_PARAM_CHECKING_ENABLE
 
@@ -79,6 +71,18 @@ static const uint32_t g_adc_valid_channels[] =
     BSP_FEATURE_ADC_E_UNIT_0_CHANNELS,
 };
 #endif
+
+/* ADC_E base address */
+static const uint32_t volatile * p_adc_e_base_address[BSP_FEATURE_ADC_E_MAX_UNIT] =
+{
+    (uint32_t *) R_ADC_E0,
+#if BSP_FEATURE_ADC_E_MAX_UNIT > 1
+    (uint32_t *) R_ADC_E1,
+ #if BSP_FEATURE_ADC_E_MAX_UNIT > 2
+    (uint32_t *) R_ADC_E2,
+ #endif
+#endif
+};
 
 /***********************************************************************************************************************
  * Global Variables
@@ -165,7 +169,7 @@ fsp_err_t R_ADC_E_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
     p_instance_ctrl->p_callback        = p_cfg->p_callback;
     p_instance_ctrl->p_context         = p_cfg->p_context;
     p_instance_ctrl->p_callback_memory = NULL;
-    p_instance_ctrl->p_reg             = R_ADC_E;
+    p_instance_ctrl->p_reg             = (R_ADC_E0_Type *) p_adc_e_base_address[p_cfg->unit];
 
     /* Initialize the hardware based on the configuration. */
     r_adc_e_open_sub(p_instance_ctrl, p_cfg);
@@ -212,14 +216,6 @@ fsp_err_t R_ADC_E_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_channel_cfg
 
     /* Configure the hardware based on the configuration */
     r_adc_e_scan_cfg(p_instance_ctrl, p_adc_channel_cfg);
-
-    if (ADC_TRIGGER_SOFTWARE != p_instance_ctrl->p_cfg->trigger)
-    {
-        /* Set the interrupt priorities. */
-        r_adc_e_irq_enable(p_instance_ctrl->p_cfg->scan_end_irq, p_instance_ctrl->p_cfg->scan_end_ipl, p_instance_ctrl);
-        r_adc_e_irq_enable(p_instance_ctrl->p_cfg->scan_end_b_irq, p_instance_ctrl->p_cfg->scan_end_b_ipl, p_instance_ctrl);
-        r_adc_e_irq_enable(p_instance_ctrl->p_cfg->scan_end_c_irq, p_instance_ctrl->p_cfg->scan_end_c_ipl, p_instance_ctrl);
-    }
 
     /* Save the scan mask locally; this is required for the infoGet function. */
     p_instance_ctrl->scan_mask = p_adc_channel_cfg->scan_mask;
@@ -290,6 +286,13 @@ fsp_err_t R_ADC_E_ScanStart (adc_ctrl_t * p_ctrl)
 #endif
 
     /* Enable hardware trigger or start software scan depending on mode. */
+    p_instance_ctrl->p_reg->ADSTRGR = p_instance_ctrl->scan_start_adstrgr;
+
+    adc_e_extended_cfg_t * p_extend = (adc_e_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    if (true == p_extend->adc_start_trigger_c_enabled)
+    {
+        p_instance_ctrl->p_reg->ADGCTRGR = p_instance_ctrl->scan_start_adgctrgr;
+    }
     p_instance_ctrl->p_reg->ADCSR = p_instance_ctrl->scan_start_adcsr;
 
     return FSP_SUCCESS;
@@ -474,11 +477,11 @@ fsp_err_t R_ADC_E_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
     /* If at least one channel is configured, determine the highest and lowest configured channels. */
     if (adc_mask != 0U)
     {
-        int32_t lowest_channel = r_adc_e_lowest_channel_get(adc_mask);
-        p_adc_info->p_address = (uint32_t *) (&p_instance_ctrl->p_reg->ADDR0 + lowest_channel);
+        uint32_t lowest_channel = r_adc_e_lowest_channel_get(adc_mask);
+        p_adc_info->p_address   = (uint32_t *) (&p_instance_ctrl->p_reg->ADDR0 + lowest_channel);
 
         /* Determine the highest channel that is configured. */
-        int32_t highest_channel = 31 - __CLZ(adc_mask);
+        uint32_t highest_channel = 31 - __CLZ(adc_mask);
 
         /* Determine the size of data that must be read to read all the channels between and including the
          * highest and lowest channels.*/
@@ -520,19 +523,20 @@ fsp_err_t R_ADC_E_Close (adc_ctrl_t * p_ctrl)
 
     /* Disable interrupts. */
     adc_e_extended_cfg_t * p_extend = (adc_e_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    r_adc_e_irq_disable(p_instance_ctrl->p_cfg->scan_end_irq);
+    r_adc_e_irq_disable(p_instance_ctrl->p_cfg->scan_end_b_irq);
+    r_adc_e_irq_disable(p_instance_ctrl->p_cfg->scan_end_c_irq);
     r_adc_e_irq_disable(p_extend->window_a_irq);
     r_adc_e_irq_disable(p_extend->window_b_irq);
-    p_instance_ctrl->p_reg->ADCSR_b.ADIE = 0U;
-    p_instance_ctrl->p_reg->ADCSR_b.GBADIE = 0U;
-    p_instance_ctrl->p_reg->ADGCTRGR_b.GCADIE = 0U;
-    p_instance_ctrl->p_reg->ADCMPCR_b.CMPAIE = 0U;
-    p_instance_ctrl->p_reg->ADCMPCR_b.CMPBIE = 0U;
-
 
     /* Stop the ADC. */
     p_instance_ctrl->p_reg->ADCSR = 0U;
 
+#if !(BSP_FEATURE_ADC_E_MAX_UNIT > 1)
+
+    /* If the ADC does not have multiple units, turn off the power to the A/D converter. */
     R_SYSC->SYS_ADC_CFG = 1;
+#endif
 
     R_BSP_MODULE_STOP(FSP_IP_ADC, 0);
 
@@ -714,18 +718,22 @@ static void r_adc_e_open_sub (adc_e_instance_ctrl_t * const p_instance_ctrl, adc
     /* Set the predetermined values for ADCSR, ADSTRGR, ADGCTRGR, ADCER, and ADADC without setting ADCSR.ADST or ADCSR.TRGE.
      * ADCSR.ADST or ADCSR.TRGE are set as configured in R_ADC_ScanStart. */
     p_instance_ctrl->p_reg->ADCSR   = (uint16_t) (adcsr & ADC_E_PRV_ADCSR_CLEAR_ADST_TRGE);
-    p_instance_ctrl->p_reg->ADSTRGR = (uint16_t) ((p_cfg_extend->adc_start_trigger_a << R_ADC_E_ADSTRGR_TRSA_Pos) |
-                                                  (p_cfg_extend->adc_start_trigger_b << R_ADC_E_ADSTRGR_TRSB_Pos));
+    uint16_t adstrgr = (uint16_t) (((uint16_t)p_cfg_extend->adc_start_trigger_a << R_ADC_E_ADSTRGR_TRSA_Pos) |
+                                   ((uint16_t)p_cfg_extend->adc_start_trigger_b << R_ADC_E_ADSTRGR_TRSB_Pos));
+    p_instance_ctrl->p_reg->ADSTRGR = adstrgr;
+    p_instance_ctrl->scan_start_adstrgr = adstrgr;
     p_instance_ctrl->p_reg->ADCER   = adcer;
     p_instance_ctrl->p_reg->ADADC   = adadc;
     p_instance_ctrl->p_reg->ADELCCR = (uint8_t) p_cfg_extend->adc_elc_ctrl;
 
     if (true == p_cfg_extend->adc_start_trigger_c_enabled)
     {
-        p_instance_ctrl->p_reg->ADGCTRGR =
-            (uint8_t) ((p_cfg_extend->adc_start_trigger_c << R_ADC_E_ADGCTRGR_TRSC_Pos) |
+        uint8_t adgctrgr =
+             ((uint8_t) p_cfg_extend->adc_start_trigger_c) << R_ADC_E_ADGCTRGR_TRSC_Pos |
                        (uint8_t) (R_ADC_E_ADGCTRGR_GCADIE_Msk |
-                                  R_ADC_E_ADGCTRGR_GRCE_Msk));
+                                  R_ADC_E_ADGCTRGR_GRCE_Msk);
+        p_instance_ctrl->p_reg->ADGCTRGR = adgctrgr;
+        p_instance_ctrl->scan_start_adgctrgr = adgctrgr;
     }
 }
 
@@ -737,11 +745,6 @@ static void r_adc_e_open_sub (adc_e_instance_ctrl_t * const p_instance_ctrl, adc
 static void r_adc_e_stop_sub (adc_e_instance_ctrl_t * const p_instance_ctrl)
 {
     adc_e_extended_cfg_t * p_extend = (adc_e_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
- 
-    volatile uint32_t * p_reg = BSP_FEATURE_ELC_EVENT_SELECT_REG;
-    uint32_t register_num     = gs_adc_event_output_num[p_instance_ctrl->p_cfg->unit] / ADC_E_PRV_EVTSEL_BIT_PER_REG;
-    uint32_t bit_num          = gs_adc_event_output_num[p_instance_ctrl->p_cfg->unit] % ADC_E_PRV_EVTSEL_BIT_PER_REG;
-    uint32_t bit_pos          = ADC_E_PRV_EVTSEL_BIT_LENGTH * bit_num;
 
     p_instance_ctrl->p_reg->ADGSPCR_b.PGS = 0;
 
@@ -752,13 +755,14 @@ static void r_adc_e_stop_sub (adc_e_instance_ctrl_t * const p_instance_ctrl)
         if (true == p_extend->adc_start_trigger_c_enabled)
         {
             p_instance_ctrl->p_reg->ADGCTRGR_b.TRSC = R_ADC_E_ADGCTRGR_TRSC_Msk;
-            r_adc_e_irq_disable(p_instance_ctrl->p_cfg->scan_end_c_irq);
+            p_instance_ctrl->p_reg->ADGCTRGR_b.GCADIE = 0U;
+            p_instance_ctrl->p_reg->ADGCTRGR_b.GRCE = 0U;
         }
         else
         {
             /* Do nothing. */
         }
-        r_adc_e_irq_disable(p_instance_ctrl->p_cfg->scan_end_b_irq);
+        p_instance_ctrl->p_reg->ADCSR_b.GBADIE = 0U;
     }
     else
     {
@@ -766,16 +770,7 @@ static void r_adc_e_stop_sub (adc_e_instance_ctrl_t * const p_instance_ctrl)
     }
 
     /* Disable interrupts. */
-    r_adc_e_irq_disable(p_instance_ctrl->p_cfg->scan_end_irq);
-
-    /* Clear the ADC related event link register to break the link */
-    FSP_CRITICAL_SECTION_DEFINE;
-    FSP_CRITICAL_SECTION_ENTER;
-
-    p_reg[register_num] &= (uint32_t) (~(ADC_E_PRV_DISABLE_ELC_FUNCTION << bit_pos));
-    p_reg[register_num] |= (uint32_t) ADC_E_PRV_DISABLE_ELC_FUNCTION << bit_pos;
- 
-    FSP_CRITICAL_SECTION_EXIT;
+    p_instance_ctrl->p_reg->ADCSR_b.ADIE = 0U;
 }
 
 #if ADC_E_CFG_PARAM_CHECKING_ENABLE
@@ -845,17 +840,11 @@ static fsp_err_t r_adc_e_scan_cfg_check (adc_e_instance_ctrl_t * const     p_ins
         FSP_ASSERT((0U != p_channel_cfg->scan_mask_group_b) &&
                    (0U == (p_channel_cfg->scan_mask_group_b & (~valid_channels))));
 
-        /* Cannot have the same channel in both groups. */
-        FSP_ASSERT(0 == (p_channel_cfg->scan_mask & p_channel_cfg->scan_mask_group_b));
-
         if (true == p_cfg_extend->adc_start_trigger_c_enabled)
         {
             /* Verify at least one channel is selected for group C. */
             FSP_ASSERT((0U != p_channel_cfg->scan_mask_group_c) &&
                        (0U == (p_channel_cfg->scan_mask_group_c & (~valid_channels))));
-
-            /* Cannot have the same channel in both groups. */
-            FSP_ASSERT(0 == (p_channel_cfg->scan_mask & p_channel_cfg->scan_mask_group_c));
         }
     }
     else
@@ -999,7 +988,7 @@ static void r_adc_e_irq_disable (IRQn_Type irq)
  *
  * @retval  adc_mask_count  index value of lowest channel
  **********************************************************************************************************************/
-static int32_t r_adc_e_lowest_channel_get (uint32_t adc_mask)
+static uint32_t r_adc_e_lowest_channel_get (uint32_t adc_mask)
 {
     /* Initialize the mask result */
     uint32_t adc_mask_result = 0U;
@@ -1011,7 +1000,7 @@ static int32_t r_adc_e_lowest_channel_get (uint32_t adc_mask)
         adc_mask_result = (uint32_t) (adc_mask & (1U << adc_mask_count));
     }
 
-    return adc_mask_count;
+    return (uint32_t) adc_mask_count;
 }
 
 /*******************************************************************************************************************//**
@@ -1150,7 +1139,7 @@ void adc_e_window_compare_isr (void)
     {
         args.channel = (adc_channel_t) 0;
 
-        R_ADC_E_Type * p_reg = p_instance_ctrl->p_reg;
+        R_ADC_E0_Type * p_reg = p_instance_ctrl->p_reg;
 
         /* Get Window A status registers */
         uint16_t adcmpsr0 = p_reg->ADCMPSR0;

@@ -4,8 +4,6 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/** @} (end addtogroup BSP_MCU) */
-
 #ifndef BSP_CACHE_H
 #define BSP_CACHE_H
 

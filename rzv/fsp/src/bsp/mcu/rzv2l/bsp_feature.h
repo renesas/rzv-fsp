@@ -73,6 +73,7 @@
 #define BSP_FEATURE_CANFD_TXMB_CHANNEL_OFFSET                  (16U)
 #define BSP_FEATURE_CANFD_RXMB_MAX                             (32U)
 #define BSP_FEATURE_CANFD_ERROR_GLOBAL_CH0_ECC_REG_POS         (28U)
+#define BSP_FEATURE_CANFD_NUM_COMMON_FIFOS                     (6U)
 
 /* CPG-Related Definitions */
 #define BSP_FEATURE_CPG_HAS_ICLK                               (1U)
@@ -111,6 +112,9 @@
 #define BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK                 (0U)
 #define BSP_FEATURE_GPT_32BIT_CHANNEL_MASK                     (0xFFU)
 #define BSP_FEATURE_GPT_CLOCK_SOURCE                           (FSP_PRIV_CLOCK_P0CLK)
+#define BSP_FEATURE_GPT_STATUS_REGISTER                        GTST
+#define BSP_FEATURE_GPT_OUTPUT_DISABLE_REQUEST_STATUS_MASK     (R_GPT0_GTST_OABLF_Msk | R_GPT0_GTST_OABHF_Msk | \
+                                                                R_GPT0_GTST_DTEF_Msk)
 
 /* GTM-Related Definitions */
 #define BSP_FEATURE_GTM_MAX_CHANNEL                            (3U)
@@ -124,9 +128,7 @@
 
 /* INTC-Related Definitions */
 #define BSP_FEATURE_INTC_IRQ_VALID_CHANNEL_MASK                (0xFFU)
-#define BSP_FEATURE_INTC_IRQ_HAS_ISCTR_ISCLR                   (0U)
-#define BSP_FEATURE_INTC_TINT_HAS_TSCTR_TSCLR                  (0U)
-#define BSP_FEATURE_INTC_NMI_HAS_NSCTR_NSCLR                   (0U)
+#define BSP_FEATURE_INTC_BASE_ADDR                             (R_INTC_IM33)
 
 /* IOPORT-Related Definitions */
 #define BSP_FEATURE_IOPORT_PORT_GROUP_NUM                      (0U)

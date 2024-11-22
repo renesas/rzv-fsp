@@ -991,7 +991,7 @@ void cmtw_oc0_int_isr (void)
     /* Invoke the callback function if it is set. */
     if (NULL != p_instance_ctrl->p_callback)
     {
-        r_cmtw_call_callback(p_instance_ctrl, TIMER_EVENT_OUTPUT_COMPARE_0, 0);
+        r_cmtw_call_callback(p_instance_ctrl, TIMER_EVENT_COMPARE_A, 0);
     }
 
     /* Restore context if RTOS is used */
@@ -1025,7 +1025,7 @@ void cmtw_oc1_int_isr (void)
     /* Invoke the callback function if it is set. */
     if (NULL != p_instance_ctrl->p_callback)
     {
-        r_cmtw_call_callback(p_instance_ctrl, TIMER_EVENT_OUTPUT_COMPARE_1, 0);
+        r_cmtw_call_callback(p_instance_ctrl, TIMER_EVENT_COMPARE_B, 0);
     }
 
     /* Restore context if RTOS is used */

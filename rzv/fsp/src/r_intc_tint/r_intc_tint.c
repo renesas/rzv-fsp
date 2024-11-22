@@ -27,11 +27,7 @@
 #define INTC_TINT_TSSR_TIEN_MASK           (1U)
 #define INTC_TINT_TSSR_TIEN_WIDTH          (7U)
 
-#if BSP_FEATURE_INTC_TINT_HAS_TSCTR_TSCLR
- #define INTC_TINT_TSCLR_TCLR_MASK         (1U)
-#else
- #define INTC_TINT_TSCR_TSTAT_MASK         (1U)
-#endif
+#define INTC_TINT_CLR_REG_MASK             (1U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -120,38 +116,24 @@ fsp_err_t R_INTC_TINT_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, e
 
     /* Set the trigger. */
     uint32_t channel_titsr = p_ctrl->channel % INTC_TINT_TITSR_TITSEL_NUMBER;
-#if BSP_FEATURE_INTC_TINT_HAS_TSCTR_TSCLR
-    uint32_t titsr = *(&R_INTC->TITSR0 + p_ctrl->channel / INTC_TINT_TITSR_TITSEL_NUMBER);
-#else
-    uint32_t titsr = *(&R_INTC_IM33->TITSR0 + p_ctrl->channel / INTC_TINT_TITSR_TITSEL_NUMBER);
-#endif
+    uint32_t titsr         = *(&BSP_FEATURE_INTC_BASE_ADDR->TITSR0 + p_ctrl->channel / INTC_TINT_TITSR_TITSEL_NUMBER);
+
     titsr &= ~(INTC_TINT_TITSR_TITSEL_MASK << (channel_titsr * INTC_TINT_TITSR_TITSEL_WIDTH));
     titsr |= (uint32_t) (p_extend->tint_trigger << (channel_titsr * INTC_TINT_TITSR_TITSEL_WIDTH));
 
-#if BSP_FEATURE_INTC_TINT_HAS_TSCTR_TSCLR
-    *(&R_INTC->TITSR0 + p_ctrl->channel / INTC_TINT_TITSR_TITSEL_NUMBER) = titsr;
-#else
-    *(&R_INTC_IM33->TITSR0 + p_ctrl->channel / INTC_TINT_TITSR_TITSEL_NUMBER) = titsr;
-#endif
+    *(&BSP_FEATURE_INTC_BASE_ADDR->TITSR0 + p_ctrl->channel / INTC_TINT_TITSR_TITSEL_NUMBER) = titsr;
 
     /* Set the source of TINT and enable the TINT. */
     uint32_t channel_tssr = p_ctrl->channel % INTC_TINT_TSSR_TSSEL_NUMBER;
-#if BSP_FEATURE_INTC_TINT_HAS_TSCTR_TSCLR
-    uint32_t tssr = *(&R_INTC->TSSR0 + p_ctrl->channel / INTC_TINT_TSSR_TSSEL_NUMBER);
-#else
-    uint32_t tssr = *(&R_INTC_IM33->TSSR0 + p_ctrl->channel / INTC_TINT_TSSR_TSSEL_NUMBER);
-#endif
+    uint32_t tssr         = *(&BSP_FEATURE_INTC_BASE_ADDR->TSSR0 + p_ctrl->channel / INTC_TINT_TSSR_TSSEL_NUMBER);
+
     tssr &= ~(INTC_TINT_TSSR_TSSEL_TIEN_MASK << (channel_tssr * INTC_TINT_TSSR_TSSEL_TIEN_WIDTH));
     tssr |= (uint32_t) (p_extend->gpioint << (channel_tssr * INTC_TINT_TSSR_TSSEL_TIEN_WIDTH));
     tssr |=
         (uint32_t) (INTC_TINT_TSSR_TIEN_MASK <<
                     (channel_tssr * INTC_TINT_TSSR_TSSEL_TIEN_WIDTH + INTC_TINT_TSSR_TIEN_WIDTH));
 
-#if BSP_FEATURE_INTC_TINT_HAS_TSCTR_TSCLR
-    *(&R_INTC->TSSR0 + p_ctrl->channel / INTC_TINT_TSSR_TSSEL_NUMBER) = tssr;
-#else
-    *(&R_INTC_IM33->TSSR0 + p_ctrl->channel / INTC_TINT_TSSR_TSSEL_NUMBER) = tssr;
-#endif
+    *(&BSP_FEATURE_INTC_BASE_ADDR->TSSR0 + p_ctrl->channel / INTC_TINT_TSSR_TSSEL_NUMBER) = tssr;
 
     if ((INTC_TINT_TRIGGER_LEVEL_HIGH == p_extend->tint_trigger) ||
         (INTC_TINT_TRIGGER_LEVEL_LOW == p_extend->tint_trigger))
@@ -160,34 +142,9 @@ fsp_err_t R_INTC_TINT_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, e
     }
     else
     {
-#if BSP_FEATURE_INTC_TINT_HAS_TSCTR_TSCLR
-
-        /* Dummy read the TSCTR register before clearing the TCLR bit of the TSCLR register. */
-        volatile uint32_t tsctr = R_INTC->TSCTR;
-        FSP_PARAMETER_NOT_USED(tsctr);
-
-        /* Clear the TCLR bit of the TSCLR register after changing the trigger setting to the edge type. */
-        R_INTC->TSCLR = INTC_TINT_TSCLR_TCLR_MASK << p_ctrl->channel;
-
-        /* Dummy read the TSCTR register to prevent the interrupt cause that have been cleared from being
-         * accidentally accepted. */
-        tsctr = R_INTC->TSCTR;
-        FSP_PARAMETER_NOT_USED(tsctr);
-#else
-
-        /* Dummy read the TSCR before clearing the TSTAT bit. */
-        volatile uint32_t tscr = R_INTC_IM33->TSCR;
-        FSP_PARAMETER_NOT_USED(tscr);
-
-        /* Clear the TSTAT bit after changing the trigger setting to the edge type.
+        /* Clear the TINT state flag after changing the trigger setting to the edge type.
          * Reference section "Precaution when Changing Interrupt Settings" of the user's manual. */
-        R_INTC_IM33->TSCR = ~(INTC_TINT_TSCR_TSTAT_MASK << p_ctrl->channel);
-
-        /* Dummy read the TSCR to prevent the interrupt cause that have been cleared from being accidentally accepted.
-         * Reference section "Clear Timing of Interrupt Cause" of the user's manual. */
-        tscr = R_INTC_IM33->TSCR;
-        FSP_PARAMETER_NOT_USED(tscr);
-#endif
+        BSP_INTC_TINT_CLR_STATE_FLAG(p_ctrl->channel);
     }
 
     if (p_ctrl->irq >= 0)
@@ -349,11 +306,9 @@ void r_intc_tint_isr (void)
 
     /* Retrieve the trigger setting. */
     uint32_t channel_titsr = p_ctrl->channel % INTC_TINT_TITSR_TITSEL_NUMBER;
-#if BSP_FEATURE_INTC_TINT_HAS_TSCTR_TSCLR
-    uint32_t titsr = *(&R_INTC->TITSR0 + p_ctrl->channel / INTC_TINT_TITSR_TITSEL_NUMBER);
-#else
-    uint32_t titsr = *(&R_INTC_IM33->TITSR0 + p_ctrl->channel / INTC_TINT_TITSR_TITSEL_NUMBER);
-#endif
+    uint32_t titsr         =
+        *(&BSP_FEATURE_INTC_BASE_ADDR->TITSR0 + p_ctrl->channel / INTC_TINT_TITSR_TITSEL_NUMBER);
+
     titsr  &= (INTC_TINT_TITSR_TITSEL_MASK << (channel_titsr * INTC_TINT_TITSR_TITSEL_WIDTH));
     titsr >>= (channel_titsr * INTC_TINT_TITSR_TITSEL_WIDTH);
 
@@ -363,35 +318,9 @@ void r_intc_tint_isr (void)
     }
     else
     {
-#if BSP_FEATURE_INTC_TINT_HAS_TSCTR_TSCLR
-
-        /* Dummy read the TSCTR register before clearing the TCLR bit of the TSCLR register. */
-        volatile uint32_t tsctr = R_INTC->TSCTR;
-        FSP_PARAMETER_NOT_USED(tsctr);
-
-        /* Clear the TCLR bit before calling the user callback so that if an edge is detected while the ISR is active
+        /* Clear the TINT state flag before calling the user callback so that if an edge is detected while the ISR is active
          * it will not be missed. */
-        R_INTC->TSCLR = INTC_TINT_TSCLR_TCLR_MASK << p_ctrl->channel;
-
-        /* Dummy read the TSCTR register to prevent the interrupt cause that should have been cleared from being accidentally
-         * accepted again. */
-        tsctr = R_INTC->TSCTR;
-        FSP_PARAMETER_NOT_USED(tsctr);
-#else
-
-        /* Dummy read the TSCR before clearing the TSTAT bit. */
-        volatile uint32_t tscr = R_INTC_IM33->TSCR;
-        FSP_PARAMETER_NOT_USED(tscr);
-
-        /* Clear the TSTAT bit before calling the user callback so that if an edge is detected while the ISR is active
-         * it will not be missed. */
-        R_INTC_IM33->TSCR = ~(INTC_TINT_TSCR_TSTAT_MASK << p_ctrl->channel);
-
-        /* Dummy read the TSCR to prevent the interrupt cause that should have been cleared from being accidentally
-         * accepted again. Reference section "Clear Timing of Interrupt Cause" of the user's manual. */
-        tscr = R_INTC_IM33->TSCR;
-        FSP_PARAMETER_NOT_USED(tscr);
-#endif
+        BSP_INTC_TINT_CLR_STATE_FLAG(p_ctrl->channel);
     }
 
     if ((NULL != p_ctrl) && (NULL != p_ctrl->p_callback))

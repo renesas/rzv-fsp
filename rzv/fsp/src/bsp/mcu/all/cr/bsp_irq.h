@@ -4,14 +4,6 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/**********************************************************************************************************************
- * File Name    : bsp_irq.h
- * Version      : 1.00
- * Description  : bsp_irq header source code
- *********************************************************************************************************************/
-
-/** @} (end addtogroup BSP_MCU) */
-
 #ifndef BSP_IRQ_H
 #define BSP_IRQ_H
 
@@ -73,6 +65,27 @@ __STATIC_INLINE void R_FSP_IsrContextSet (IRQn_Type const irq, void * p_context)
      * being part of bsp_irq.c for performance considerations because it is used in interrupt service routines. */
     gp_renesas_isr_context[irq_no] = p_context;
 }
+
+/*******************************************************************************************************************//**
+ * @brief      Finds the ISR context associated with the requested IRQ.
+ *
+ * @param[in]  irq            IRQ number (parameter checking must ensure the IRQ number is valid before calling this
+ *                            function.
+ *
+ * @warning Do not call this function for system exceptions where the IRQn_Type value is less than 0.
+ *
+ * @return  ISR context for IRQ.
+ **********************************************************************************************************************/
+__STATIC_INLINE void * R_FSP_IsrContextGet (IRQn_Type const irq)
+{
+    uint32_t irq_no = (uint32_t) irq + BSP_CORTEX_VECTOR_TABLE_ENTRIES;
+
+    /* This provides access to the ISR context array defined in bsp_irq.c. This is an inline function instead of
+     * being part of bsp_irq.c for performance considerations because it is used in interrupt service routines. */
+    return gp_renesas_isr_context[irq_no];
+}
+
+#if BSP_CFG_INLINE_IRQ_FUNCTIONS
 
 /*******************************************************************************************************************//**
  * Sets the interrupt detect type.
@@ -306,25 +319,6 @@ __STATIC_INLINE void R_BSP_IrqCfgEnable (IRQn_Type const irq, uint32_t priority,
 }
 
 /*******************************************************************************************************************//**
- * @brief      Finds the ISR context associated with the requested IRQ.
- *
- * @param[in]  irq            IRQ number (parameter checking must ensure the IRQ number is valid before calling this
- *                            function.
- *
- * @warning Do not call this function for system exceptions where the IRQn_Type value is less than 0.
- *
- * @return  ISR context for IRQ.
- **********************************************************************************************************************/
-__STATIC_INLINE void * R_FSP_IsrContextGet (IRQn_Type const irq)
-{
-    uint32_t irq_no = (uint32_t) irq + BSP_CORTEX_VECTOR_TABLE_ENTRIES;
-
-    /* This provides access to the ISR context array defined in bsp_irq.c. This is an inline function instead of
-     * being part of bsp_irq.c for performance considerations because it is used in interrupt service routines. */
-    return gp_renesas_isr_context[irq_no];
-}
-
-/*******************************************************************************************************************//**
  * Sets the interrupt Group.
  *
  * @param[in] irq               The IRQ number to configure.
@@ -364,6 +358,22 @@ __STATIC_INLINE uint32_t R_BSP_IrqMaskLevelGet (void)
     return (uint32_t) ((FSP_CRITICAL_SECTION_GET_CURRENT_STATE() & BSP_FEATURE_INTC_IRQ_PRIORITY_MASK) >>
                        BSP_FEATURE_INTC_IRQ_PRIORITY_POS_BIT);
 }
+
+#else
+void     R_BSP_IrqDetectTypeSet(IRQn_Type const irq, uint8_t detect_type);
+void     R_BSP_IrqStatusClear(IRQn_Type irq);
+void     R_BSP_IrqClearPending(IRQn_Type irq);
+uint32_t R_BSP_IrqPendingGet(IRQn_Type irq);
+void     R_BSP_IrqCfg(IRQn_Type const irq, uint32_t priority, void * p_context);
+void     R_BSP_IrqEnableNoClear(IRQn_Type const irq);
+void     R_BSP_IrqEnable(IRQn_Type const irq);
+void     R_BSP_IrqDisable(IRQn_Type const irq);
+void     R_BSP_IrqCfgEnable(IRQn_Type const irq, uint32_t priority, void * p_context);
+void     R_BSP_IrqGroupSet(IRQn_Type const irq, uint32_t interrupt_group);
+void     R_BSP_IrqMaskLevelSet(uint32_t mask_level);
+uint32_t R_BSP_IrqMaskLevelGet(void);
+
+#endif
 
 /*******************************************************************************************************************//**
  * @internal

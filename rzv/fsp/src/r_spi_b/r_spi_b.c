@@ -537,9 +537,6 @@ static void r_spi_b_hw_config (spi_b_instance_ctrl_t * p_ctrl)
     /* Enable Error interrupt. */
     spcr |= R_SPI_B0_SPCR_SPEIE_Msk;
 
-    /* Enable Communication End interrupt. */
-    spcr |= R_SPI_B0_SPCR_CENDIE_Msk;
-
     /* Configure Master Mode setting. */
     spcr |= (uint32_t) (SPI_MODE_MASTER == p_ctrl->p_cfg->operating_mode) << R_SPI_B0_SPCR_MSTR_Pos;
 
@@ -631,6 +628,23 @@ static void r_spi_b_hw_config (spi_b_instance_ctrl_t * p_ctrl)
                              (p_extend->ssl_negation_delay << R_SPI_B0_SPDECR_SLNDL_Pos) |
                              (p_extend->next_access_delay << R_SPI_B0_SPDECR_SPNDL_Pos));
     }
+
+#if !SPI_B_DMAC_SUPPORT_ENABLE
+
+    /* Sets the received data ready detection timing */
+    spcr2 |= p_extend->receive_data_ready_detect_adjustment << R_SPI_B0_SPCR2_SPDRC_Pos;
+
+    /* Sets the receive FIFO threshold and the transmit FIFO threshold */
+    if (!p_ctrl->p_cfg->p_transfer_tx)
+    {
+        spdcr2 |= (uint32_t) (p_extend->transmit_fifo_threshold << R_SPI_B0_SPDCR2_TTRG_Pos);
+    }
+
+    if (!p_ctrl->p_cfg->p_transfer_rx)
+    {
+        spdcr2 |= (uint32_t) (p_extend->receive_fifo_threshold << R_SPI_B0_SPDCR2_RTRG_Pos);
+    }
+#endif
 
     /* Enable the SPI module. */
     R_BSP_MODULE_START(FSP_IP_RSPI, p_ctrl->p_cfg->channel);
@@ -904,31 +918,41 @@ static void r_spi_b_receive (spi_b_instance_ctrl_t * p_ctrl)
         return;
     }
 
-    if (0 == p_ctrl->p_rx_data)
+    while (p_ctrl->p_regs->SPRFSR != 0 && rx_count != p_ctrl->count)
     {
-        /* Read the received data but do nothing with it. */
-        p_ctrl->p_regs->SPDR;
+        if (0 == p_ctrl->p_rx_data)
+        {
+            /* Read the received data but do nothing with it. */
+            p_ctrl->p_regs->SPDR;
+        }
+        else
+        {
+            if (p_ctrl->bit_width > SPI_BIT_WIDTH_16_BITS)     /* Bit Widths of 17-32 bits */
+            {
+                ((uint32_t *) (p_ctrl->p_rx_data))[rx_count] = p_ctrl->p_regs->SPDR;
+            }
+            else if (p_ctrl->bit_width > SPI_BIT_WIDTH_8_BITS) /* Bit Widths of 9-16 bits*/
+            {
+                ((uint16_t *) (p_ctrl->p_rx_data))[rx_count] = (uint16_t) p_ctrl->p_regs->SPDR;
+            }
+            else                                               /* Bit Widths of 4-8 bits */
+            {
+                ((uint8_t *) (p_ctrl->p_rx_data))[rx_count] = (uint8_t) p_ctrl->p_regs->SPDR;
+            }
+        }
+
+        rx_count++;
+        p_ctrl->rx_count = rx_count;
     }
-    else
+
+    /* Clear the SPI Receive Data Ready Flag, if the flag is set */
+    if (1 == p_ctrl->p_regs->SPSR_b.SPDRF)
     {
-        if (p_ctrl->bit_width > SPI_BIT_WIDTH_16_BITS)     /* Bit Widths of 17-32 bits */
-        {
-            ((uint32_t *) (p_ctrl->p_rx_data))[rx_count] = p_ctrl->p_regs->SPDR;
-        }
-        else if (p_ctrl->bit_width > SPI_BIT_WIDTH_8_BITS) /* Bit Widths of 9-16 bits*/
-        {
-            ((uint16_t *) (p_ctrl->p_rx_data))[rx_count] = (uint16_t) p_ctrl->p_regs->SPDR;
-        }
-        else                                               /* Bit Widths of 4-8 bits */
-        {
-            ((uint8_t *) (p_ctrl->p_rx_data))[rx_count] = (uint8_t) p_ctrl->p_regs->SPDR;
-        }
+        p_ctrl->p_regs->SPSRC = R_SPI_B0_SPSRC_SPDRFC_Msk;
     }
 
     /* Clear Receive Full flag */
     p_ctrl->p_regs->SPSRC = R_SPI_B0_SPSRC_SPRFC_Msk;
-
-    p_ctrl->rx_count = rx_count + 1;
 }
 
 /*******************************************************************************************************************//**
@@ -940,37 +964,47 @@ static void r_spi_b_receive (spi_b_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static void r_spi_b_transmit (spi_b_instance_ctrl_t * p_ctrl)
 {
-    uint32_t tx_count = p_ctrl->tx_count;
+    uint32_t               tx_count = p_ctrl->tx_count;
+    spi_b_extended_cfg_t * p_extend = ((spi_b_extended_cfg_t *) p_ctrl->p_cfg->p_extend);
     if (tx_count == p_ctrl->count)
     {
         return;
     }
 
-    if (0 == p_ctrl->p_tx_data)
+    while (p_ctrl->p_regs->SPTFSR != 0 && tx_count < p_ctrl->count)
     {
-        /* Transmit zero if no tx buffer present. */
-        p_ctrl->p_regs->SPDR = 0;
-    }
-    else
-    {
-        if (p_ctrl->bit_width > SPI_BIT_WIDTH_16_BITS)     /* Bit Widths of 17-32 bits */
+        if (p_extend && (SPI_B_COMMUNICATION_TRANSMIT_ONLY == p_extend->spi_comm) && (tx_count == p_ctrl->count - 1) &&
+            (0 == p_ctrl->p_regs->SPCR_b.CENDIE))
         {
-            p_ctrl->p_regs->SPDR = ((uint32_t *) p_ctrl->p_tx_data)[tx_count];
+            return;
         }
-        else if (p_ctrl->bit_width > SPI_BIT_WIDTH_8_BITS) /* Bit Widths of 9-16 bits*/
+
+        if (0 == p_ctrl->p_tx_data)
         {
-            p_ctrl->p_regs->SPDR = ((uint16_t *) p_ctrl->p_tx_data)[tx_count];
+            /* Transmit zero if no tx buffer present. */
+            p_ctrl->p_regs->SPDR = 0;
         }
-        else                                               /* Bit Widths of 4-8 bits */
+        else
         {
-            p_ctrl->p_regs->SPDR = ((uint8_t *) p_ctrl->p_tx_data)[tx_count];
+            if (p_ctrl->bit_width > SPI_BIT_WIDTH_16_BITS)     /* Bit Widths of 17-32 bits */
+            {
+                p_ctrl->p_regs->SPDR = ((uint32_t *) p_ctrl->p_tx_data)[tx_count];
+            }
+            else if (p_ctrl->bit_width > SPI_BIT_WIDTH_8_BITS) /* Bit Widths of 9-16 bits*/
+            {
+                p_ctrl->p_regs->SPDR = ((uint16_t *) p_ctrl->p_tx_data)[tx_count];
+            }
+            else                                               /* Bit Widths of 4-8 bits */
+            {
+                p_ctrl->p_regs->SPDR = ((uint8_t *) p_ctrl->p_tx_data)[tx_count];
+            }
         }
-    }
+        tx_count++;
+        p_ctrl->tx_count = tx_count;
+    } 
 
     /* Clear Transmit Empty flag */
     p_ctrl->p_regs->SPSRC = R_SPI_B0_SPSRC_SPTEFC_Msk;
-
-    p_ctrl->tx_count = tx_count + 1;
 }
 
 /*******************************************************************************************************************//**
@@ -1050,12 +1084,14 @@ void spi_b_rxi_isr (void)
     r_spi_b_transmit(p_ctrl);
 #endif
 
-    if (p_ctrl->rx_count == p_ctrl->count)
+    /* Note that the transfer end interrupt is enabled only while SPCR.SPE bit is set to 1(TEI is not enabled after communication ends). */
+    if ((p_ctrl->rx_count == p_ctrl->count) && (0 != p_ctrl->p_regs->SPCR_b.SPE))
     {
         /* If the transmit and receive ISRs are too slow to keep up at high bitrates,
          * the hardware will generate an interrupt before all of the transfers are completed.
          * By enabling the transfer end ISR here, all of the transfers are guaranteed to be completed. */
         R_BSP_IrqEnableNoClear(p_ctrl->p_cfg->tei_irq);
+        p_ctrl->p_regs->SPCR_b.CENDIE = 1;
     }
 
     /* Restore context if RTOS is used */
@@ -1081,19 +1117,22 @@ void spi_b_txi_isr (void)
     if (SPI_B_COMMUNICATION_TRANSMIT_ONLY == p_extend->spi_comm)
     {
         /* Only enable the transfer end ISR if there are no receive buffer full interrupts expected to be handled
-         * after this interrupt. */
-        if (p_ctrl->tx_count == p_ctrl->count - 1)
+         * after this interrupt.
+         * Note that the transfer end interrupt is enabled only while SPCR.SPE bit is set to 1(TEI is not enabled after communication ends). */
+        if ((p_ctrl->tx_count == p_ctrl->count - 1) && (0 != p_ctrl->p_regs->SPCR_b.SPE))
         {
             /* If the transmit and receive ISRs are too slow to keep up at high bitrates,
              * the hardware will generate an interrupt before all of the transfers are completed.
              * By enabling the transfer end ISR here, all of the transfers are guaranteed to be completed. */
             R_BSP_IrqEnable(p_ctrl->p_cfg->tei_irq);
+            p_ctrl->p_regs->SPCR_b.CENDIE = 1;
         }
         else if (p_ctrl->p_cfg->p_transfer_tx)
         {
             /* If DMA is used to transmit data, enable the interrupt after all the data has been transfered, but do not
              * clear the IRQ Pending Bit. */
             R_BSP_IrqEnableNoClear(p_ctrl->p_cfg->tei_irq);
+            p_ctrl->p_regs->SPCR_b.CENDIE = 1;
         }
         else
         {
@@ -1125,6 +1164,7 @@ void spi_b_tei_isr (void)
     if ((0 == p_ctrl->p_regs->SPSR_b.IDLNF) || (SPI_MODE_SLAVE == p_ctrl->p_cfg->operating_mode))
     {
         R_BSP_IrqDisable(irq);
+        p_ctrl->p_regs->SPCR_b.CENDIE = 0;
 
         /* Writing 0 to SPE generatates a TXI IRQ. Disable the TXI IRQ.
          * (See Section SPI Control Register in the Use's manual). */
@@ -1216,6 +1256,7 @@ void spi_b_tx_dmac_callback (spi_b_instance_ctrl_t * p_ctrl)
         /* If DMA is used to transmit data, enable the interrupt after all the data has been transfered, but do not
          * clear the IRQ Pending Bit. */
         R_BSP_IrqEnableNoClear(p_ctrl->p_cfg->tei_irq);
+        p_ctrl->p_regs->SPCR_b.CENDIE = 1;
     }
 
  #else
@@ -1232,6 +1273,7 @@ void spi_b_rx_dmac_callback (spi_b_instance_ctrl_t * p_ctrl)
      * the hardware will generate an interrupt before all of the transfers are completed.
      * By enabling the transfer end ISR here, all of the transfers are guaranteed to be completed. */
     R_BSP_IrqEnableNoClear(p_ctrl->p_cfg->tei_irq);
+    p_ctrl->p_regs->SPCR_b.CENDIE = 1;
 }
 
 #endif

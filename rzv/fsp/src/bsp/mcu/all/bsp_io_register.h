@@ -1,10 +1,8 @@
-/**********************************************************************************************************************
- * File Name    : bsp_io_register.h
- * Version      : 1.00
- * Description  : bsp_io_register header source code
- *********************************************************************************************************************/
-
-/** @} (end addtogroup BSP_MCU) */
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef BSP_IO_REGISTER_H
 #define BSP_IO_REGISTER_H

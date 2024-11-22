@@ -1,12 +1,13 @@
 ## Software Modules Packaged with FSP
 
 ### FSP Top Level Modules
+  * AI
+    * [Arm CMSIS NN Library Source](https://arm-software.github.io/CMSIS-NN/latest/)
   * Analog
     * [ADC (r_adc_c)](https://renesas.github.io/rzv-fsp/group___a_d_c___c.html)
     * [ADC Driver on r_adc_e](https://renesas.github.io/rzv-fsp/group___a_d_c___e.html)
-    * [ADC Driver on r_tsu_b](https://renesas.github.io/rzv-fsp/group___t_s_u___b.html)
-  * Artificial Intelligence
-    * [Arm CMSIS5 NN Library Source](https://arm-software.github.io/CMSIS_5/NN/html/index.html)
+  * Audio
+    * [PDM Driver on r_pdm](https://renesas.github.io/rzv-fsp/group___p_d_m.html)
   * Connectivity
     * [CANFD Driver on r_canfd](https://renesas.github.io/rzv-fsp/group___c_a_n_f_d.html)
     * [I2C Communication Device (rm_comms_i2c)](https://renesas.github.io/rzv-fsp/group___r_m___c_o_m_m_s___i2_c.html)
@@ -23,13 +24,13 @@
     * [Message Handling Unit Driver (NonSecure) on r_mhu_ns_swint_set](https://renesas.github.io/rzv-fsp/group___m_h_u___n_s___s_w_i_n_t___s_e_t.html)
     * [Message Handling Unit Driver (Secure) on r_mhu_b_s](https://renesas.github.io/rzv-fsp/group___m_h_u___b___s.html)
     * [Message Handling Unit Driver (Secure) on r_mhu_s](https://renesas.github.io/rzv-fsp/group___m_h_u___s.html)
-    * [PDM Driver on r_pdm](https://renesas.github.io/rzv-fsp/group___p_d_m.html)
     * [SPI (r_rspi)](https://renesas.github.io/rzv-fsp/group___r_s_p_i.html)
+    * [SPI (r_sci_b_spi)](https://renesas.github.io/rzv-fsp/group___s_c_i___b___s_p_i.html)
     * [SPI (r_spi_b)](https://renesas.github.io/rzv-fsp/group___s_p_i___b.html)
     * [UART (r_sci_b_uart)](https://renesas.github.io/rzv-fsp/group___s_c_i___b___u_a_r_t.html)
     * [UART Driver on r_scif_uart](https://renesas.github.io/rzv-fsp/group___s_c_i_f___u_a_r_t.html)
   * DSP
-    * [Arm CMSIS5 DSP Library Source](http://www.keil.com/pack/doc/CMSIS/DSP/html/index.html)
+    * [Arm CMSIS DSP Library Source](https://arm-software.github.io/CMSIS-DSP/latest/)
   * Input
     * [External IRQ Driver on r_intc_irq](https://renesas.github.io/rzv-fsp/group___i_n_t_c___i_r_q.html)
     * [External IRQ Driver on r_intc_nmi](https://renesas.github.io/rzv-fsp/group___i_n_t_c___n_m_i.html)
@@ -49,6 +50,7 @@
   * Sensor
     * [HS300X Temperature/Humidity Sensor (rm_hs300x)](https://renesas.github.io/rzv-fsp/group___r_m___h_s300_x.html)
     * [HS400X Temperature/Humidity Sensor (rm_hs400x)](https://renesas.github.io/rzv-fsp/group___r_m___h_s400_x.html)
+    * [Temperature Sensor Unit (r_tsu_b)](https://renesas.github.io/rzv-fsp/group___t_s_u___b.html)
     * [ZMOD4XXX Gas Sensor (rm_zmod4xxx)](https://renesas.github.io/rzv-fsp/group___r_m___z_m_o_d4_x_x_x.html)
   * Storage
     * [QSPI Driver on r_xspi_qspi](https://renesas.github.io/rzv-fsp/group___x_s_p_i___q_s_p_i.html)
@@ -56,7 +58,6 @@
     * [Event Link Controller (r_elc)](https://renesas.github.io/rzv-fsp/group___e_l_c.html)
     * [I/O Port (r_ioport)](https://renesas.github.io/rzv-fsp/group___i_o_p_o_r_t.html)
   * Timers
-    * [Port Output Enable for GPT (r_poeg)](https://renesas.github.io/rzv-fsp/group___p_o_e_g___a_p_i.html)
     * [Realtime Clock (r_rtc)](https://renesas.github.io/rzv-fsp/group___r_t_c.html)
     * [Timer (r_gtm)](https://renesas.github.io/rzv-fsp/group___g_t_m.html)
     * [Timer Driver on r_cmtw](https://renesas.github.io/rzv-fsp/group___c_m_t_w.html)
@@ -79,4 +80,6 @@
     * [ZMOD4510 OAQ 1st Generation (rm_zmod4xxx)](https://renesas.github.io/rzv-fsp/group___r_m___z_m_o_d4_x_x_x.html)
     * [ZMOD4510 OAQ 2nd Generation (rm_zmod4xxx)](https://renesas.github.io/rzv-fsp/group___r_m___z_m_o_d4_x_x_x.html)
   * System
-    * [Arm CMSIS5 Core (M)](https://arm-software.github.io/CMSIS_5/Core/html/index.html)
+    * [Arm CMSIS6 Core (M)](https://arm-software.github.io/CMSIS_6/latest/Core/index.html)
+  * Timers
+    * [Port Output Enable for GPT (r_poeg)](https://renesas.github.io/rzv-fsp/group___p_o_e_g___a_p_i.html)

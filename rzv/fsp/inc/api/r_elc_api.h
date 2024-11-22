@@ -5,7 +5,7 @@
 */
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_SYSTEM_INTERFACES
  * @defgroup ELC_API ELC Interface
  * @brief Interface for the Event Link Controller.
  *
@@ -70,8 +70,6 @@ typedef enum e_elc_peripheral
 #endif
 
 /** ELC control block.  Allocate an instance specific control block to pass into the ELC API calls.
- * @par Implemented as
- * - elc_instance_ctrl_t
  */
 typedef void elc_ctrl_t;
 
@@ -79,6 +77,7 @@ typedef void elc_ctrl_t;
 typedef struct st_elc_cfg
 {
     elc_event_t const link[ELC_PERIPHERAL_NUM]; ///< Event link register settings
+    void const      * p_extend;                 ///< Extension parameter for hardware specific settings
 } elc_cfg_t;
 
 #ifndef BSP_OVERRIDE_ELC_SOFTWARE_EVENT_T
@@ -96,8 +95,6 @@ typedef enum e_elc_software_event
 typedef struct st_elc_api
 {
     /** Initialize all links in the Event Link Controller.
-     * @par Implemented as
-     * - @ref R_ELC_Open()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      * @param[in]   p_cfg   Pointer to configuration structure.
@@ -105,16 +102,12 @@ typedef struct st_elc_api
     fsp_err_t (* open)(elc_ctrl_t * const p_ctrl, elc_cfg_t const * const p_cfg);
 
     /** Disable all links in the Event Link Controller and close the API.
-     * @par Implemented as
-     * - @ref R_ELC_Close()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      **/
     fsp_err_t (* close)(elc_ctrl_t * const p_ctrl);
 
     /** Generate a software event in the Event Link Controller.
-     * @par Implemented as
-     * - @ref R_ELC_SoftwareEventGenerate()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      * @param[in]   eventNum           Software event number to be generated.
@@ -122,8 +115,6 @@ typedef struct st_elc_api
     fsp_err_t (* softwareEventGenerate)(elc_ctrl_t * const p_ctrl, elc_software_event_t event_num);
 
     /** Create a single event link.
-     * @par Implemented as
-     * - @ref R_ELC_LinkSet()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      * @param[in]   peripheral The peripheral block that will receive the event signal.
@@ -132,8 +123,6 @@ typedef struct st_elc_api
     fsp_err_t (* linkSet)(elc_ctrl_t * const p_ctrl, elc_peripheral_t peripheral, elc_event_t signal);
 
     /** Break an event link.
-     * @par Implemented as
-     * - @ref R_ELC_LinkBreak()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      * @param[in]   peripheral   The peripheral that should no longer be linked.
@@ -141,16 +130,12 @@ typedef struct st_elc_api
     fsp_err_t (* linkBreak)(elc_ctrl_t * const p_ctrl, elc_peripheral_t peripheral);
 
     /** Enable the operation of the Event Link Controller.
-     * @par Implemented as
-     * - @ref R_ELC_Enable()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      **/
     fsp_err_t (* enable)(elc_ctrl_t * const p_ctrl);
 
     /** Disable the operation of the Event Link Controller.
-     * @par Implemented as
-     * - @ref R_ELC_Disable()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      **/
@@ -171,5 +156,5 @@ FSP_FOOTER
 #endif
 
 /*******************************************************************************************************************//**
- * @} (end addtogroup ELC_API)
+ * @} (end defgroup ELC_API)
  **********************************************************************************************************************/

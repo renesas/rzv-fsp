@@ -39,6 +39,15 @@ static void     r_tsu_b_irq_disable(IRQn_Type irq);
 static void     r_tsu_b_call_callback (tsu_b_instance_ctrl_t * p_ctrl, adc_callback_args_t * p_args);
 static uint32_t r_tsu_b_calculate_comparison_value (tsu_b_instance_ctrl_t * const p_instance_ctrl, int setting_temperature);
 
+/* TSU_B base address */
+static const uint32_t volatile * p_tsu_b_base_address[BSP_FEATURE_TSU_B_MAX_UNIT] =
+{
+    (uint32_t *) R_TSU_B0,
+#if BSP_FEATURE_TSU_B_MAX_UNIT > 1
+    (uint32_t *) R_TSU_B1,
+#endif
+};
+
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -59,18 +68,6 @@ const adc_api_t g_adc_on_tsu_b =
     .calibrate      = R_TSU_B_Calibrate,
     .offsetSet      = R_TSU_B_OffsetSet,
     .callbackSet    = R_TSU_B_CallbackSet,
-};
-
-static uint32_t volatile * const gp_calibration_low_temparature[] =
-{
-    [0] = (uint32_t *) BSP_FEATURE_TSU_B_UNIT_0_LOW_TEMPERATURE_REGISTER,
-    [1] = (uint32_t *) BSP_FEATURE_TSU_B_UNIT_1_LOW_TEMPERATURE_REGISTER,
-};
-
-static uint32_t volatile * const gp_calibration_high_temparature[] =
-{
-    [0] = (uint32_t *) BSP_FEATURE_TSU_B_UNIT_0_HIGH_TEMPERATURE_REGISTER,
-    [1] = (uint32_t *) BSP_FEATURE_TSU_B_UNIT_1_HIGH_TEMPERATURE_REGISTER,
 };
 
 /*******************************************************************************************************************//**
@@ -122,24 +119,17 @@ fsp_err_t R_TSU_B_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
     p_instance_ctrl->p_cfg             = p_cfg;
 #if BSP_FEATURE_TSU_B_CALIBRAION_DATA_CHECK_ENABLE
     /* Read calibration data. */
-    uint32_t calibration_data1 = *gp_calibration_low_temparature[p_instance_ctrl->p_cfg->unit] & BSP_FEATURE_TSU_B_CALIBRAION_DATA_MASK;
-    uint32_t calibration_data2 = *gp_calibration_high_temparature[p_instance_ctrl->p_cfg->unit] & BSP_FEATURE_TSU_B_CALIBRAION_DATA_MASK;
-
+    uint32_t calibration_data1;
+    uint32_t calibration_data2;
+    R_BSP_TSU_B_Read_CalibrationData(p_instance_ctrl->p_cfg->unit, &calibration_data1, &calibration_data2);
     FSP_ERROR_RETURN(BSP_FEATURE_TSU_B_CALIBRAION_DATA_INVALID != calibration_data1 && BSP_FEATURE_TSU_B_CALIBRAION_DATA_INVALID != calibration_data2, FSP_ERR_INVALID_HW_CONDITION);
 #endif
     p_instance_ctrl->p_callback        = p_cfg->p_callback;
     p_instance_ctrl->p_context         = p_cfg->p_context;
     p_instance_ctrl->p_callback_memory = NULL;
 
-    /* Calculate the register base address. */
-    if (0U == p_cfg->unit)
-    {
-        p_instance_ctrl->p_reg = R_TSU_B0;
-    }
-    else
-    {
-        p_instance_ctrl->p_reg = R_TSU_B1;
-    }
+    /* Save register base address. */
+    p_instance_ctrl->p_reg = (R_TSU_B0_Type *) p_tsu_b_base_address[p_cfg->unit];
 
     /* Initialize the hardware based on the configuration. */
     r_tsu_b_open_sub(p_instance_ctrl, p_cfg);
@@ -236,10 +226,13 @@ fsp_err_t R_TSU_B_ScanStart (adc_ctrl_t * p_ctrl)
     {
         p_instance_ctrl->p_reg->TSU_STRGR_b.ADST = 1U;
     }
+
+#if BSP_FEATURE_TSU_B_ELC_TRIGGER_SUPPORTED
     else
     {
         p_instance_ctrl->p_reg->TSU_SOSR1_b.TRGE = 1U;
     }
+#endif
 
     return FSP_SUCCESS;
 }
@@ -290,7 +283,6 @@ fsp_err_t R_TSU_B_Read (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_
     FSP_ASSERT(NULL != p_data);
     FSP_ERROR_RETURN(TSU_B_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(TSU_B_OPEN == p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
-
 #endif
 
     /* Read the data from the requested TSU_B conversion register and return it */
@@ -312,6 +304,9 @@ fsp_err_t R_TSU_B_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
     tsu_b_instance_ctrl_t * p_instance_ctrl = (tsu_b_instance_ctrl_t *) p_ctrl;
     fsp_err_t             err             = FSP_SUCCESS;
 
+    uint32_t calibration_data1;
+    uint32_t calibration_data2;
+
 #if TSU_B_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_adc_info);
@@ -323,8 +318,9 @@ fsp_err_t R_TSU_B_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
     p_adc_info->transfer_size = TRANSFER_SIZE_2_BYTE;
 
     /* Set calibration data. */
-    p_adc_info->calibration_data1 = *gp_calibration_low_temparature[p_instance_ctrl->p_cfg->unit] & BSP_FEATURE_TSU_B_CALIBRAION_DATA_MASK;
-    p_adc_info->calibration_data2 = *gp_calibration_high_temparature[p_instance_ctrl->p_cfg->unit] & BSP_FEATURE_TSU_B_CALIBRAION_DATA_MASK;
+    R_BSP_TSU_B_Read_CalibrationData(p_instance_ctrl->p_cfg->unit, &calibration_data1, &calibration_data2);
+    p_adc_info->calibration_data1 = calibration_data1;
+    p_adc_info->calibration_data2 = calibration_data2;
 
     return err;
 }
@@ -351,17 +347,23 @@ fsp_err_t R_TSU_B_ScanStop (adc_ctrl_t * p_ctrl)
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(TSU_B_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(TSU_B_OPEN == p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+ #if !BSP_FEATURE_TSU_B_CONTINUOUS_MODE_SUPPORTED
     FSP_ERROR_RETURN(ADC_TRIGGER_SOFTWARE != p_instance_ctrl->p_cfg->trigger, FSP_ERR_INVALID_MODE);
+ #endif
 #endif
 
     /* Disable hardware trigger. */
     if (ADC_TRIGGER_SYNC_ELC == p_instance_ctrl->p_cfg->trigger)
     {
+#if BSP_FEATURE_TSU_B_ELC_TRIGGER_SUPPORTED
         p_instance_ctrl->p_reg->TSU_SOSR1_b.TRGE = 0U;
+#endif
     }
     else
     {
-        /* Do nothing. */
+#if BSP_FEATURE_TSU_B_CONTINUOUS_MODE_SUPPORTED
+        p_instance_ctrl->p_reg->TSU_STRGR_b.ADEND = 1U;
+#endif
     }
 
     return FSP_SUCCESS;
@@ -391,16 +393,17 @@ fsp_err_t R_TSU_B_CalculateTemperature (adc_ctrl_t * p_ctrl, uint16_t temperatur
 #endif
 
     /* Read calibration data. */
-    calibration_data1 = *gp_calibration_low_temparature[p_instance_ctrl->p_cfg->unit] & BSP_FEATURE_TSU_B_CALIBRAION_DATA_MASK;
-    calibration_data2 = *gp_calibration_high_temparature[p_instance_ctrl->p_cfg->unit] & BSP_FEATURE_TSU_B_CALIBRAION_DATA_MASK;
+    R_BSP_TSU_B_Read_CalibrationData(p_instance_ctrl->p_cfg->unit, &calibration_data1, &calibration_data2);
 
     /* Calculate the temperature. Reference section "Temperature Compensation Calculation" in the user's manual.
-       The correspondence of constants is shown below. 
-       temperature_code                                             : a
-       calibration_data1(the value at low temperature)              : b
-       calibration_data2(the value at high temperature)             : c
-       BSP_FEATURE_TSU_B_LOW_TEMPERATURE(low temperature)           : d
-       BSP_FEATURE_TSU_B_HIGH_TEMPERATURE(high temperature)         : e */
+     * The calculation formula is as follows:
+     * T(degrees Celsius) = ((e - d) / (c - b)) * (a - b) + d
+     * The correspondence between the formula and the constants in the code is as follows:
+     * a :temperature_code
+     * b :calibration_data1(the value at low temperature)
+     * c :calibration_data2(the value at high temperature)
+     * d :BSP_FEATURE_TSU_B_LOW_TEMPERATURE(low temperature)
+     * e :BSP_FEATURE_TSU_B_HIGH_TEMPERATURE(high temperature) */
     float term1;
     float term2;
 
@@ -529,7 +532,7 @@ fsp_err_t R_TSU_B_OffsetSet (adc_ctrl_t * const p_ctrl, adc_channel_t const reg_
 }
 
 /*******************************************************************************************************************//**
- * @} (end addtogroup ADC)
+ * @} (end addtogroup TSU_B)
  **********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -555,11 +558,17 @@ static void r_tsu_b_open_sub (tsu_b_instance_ctrl_t * const p_instance_ctrl, adc
     uint32_t sosr1 = (uint32_t) (R_TSU_B0_SOSR1_OUTSEL_Msk);
     sosr1 |= (uint32_t) (p_cfg_extend->average_count << R_TSU_B0_SOSR1_ADCT_Pos);
 
+#if BSP_FEATURE_TSU_B_ELC_TRIGGER_SUPPORTED
+
     /* Sets the trigger. */
     sosr1 |= (uint32_t) (0U << R_TSU_B0_SOSR1_TRGE_Pos);
+#endif
 
-    /* Sets the operating mode. */
-    sosr1 |= (uint32_t) (0U << R_TSU_B0_SOSR1_ADCS_Pos);
+    /* Repeat mode corresponds to ADC_MODE_CONTINUOUS_SCAN of API,
+     * but since the API value (=2) and repeat mode register setting value (=1) are different,
+     * it is necessary to convert them.
+     * Sets the conversion mode. */
+    sosr1 |= (uint32_t) ((p_cfg->mode >> 1U) << R_TSU_B0_SOSR1_ADCS_Pos);
 
     uint32_t cmsr;
     uint32_t sier;
@@ -600,7 +609,7 @@ static void r_tsu_b_open_sub (tsu_b_instance_ctrl_t * const p_instance_ctrl, adc
  * Calculate comparison setting values.
  *
  * @param[in]  p_instance_ctrl         Pointer to instance control block
- * @param[in]  setting_temperature     The temperature T (°C) you want to set.
+ * @param[in]  setting_temperature     The temperature T (degrees Celsius) you want to set.
  *
  * @retval  calculate_value  The comparison setting values
  **********************************************************************************************************************/
@@ -610,16 +619,17 @@ static uint32_t r_tsu_b_calculate_comparison_value (tsu_b_instance_ctrl_t * cons
     uint32_t calibration_data2;
 
     /* Set calibration data. */
-    calibration_data1 = *gp_calibration_low_temparature[p_instance_ctrl->p_cfg->unit] & BSP_FEATURE_TSU_B_CALIBRAION_DATA_MASK;
-    calibration_data2 = *gp_calibration_high_temparature[p_instance_ctrl->p_cfg->unit] & BSP_FEATURE_TSU_B_CALIBRAION_DATA_MASK;
+    R_BSP_TSU_B_Read_CalibrationData(p_instance_ctrl->p_cfg->unit, &calibration_data1, &calibration_data2);
 
     /* Calculate the comparison setting values. Reference section "Temperature Compensation Calculation" in the user's manual.
-       The correspondence of constants is shown below. 
-       setting_temperature                                          : T
-       calibration_data1(the value at low temperature)              : b
-       calibration_data2(the value at high temperature)             : c
-       BSP_FEATURE_TSU_B_LOW_TEMPERATURE(low temperature)           : d
-       BSP_FEATURE_TSU_B_HIGH_TEMPERATURE(high temperature)         : e */
+     * The calculation formula is as follows:
+     * a = ((T - d) * (c - b)) / (e - d) + b
+     * The correspondence between the formula and the constants in the code is as follows:
+     * T : setting_temperature
+     * b : calibration_data1(the value at low temperature)
+     * c : calibration_data2(the value at high temperature)
+     * d : BSP_FEATURE_TSU_B_LOW_TEMPERATURE(low temperature)
+     * e : BSP_FEATURE_TSU_B_HIGH_TEMPERATURE(high temperature) */
     uint32_t calculate_value;
     float term1;
     float term2;
@@ -628,10 +638,13 @@ static uint32_t r_tsu_b_calculate_comparison_value (tsu_b_instance_ctrl_t * cons
 
     /* Calculate the term1. Reference section "Comparison Setting Value Calculation" in the user's manual.*/
     term1 = (float)setting_temperature - BSP_FEATURE_TSU_B_LOW_TEMPERATURE;
+
     /* Calculate the term2. Reference section "Comparison Setting Value Calculation" in the user's manual.*/
     term2 = (float)calibration_data2 - (float)calibration_data1;
+
     /* Calculate the term3. Reference section "Comparison Setting Value Calculation" in the user's manual.*/
     term3 = BSP_FEATURE_TSU_B_HIGH_TEMPERATURE - BSP_FEATURE_TSU_B_LOW_TEMPERATURE;
+    
     /* Calculate the term4. Reference section "Comparison Setting Value Calculation" in the user's manual.*/
     term4 = (term1 * term2) / term3;
 

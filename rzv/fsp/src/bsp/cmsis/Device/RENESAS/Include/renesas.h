@@ -25,9 +25,9 @@
 extern "C" {
  #endif
 
-#if !defined(BSP_SUPPORT_CORE_CR8)
- #include "cmsis_compiler.h"
-#endif
+ #if !defined(BSP_SUPPORT_CORE_CR8)
+  #include "cmsis_compiler.h"
+ #endif
 
 /** @addtogroup Configuration_of_CMSIS
  * @{
@@ -48,6 +48,8 @@ extern "C" {
   #include "R9A07G054L.h"
  #elif BSP_MCU_GROUP_RZV2H
   #include "R9A09G057H.h"
+ #elif BSP_MCU_GROUP_RZV2N
+  #include "R9A09G056N.h"
  #else
   #if __has_include("renesas_internal.h")
    #include "renesas_internal.h"

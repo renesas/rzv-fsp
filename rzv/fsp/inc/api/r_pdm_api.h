@@ -5,15 +5,13 @@
 */
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_AUDIO_INTERFACES
  * @defgroup PDM_API PDM Interface
  * @brief Interface for PDM audio communication.
  *
  * @section PDM_API_SUMMARY Summary
  * @brief The pulse-density modulation(PDM) interface provides APIs and definitions for PDM audio communication.
  *
- * @section PDM_API_INSTANCES Known Implementations
- * @ref PDM
  * @{
  **********************************************************************************************************************/
 
@@ -95,8 +93,6 @@ typedef struct st_pdm_callback_args
 } pdm_callback_args_t;
 
 /** PDM control block.  Allocate an instance specific control block to pass into the PDM API calls.
- * @par Implemented as
- * - pdm_instance_ctrl_t
  */
 typedef void pdm_ctrl_t;
 
@@ -136,8 +132,6 @@ typedef struct st_pdm_cfg
 typedef struct st_pdm_api
 {
     /** Initial configuration.
-     * @par Implemented as
-     * - @ref R_PDM_Open()
      *
      * @pre Peripheral clocks and any required output pins should be configured prior to calling this function.
      * @note To reconfigure after calling this function, call @ref pdm_api_t::close first.
@@ -147,9 +141,6 @@ typedef struct st_pdm_api
     fsp_err_t (* open)(pdm_ctrl_t * const p_ctrl, pdm_cfg_t const * const p_cfg);
 
     /** Start communication.
-     *
-     * @par Implemented as
-     * - @ref R_PDM_Start()
      *
      * @param[in]   p_ctrl                     Control block set in @ref pdm_api_t::open call for this instance.
      * @param[in]   p_buffer                   Pointer to the reception buffer
@@ -161,16 +152,11 @@ typedef struct st_pdm_api
 
     /** Stop communication. Communication is stopped when callback is called with PDM_EVENT_IDLE.
      *
-     * @par Implemented as
-     * - @ref R_PDM_Stop()
-     *
      * @param[in]   p_ctrl     Control block set in @ref pdm_api_t::open call for this instance.
      */
     fsp_err_t (* stop)(pdm_ctrl_t * const p_ctrl);
 
     /** Read remaining PDM data. This function can be called during PDM_STATE_STOPPED.
-     * @par Implemented as
-     * - @ref R_PDM_Read()
      *
      * @param[in]   p_ctrl     Control block set in @ref pdm_api_t::open call for this instance.
      * @param[in]   p_dest     Buffer to store PCM samples.  Must be 4 byte aligned.
@@ -180,8 +166,6 @@ typedef struct st_pdm_api
     fsp_err_t (* read)(pdm_ctrl_t * const p_ctrl, void * const p_dest, uint32_t const bytes);
 
     /** Get current status and store it in provided pointer p_status.
-     * @par Implemented as
-     * - @ref R_PDM_StatusGet()
      *
      * @param[in]   p_ctrl     Control block set in @ref pdm_api_t::open call for this instance.
      * @param[out]  p_status   Current status of the driver.
@@ -189,8 +173,6 @@ typedef struct st_pdm_api
     fsp_err_t (* statusGet)(pdm_ctrl_t * const p_ctrl, pdm_status_t * const p_status);
 
     /** Allows driver to be reconfigured and may reduce power consumption.
-     * @par Implemented as
-     * - @ref R_PDM_Close()
      *
      * @param[in]   p_ctrl     Control block set in @ref pdm_api_t::open call for this instance.
      */
@@ -198,8 +180,6 @@ typedef struct st_pdm_api
 
     /**
      * Specify callback function and optional context pointer and working memory pointer.
-     * @par Implemented as
-     * - R_PDM_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the PDM control block.
      * @param[in]   p_callback               Callback function

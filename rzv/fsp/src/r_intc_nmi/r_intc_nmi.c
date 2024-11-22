@@ -98,41 +98,12 @@ fsp_err_t R_INTC_NMI_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, ex
     p_ctrl->p_context  = p_cfg->p_context;
     p_ctrl->channel    = p_cfg->channel;
 
-#if BSP_FEATURE_INTC_NMI_HAS_NSCTR_NSCLR
-
     /* Set the trigger. */
-    R_INTC->NITSR_b.NTSEL = p_cfg->trigger;
+    BSP_FEATURE_INTC_BASE_ADDR->NITSR_b.NTSEL = p_cfg->trigger;
 
-    /* Dummy read the NSCNT before clearing the NSTAT bit. */
-    volatile uint32_t nscnt = R_INTC->NSCNT;
-    FSP_PARAMETER_NOT_USED(nscnt);
-
-    /* Clear the NCLR bit after changing the trigger setting to the edge type.
+    /* Clear the NMI state flag after changing the trigger setting to the edge type.
      * Reference section "Precaution when Changing Interrupt Settings" of the user's manual. */
-    R_INTC->NSCLR_b.NCLR = 1;
-
-    /* Dummy read the NSCNT to prevent the interrupt cause that have been cleared from being accidentally accepted.
-     * Reference section "Clear Timing of Interrupt Cause" of the user's manual. */
-    nscnt = R_INTC->NSCNT;
-    FSP_PARAMETER_NOT_USED(nscnt);
-#else
-
-    /* Set the trigger. */
-    R_INTC_IM33->NITSR_b.NTSEL = p_cfg->trigger;
-
-    /* Dummy read the NSCR before clearing the NSTAT bit. */
-    volatile uint32_t nscr = R_INTC_IM33->NSCR;
-    FSP_PARAMETER_NOT_USED(nscr);
-
-    /* Clear the NSTAT bit after changing the trigger setting to the edge type.
-     * Reference section "Precaution when Changing Interrupt Settings" of the user's manual. */
-    R_INTC_IM33->NSCR_b.NSTAT = 0;
-
-    /* Dummy read the NSCR to prevent the interrupt cause that have been cleared from being accidentally accepted.
-     * Reference section "Clear Timing of Interrupt Cause" of the user's manual. */
-    nscr = R_INTC_IM33->NSCR;
-    FSP_PARAMETER_NOT_USED(nscr);
-#endif
+    BSP_INTC_NMI_CLR_STATE_FLAG();
 
     if (p_ctrl->irq >= 0)
     {
@@ -289,35 +260,9 @@ void r_intc_nmi_isr (void)
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     intc_nmi_instance_ctrl_t * p_ctrl = (intc_nmi_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-#if BSP_FEATURE_INTC_NMI_HAS_NSCTR_NSCLR
-
-    /* Dummy read the NSCNT before clearing the NSTAT bit. */
-    volatile uint32_t nscnt = R_INTC->NSCNT;
-    FSP_PARAMETER_NOT_USED(nscnt);
-
-    /* Clear the NCLR bit before calling the user callback so that if an edge is detected while the ISR is active
+    /* Clear the NMI state flag before calling the user callback so that if an edge is detected while the ISR is active
      * it will not be missed. */
-    R_INTC->NSCLR_b.NCLR = 1;
-
-    /* Dummy read the NSCNT to prevent the interrupt cause that should have been cleared from being accidentally
-     * accepted again. Reference section "Clear Timing of Interrupt Cause" of the user's manual. */
-    nscnt = R_INTC->NSCNT;
-    FSP_PARAMETER_NOT_USED(nscnt);
-#else
-
-    /* Dummy read the NSCR before clearing the NSTAT bit. */
-    volatile uint32_t nscr = R_INTC_IM33->NSCR;
-    FSP_PARAMETER_NOT_USED(nscr);
-
-    /* Clear the NSTAT bit before calling the user callback so that if an edge is detected while the ISR is active
-     * it will not be missed. */
-    R_INTC_IM33->NSCR_b.NSTAT = 0;
-
-    /* Dummy read the NSCR to prevent the interrupt cause that should have been cleared from being accidentally
-     * accepted again. Reference section "Clear Timing of Interrupt Cause" of the user's manual. */
-    nscr = R_INTC_IM33->NSCR;
-    FSP_PARAMETER_NOT_USED(nscr);
-#endif
+    BSP_INTC_NMI_CLR_STATE_FLAG();
 
     if ((NULL != p_ctrl) && (NULL != p_ctrl->p_callback))
     {

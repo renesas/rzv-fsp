@@ -163,6 +163,7 @@ typedef enum e_adc_e_window_b_channel
     ADC_E_WINDOW_B_CHANNEL_5,
     ADC_E_WINDOW_B_CHANNEL_6,
     ADC_E_WINDOW_B_CHANNEL_7,
+    ADC_E_WINDOW_B_CHANNEL_NONE = 63,
 } adc_e_window_b_channel_t;
 
 /** ADC Window B comparison mode */
@@ -231,12 +232,14 @@ typedef struct st_adc_e_channel_cfg
 /** ADC instance control block. DO NOT INITIALIZE.  Initialized in @ref adc_api_t::open(). */
 typedef struct
 {
-    R_ADC_E_Type      * p_reg;                  // Base register for this unit
+    R_ADC_E0_Type     * p_reg;                  // Base register for this unit
     adc_cfg_t const   * p_cfg;
     uint32_t          opened;                   // Boolean to verify that the Unit has been initialized
     uint32_t          initialized;              // Initialized status of ADC
     uint32_t          scan_mask;                // Scan mask used for Normal scan.
     uint16_t          scan_start_adcsr;
+    uint16_t          scan_start_adstrgr;
+    uint8_t           scan_start_adgctrgr;
 
     void (* p_callback)(adc_callback_args_t *); // Pointer to callback that is called when an adc_event_t occurs.
     adc_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.

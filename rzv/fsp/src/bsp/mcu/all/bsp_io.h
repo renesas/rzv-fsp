@@ -502,7 +502,7 @@ __STATIC_INLINE void R_BSP_PinWrite (bsp_io_port_pin_t pin, bsp_io_level_t level
 }
 
 /*******************************************************************************************************************//**
- * Enable access to the PFS registers. Uses a reference counter to protect against interrupts that could occur
+ * Enable access to the PFC registers. Uses a reference counter to protect against interrupts that could occur
  * via multiple threads or an ISR re-entering this code.
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_PinAccessEnable (void)
@@ -513,15 +513,15 @@ __STATIC_INLINE void R_BSP_PinAccessEnable (void)
     FSP_CRITICAL_SECTION_DEFINE;
     FSP_CRITICAL_SECTION_ENTER;
 
-    /** If this is first entry then allow writing of PFS. */
+    /** If this is first entry then allow writing of PFC. */
     if (0 == g_protect_pfswe_counter)
     {
  #if BSP_FEATURE_BSP_SUPPORT_PFCWE_PROTECT
-        R_GPIO->PWPR = 0;                                          ///< Clear BOWI bit - writing to PFSWE bit enabled
-        R_GPIO->PWPR = 1U << BSP_FEATURE_IOPORT_PWPR_PFCWE_OFFSET; ///< Set PFSWE bit - writing to PFS register enabled
+        R_GPIO->PWPR = 0;                                                               ///< Clear BOWI bit - writing to PFCWE bit enabled
+        R_GPIO->PWPR = 1U << BSP_FEATURE_IOPORT_PWPR_PFCWE_OFFSET;                      ///< Set PFCWE bit - writing to PFC register enabled
  #else
         R_GPIO->PWPR = (uint32_t) ((BSP_FEATURE_IOPORT_PFC_PWPR_REGWE_A_MASK & R_GPIO->PWPR) | \
-                                   (1U << BSP_FEATURE_IOPORT_PFC_PWPR_REGWE_A_OFFSET));
+                                   (1U << BSP_FEATURE_IOPORT_PFC_PWPR_REGWE_A_OFFSET)); ///< Set REGWE_A bit - writing to PFC and PMC registers enabled
  #endif
     }
 
@@ -534,7 +534,7 @@ __STATIC_INLINE void R_BSP_PinAccessEnable (void)
 }
 
 /*******************************************************************************************************************//**
- * Disable access to the PFS registers. Uses a reference counter to protect against interrupts that could occur via
+ * Disable access to the PFC registers. Uses a reference counter to protect against interrupts that could occur via
  * multiple threads or an ISR re-entering this code.
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_PinAccessDisable (void)
@@ -545,21 +545,21 @@ __STATIC_INLINE void R_BSP_PinAccessDisable (void)
     FSP_CRITICAL_SECTION_DEFINE;
     FSP_CRITICAL_SECTION_ENTER;
 
-    /** Is it safe to disable PFS register? */
+    /** Is it safe to disable PFC register? */
     if (0 != g_protect_pfswe_counter)
     {
         /* Decrement the protect counter */
         g_protect_pfswe_counter--;
     }
 
-    /** Is it safe to disable writing of PFS? */
+    /** Is it safe to disable writing of PFC? */
     if (0 == g_protect_pfswe_counter)
     {
  #if BSP_FEATURE_BSP_SUPPORT_PFCWE_PROTECT
-        R_GPIO->PWPR = 0;                                         ///< Clear PFSWE bit - writing to PFS register disabled
-        R_GPIO->PWPR = 1U << BSP_FEATURE_IOPORT_PWPR_B0WI_OFFSET; ///< Set BOWI bit - writing to PFSWE bit disabled
+        R_GPIO->PWPR = 0;                                                                    ///< Clear PFCWE bit - writing to PFC register disabled
+        R_GPIO->PWPR = 1U << BSP_FEATURE_IOPORT_PWPR_B0WI_OFFSET;                            ///< Set BOWI bit - writing to PFCWE bit disabled
  #else
-        R_GPIO->PWPR = (uint32_t) (BSP_FEATURE_IOPORT_PFC_PWPR_REGWE_A_MASK & R_GPIO->PWPR);
+        R_GPIO->PWPR = (uint32_t) (BSP_FEATURE_IOPORT_PFC_PWPR_REGWE_A_MASK & R_GPIO->PWPR); ///< Clear REGWE_A bit - writing to PFC and PMC registers disabled
  #endif
     }
 

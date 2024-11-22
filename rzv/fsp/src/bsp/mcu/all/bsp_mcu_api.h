@@ -4,12 +4,6 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/**********************************************************************************************************************
- * File Name    : bsp_mcu_api.h
- * Version      : 1.00
- * Description  : bsp_mcu_api header
- *********************************************************************************************************************/
-
 #ifndef BSP_MCU_API_H
 #define BSP_MCU_API_H
 
@@ -17,7 +11,6 @@
 FSP_HEADER
 fsp_err_t R_BSP_GroupIrqWrite(bsp_grp_irq_t irq, void (* p_callback)(bsp_grp_irq_t irq));
 void      R_BSP_SoftwareDelay(uint32_t delay, bsp_delay_units_t units);
-fsp_err_t R_BSP_VersionGet(fsp_version_t * p_version);
 uint32_t  R_BSP_SlaveAddressConversion(uint32_t original_address);
 fsp_err_t R_BSP_ClockSelectorSet(fsp_priv_clock_selector_t selector, uint32_t clock_sel);
 fsp_err_t R_BSP_ClockDividerSet(fsp_priv_clock_divider_t divider, uint32_t clock_div);

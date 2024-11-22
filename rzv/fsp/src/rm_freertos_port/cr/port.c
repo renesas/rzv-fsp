@@ -148,11 +148,6 @@ void SysTick_Handler(timer_callback_args_t * p_args) PRIVILEGED_FUNCTION;
 /**
  * @brief Idle Hook
  */
-void vApplicationIdleHook(void);
-
-/**
- * @brief Idle Hook
- */
 void rm_freertos_port_sleep_preserving_lpm(uint32_t xExpectedIdleTime);
 
 void vApplicationIRQHandler(uint32_t ulICCIAR);

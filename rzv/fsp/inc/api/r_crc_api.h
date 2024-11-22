@@ -9,7 +9,7 @@
 
 /*******************************************************************************************************************//**
  * @defgroup CRC_API CRC Interface
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_MONITORING_INTERFACES
  *
  * @brief Interface for cyclic redundancy checking.
  *
@@ -18,8 +18,6 @@
  * 16 bit, and 32 bit variations. Calculation can be performed by sending data to the block using the CPU or by snooping
  * on read or write activity on one of SCI channels.
  *
- * Implemented by:
- * - @ref CRC
  *
  * @{
  **********************************************************************************************************************/
@@ -74,14 +72,12 @@ typedef enum e_crc_snoop_direction
 /** Structure for CRC inputs */
 typedef struct st_crc_input_t
 {
-    uint32_t num_bytes;                // Length of input buffer
-    uint32_t crc_seed;                 // CRC seed value
-    void   * p_input_buffer;           // Pointer to input buffer
+    uint32_t     num_bytes;            ///< Length of input buffer. It must be 4-byte aligned when a 32-bit CRC polynomial function is used.
+    uint32_t     crc_seed;             ///< CRC seed value
+    const void * p_input_buffer;       ///< Pointer to input buffer
 } crc_input_t;
 
 /** CRC control block.  Allocate an instance specific control block to pass into the CRC API calls.
- * @par Implemented as
- * - crc_instance_ctrl_t
  */
 typedef void crc_ctrl_t;
 
@@ -92,15 +88,13 @@ typedef struct st_crc_cfg
     crc_polynomial_t polynomial;       ///< CRC Generating Polynomial Switching (GPS)
     crc_bit_order_t  bit_order;        ///< CRC Calculation Switching (LMS)
     uint32_t         snoop_address;    ///< Register Snoop Address (CRCSA)
-    void const *     p_extend;         ///< CRC Hardware Dependent Configuration
+    void const     * p_extend;         ///< CRC Hardware Dependent Configuration
 } crc_cfg_t;
 
 /** CRC driver structure. General CRC functions implemented at the HAL layer will follow this API. */
 typedef struct st_crc_api
 {
     /** Open the CRC driver module.
-     * @par Implemented as
-     * - @ref R_CRC_Open()
      *
      * @param[in] p_ctrl               Pointer to CRC device handle.
      * @param[in] p_cfg                Pointer to a configuration structure.
@@ -108,8 +102,6 @@ typedef struct st_crc_api
     fsp_err_t (* open)(crc_ctrl_t * const p_ctrl, crc_cfg_t const * const p_cfg);
 
     /** Close the CRC module driver
-     * @par Implemented as
-     * - @ref R_CRC_Close()
      *
      * @param[in] p_ctrl               Pointer to CRC device handle
      * @retval FSP_SUCCESS             Configuration was successful.
@@ -117,8 +109,6 @@ typedef struct st_crc_api
     fsp_err_t (* close)(crc_ctrl_t * const p_ctrl);
 
     /** Return the current calculated value.
-     * @par Implemented as
-     * - @ref R_CRC_CalculatedValueGet()
      *
      * @param[in]  p_ctrl              Pointer to CRC device handle.
      * @param[out] crc_result          The calculated value from the last CRC calculation.
@@ -126,8 +116,6 @@ typedef struct st_crc_api
     fsp_err_t (* crcResultGet)(crc_ctrl_t * const p_ctrl, uint32_t * crc_result);
 
     /** Configure and Enable snooping.
-     * @par Implemented as
-     * - @ref R_CRC_SnoopEnable()
      *
      * @param[in] p_ctrl               Pointer to CRC device handle.
      * @param[in] crc_seed             CRC seed.
@@ -135,16 +123,12 @@ typedef struct st_crc_api
     fsp_err_t (* snoopEnable)(crc_ctrl_t * const p_ctrl, uint32_t crc_seed);
 
     /** Disable snooping.
-     * @par Implemented as
-     * - @ref R_CRC_SnoopDisable()
      *
      * @param[in] p_ctrl               Pointer to CRC device handle.
      **/
     fsp_err_t (* snoopDisable)(crc_ctrl_t * const p_ctrl);
 
     /** Perform a CRC calculation on a block of data.
-     * @par Implemented as
-     * - @ref R_CRC_Calculate()
      *
      * @param[in]  p_ctrl         Pointer to CRC device handle.
      * @param[in]  p_crc_input    A pointer to structure for CRC inputs

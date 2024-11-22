@@ -25,24 +25,24 @@
 
 static const uint32_t gs_elc_ssel_pos_table[ELC_ELC_SSEL_SEL_SETTING_NUM] =
 {
-    BSP_FEATURE_ELC_EVENT_SELECT0_POSITION,
-    BSP_FEATURE_ELC_EVENT_SELECT1_POSITION,
-    BSP_FEATURE_ELC_EVENT_SELECT2_POSITION
+    BSP_ELC_EVENT_SELECT0_POSITION,
+    BSP_ELC_EVENT_SELECT1_POSITION,
+    BSP_ELC_EVENT_SELECT2_POSITION
 };
 
 static const uint32_t gs_elc_ssel_msk_table[ELC_ELC_SSEL_SEL_SETTING_NUM] =
 {
-    BSP_FEATURE_ELC_EVENT_SELECT0_MASK,
-    BSP_FEATURE_ELC_EVENT_SELECT1_MASK,
-    BSP_FEATURE_ELC_EVENT_SELECT2_MASK
+    BSP_ELC_EVENT_SELECT0_MASK,
+    BSP_ELC_EVENT_SELECT1_MASK,
+    BSP_ELC_EVENT_SELECT2_MASK
 };
 
-static const uint32_t gs_elc_event_source_msk_table[BSP_FEATURE_ELC_EVENT_MASK_NUM] =
+static const uint32_t gs_elc_event_source_msk_table[BSP_ELC_EVENT_MASK_NUM] =
 {
-    BSP_FEATURE_ELC_PERIPHERAL_0_MASK,
-    BSP_FEATURE_ELC_PERIPHERAL_1_MASK,
-    BSP_FEATURE_ELC_PERIPHERAL_2_MASK,
-    BSP_FEATURE_ELC_PERIPHERAL_3_MASK
+    BSP_ELC_PERIPHERAL_0_MASK,
+    BSP_ELC_PERIPHERAL_1_MASK,
+    BSP_ELC_PERIPHERAL_2_MASK,
+    BSP_ELC_PERIPHERAL_3_MASK
 };
 
 /***********************************************************************************************************************
@@ -108,7 +108,7 @@ fsp_err_t R_ELC_Open (elc_ctrl_t * const p_ctrl, elc_cfg_t const * const p_cfg)
     FSP_ERROR_RETURN(ELC_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #endif
 
-    volatile uint32_t * p_reg   = BSP_FEATURE_ELC_EVENT_SELECT_REG;
+    volatile uint32_t * p_reg   = BSP_ELC_EVENT_SELECT_REG;
     uint32_t            i_shift = 1;
 
     /* All links and set or clear them in the ELC block.
@@ -116,7 +116,7 @@ fsp_err_t R_ELC_Open (elc_ctrl_t * const p_ctrl, elc_cfg_t const * const p_cfg)
      * see Event Selection register description chapter of the RZ microprocessor manual for more details.
      *
      * Loop through all Event Selection register. */
-    for (uint32_t ssel_register_num = 0; ssel_register_num < BSP_FEATURE_ELC_ELC_SSEL_NUM; ssel_register_num++)
+    for (uint32_t ssel_register_num = 0; ssel_register_num < BSP_ELC_ELC_SSEL_NUM; ssel_register_num++)
     {
         uint32_t elc_ssel = ELC_SSEL_ALL_DISABLE;
 
@@ -179,10 +179,10 @@ fsp_err_t R_ELC_Close (elc_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
-    volatile uint32_t * p_reg = BSP_FEATURE_ELC_EVENT_SELECT_REG;
+    volatile uint32_t * p_reg = BSP_ELC_EVENT_SELECT_REG;
 
     /* Globally disable the operation of the Event Link Controller */
-    for (int i = 0; i < BSP_FEATURE_ELC_ELC_SSEL_NUM; i++)
+    for (int i = 0; i < BSP_ELC_ELC_SSEL_NUM; i++)
     {
         p_reg[i] = ELC_SSEL_ALL_DISABLE;
     }
@@ -209,7 +209,7 @@ fsp_err_t R_ELC_SoftwareEventGenerate (elc_ctrl_t * const p_ctrl, elc_software_e
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
-    volatile uint32_t * p_reg = BSP_FEATURE_ELC_SOFTWARE_EVENT_REG;
+    volatile uint32_t * p_reg = BSP_ELC_SOFTWARE_EVENT_REG;
 
     FSP_PARAMETER_NOT_USED(p_ctrl);
 
@@ -217,7 +217,7 @@ fsp_err_t R_ELC_SoftwareEventGenerate (elc_ctrl_t * const p_ctrl, elc_software_e
     FSP_CRITICAL_SECTION_ENTER;
 
     /* Software event output is generated in the ICU by writing 1 and then 0 successively to a bit. */
-    *p_reg = (uint32_t) (BSP_FEATURE_ELC_SOFTWARE_EVENT_MASK << event_number);
+    *p_reg = (uint32_t) (BSP_ELC_SOFTWARE_EVENT_MASK << event_number);
     *p_reg = 0;
 
     FSP_CRITICAL_SECTION_EXIT;
@@ -243,7 +243,7 @@ fsp_err_t R_ELC_LinkSet (elc_ctrl_t * const p_ctrl, elc_peripheral_t peripheral,
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    volatile uint32_t * p_reg = BSP_FEATURE_ELC_EVENT_SELECT_REG;
+    volatile uint32_t * p_reg = BSP_ELC_EVENT_SELECT_REG;
 
     /* Set the event link register for the corresponding peripheral to the given signal */
     uint32_t register_num         = (uint32_t) peripheral / ELC_ELC_SSEL_SEL_SETTING_NUM;
@@ -278,7 +278,7 @@ fsp_err_t R_ELC_LinkBreak (elc_ctrl_t * const p_ctrl, elc_peripheral_t periphera
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    volatile uint32_t * p_reg = BSP_FEATURE_ELC_EVENT_SELECT_REG;
+    volatile uint32_t * p_reg = BSP_ELC_EVENT_SELECT_REG;
 
     /* Clear the corresponding peripheral event link register to break the link */
     uint32_t register_num         = (uint32_t) peripheral / ELC_ELC_SSEL_SEL_SETTING_NUM;

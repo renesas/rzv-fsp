@@ -488,6 +488,23 @@ typedef enum e_elc_event_rzv2h
     ELC_EVENT_NONE
 } elc_event_t;
 
+/* ELC-Related Definitions */
+#define BSP_ELC_ELC_SSEL_NUM              (15)
+#define BSP_ELC_EVENT_MASK_NUM            (4U)
+#define BSP_ELC_EVENT_SELECT0_MASK        (R_INTC_EVTSEL0_EC_SEL0_Msk)
+#define BSP_ELC_EVENT_SELECT1_MASK        (R_INTC_EVTSEL0_EC_SEL1_Msk)
+#define BSP_ELC_EVENT_SELECT2_MASK        (R_INTC_EVTSEL0_EC_SEL2_Msk)
+#define BSP_ELC_EVENT_SELECT0_POSITION    (R_INTC_EVTSEL0_EC_SEL0_Pos)
+#define BSP_ELC_EVENT_SELECT1_POSITION    (R_INTC_EVTSEL0_EC_SEL1_Pos)
+#define BSP_ELC_EVENT_SELECT2_POSITION    (R_INTC_EVTSEL0_EC_SEL2_Pos)
+#define BSP_ELC_EVENT_SELECT_REG          (&R_INTC->EVTSEL0)
+#define BSP_ELC_PERIPHERAL_0_MASK         (0xFFFFFFFFU) // ELC event source no.0 to 31 available on this MPU
+#define BSP_ELC_PERIPHERAL_1_MASK         (0x000007FFU) // ELC event source no.32 to 63 available on this MPU.
+#define BSP_ELC_PERIPHERAL_2_MASK         (0x00000000U) // ELC event source no.64 to 95 available on this MPU.
+#define BSP_ELC_PERIPHERAL_3_MASK         (0x00000000U) // ELC event source no.96 to 127 available on this MPU.
+#define BSP_ELC_SOFTWARE_EVENT_MASK       (R_INTC_SWEVT_SWE0_Msk)
+#define BSP_ELC_SOFTWARE_EVENT_REG        (&R_INTC->SWEVT)
+
 /** @} (end addtogroup BSP_MCU_RZV2H) */
 
 #endif

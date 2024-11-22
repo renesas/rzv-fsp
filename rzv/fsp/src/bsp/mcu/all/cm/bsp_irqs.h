@@ -4,14 +4,6 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/**********************************************************************************************************************
- * File Name    : bsp_irqs.h
- * Version      : 1.00
- * Description  : bsp_irq (secure) header
- *********************************************************************************************************************/
-
-/** @} (end addtogroup BSP_MCU) */
-
 #ifndef BSP_IRQS_H
 #define BSP_IRQS_H
 
