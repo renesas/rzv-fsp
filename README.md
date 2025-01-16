@@ -16,7 +16,6 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 
 - [RZ/V2L Evaluation Board Kit](https://www.renesas.com/us/en/products/microcontrollers-microprocessors/rz-mpus/rzv2l-evaluation-board-kit-rzv2l-evaluation-board-kit)
 - [RZ/V2H Quad-core Vision AI MPU Evaluation Kit](https://www.renesas.com/us/en/products/microcontrollers-microprocessors/rz-mpus/rzv2h-evk-rzv2h-quad-core-vision-ai-mpu-evaluation-kit)
-- RZ/V2N Evaluation Board Kit
 
 ### Supported Software Packaged with FSP
 
@@ -67,8 +66,6 @@ FSP Webpage: www.renesas.com/rzv/fsp
 RZ/V2L Product Information : www.renesas.com/rzv2l
 
 RZ/V2H Product Information : www.renesas.com/rzv2h
-
-RZ/V2N Product Information :
 
 e² studio : www.renesas.com/e2studio
 
