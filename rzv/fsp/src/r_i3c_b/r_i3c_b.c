@@ -272,8 +272,14 @@ fsp_err_t R_I3C_B_Open (i3c_ctrl_t * const p_api_ctrl, i3c_cfg_t const * const p
      */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->RSTCTL, 0U);
 
+    /* Reset the internal state */
+    p_ctrl->p_reg->RSTCTL_b.INTLRST = 1U;
+
     /* Set I3C mode. */
     p_ctrl->p_reg->PRTS = 0U;
+
+    /* Release from resetting */
+    p_ctrl->p_reg->RSTCTL_b.INTLRST = 0U;
 
     return FSP_SUCCESS;
 }
