@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RZV Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.0</span>
+   &#160;<span id="projectnumber">Release v3.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -248,35 +248,27 @@ Features</h2>
 <h3>Per-MPU Specifications</h3>
 <table class="doxtable">
 <tr>
-<th></th><th>RZ/V2L </th><th>RZ/V2H  </th></tr>
+<th></th><th>RZ/V2L </th><th>RZ/V2H </th><th>RZ/V2N  </th></tr>
 <tr>
-<td>Channels </td><td>2 </td><td>6 </td></tr>
+<td>Channels </td><td>2 </td><td>6 </td><td>6 </td></tr>
 <tr>
-<td>Max nominal bitrate </td><td>1 Mbps </td><td>1 Mbps </td></tr>
+<td>Max nominal bitrate </td><td>1 Mbps </td><td>1 Mbps </td><td>1 Mbps </td></tr>
 <tr>
-<td>Max data bitrate </td><td>4 Mbps </td><td>8 Mbps </td></tr>
+<td>Max data bitrate </td><td>4 Mbps </td><td>8 Mbps </td><td>8 Mbps </td></tr>
 <tr>
-<td>Filter rules </td><td>128 </td><td>256 </td></tr>
+<td>Filter rules </td><td>128 </td><td>256 </td><td>256 </td></tr>
 <tr>
-<td>TX message buffers </td><td>16/ch </td><td>32/ch </td></tr>
+<td>TX message buffers </td><td>16/ch </td><td>32/ch </td><td>32/ch </td></tr>
 <tr>
-<td>RX message buffers </td><td>32 </td><td>96 </td></tr>
+<td>RX message buffers </td><td>32 </td><td>96 </td><td>96 </td></tr>
 <tr>
-<td>RX FIFOs </td><td>8 </td><td>8 </td></tr>
+<td>RX FIFOs </td><td>8 </td><td>8 </td><td>8 </td></tr>
 <tr>
-<td>RX Buffer RAM </td><td>4864 bytes </td><td>14,592 bytes </td></tr>
+<td>RX Buffer RAM </td><td>3584 bytes </td><td>29,184 bytes </td><td>29,184 bytes </td></tr>
 <tr>
-<td>Standards </td><td>ISO </td><td>ISO </td></tr>
+<td>Standards </td><td>ISO </td><td>ISO </td><td>ISO </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd>Each message buffer comprises 12 header bytes plus data length (8-64 bytes). The above buffer RAM values therefore correspond to the following capacities: <table class="doxtable">
-<tr>
-<th></th><th>RZ/V2L </th><th>RZ/V2H  </th></tr>
-<tr>
-<td>Max 64-byte storage </td><td>64 messages </td><td>192 messages </td></tr>
-<tr>
-<td>Max 8-byte storage </td><td>243 messages </td><td>729 messages </td></tr>
-</table>
-</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Each message buffer comprises 12 header bytes plus data length (8-64 bytes). Refer to the table above and configure the FIFO so that the RAM capacity is not exceeded.</dd></dl>
 <h1><a class="anchor" id="r-canfd-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_canfd</h2>
@@ -2634,7 +2626,7 @@ TXMB buffer marge mode configuration. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
